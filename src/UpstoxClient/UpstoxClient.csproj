@@ -8,8 +8,7 @@ OpenAPI spec version: v0
 
 -->
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    
+  <PropertyGroup>    
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F2EBAF1C-85B0-4278-B9CD-D928611129D9}</ProjectGuid>
