@@ -2,24 +2,24 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- The identifier that must be unique within the hosting gallery -->
-        <id>$id$</id>
-        <title>Upstox Client SDK</title>
+        <id>upstox-dotnet-sdk</id>
+        <title>Upstox DotNet SDK</title>
 
         <!-- The package version number that is used when resolving dependencies -->
-        <version>$version$</version>
+        <version>1.0.0</version>
 
         <!-- Authors contain text that appears directly on the gallery -->
-        <authors>$author$</authors>
+        <authors>Upstox</authors>
 
         <!-- Owners are typically nuget.org identities that allow gallery
              users to earily find other packages by the same owners.  -->
-        <owners>$author$</owners>
+        <owners>Upstox</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <developmentDependency>false</developmentDependency>
 
         <!-- The description can be used in package manager UI. Note that the
              nuget.org gallery uses information you add in the portal. -->
-        <description>A library generated from a Swagger doc</description>
+        <description>The official .Net client for communicating with the Upstox API</description>
 
         <!-- Dependencies are automatically installed when the package is installed -->
         <dependencies>
@@ -29,6 +29,11 @@
             <dependency id="RestSharp" version="105.1.0" />
 
         </dependencies>
+
+        <projectUrl>https://github.com/upstox/upstox-dotnet</projectUrl>
+        <license type="expression">MIT</license>
+        <tags>upstox trade sdk rest api csharp dotnet</tags>
+
     </metadata>
     <files>
 
