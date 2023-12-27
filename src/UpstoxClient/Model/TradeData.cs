@@ -187,6 +187,13 @@ namespace UpstoxClient.Model
         public string Tradingsymbol { get; private set; }
 
         /// <summary>
+        /// Shows the trading symbol which could be a combination of symbol name, instrument, expiry date etc
+        /// </summary>
+        /// <value>Shows the trading symbol which could be a combination of symbol name, instrument, expiry date etc</value>
+        [DataMember(Name="trading_symbol", EmitDefaultValue=false)]
+        public string TradingSymbol { get; private set; }
+
+        /// <summary>
         /// Identifier issued by Upstox used for subscribing to live market quotes
         /// </summary>
         /// <value>Identifier issued by Upstox used for subscribing to live market quotes</value>
@@ -262,6 +269,7 @@ namespace UpstoxClient.Model
             sb.Append("  Exchange: ").Append(Exchange).Append("\n");
             sb.Append("  Product: ").Append(Product).Append("\n");
             sb.Append("  Tradingsymbol: ").Append(Tradingsymbol).Append("\n");
+            sb.Append("  TradingSymbol: ").Append(TradingSymbol).Append("\n");
             sb.Append("  InstrumentToken: ").Append(InstrumentToken).Append("\n");
             sb.Append("  OrderType: ").Append(OrderType).Append("\n");
             sb.Append("  TransactionType: ").Append(TransactionType).Append("\n");
@@ -321,6 +329,11 @@ namespace UpstoxClient.Model
                     this.Tradingsymbol == input.Tradingsymbol ||
                     (this.Tradingsymbol != null &&
                     this.Tradingsymbol.Equals(input.Tradingsymbol))
+                ) && 
+                (
+                    this.TradingSymbol == input.TradingSymbol ||
+                    (this.TradingSymbol != null &&
+                    this.TradingSymbol.Equals(input.TradingSymbol))
                 ) && 
                 (
                     this.InstrumentToken == input.InstrumentToken ||
@@ -394,6 +407,8 @@ namespace UpstoxClient.Model
                     hashCode = hashCode * 59 + this.Product.GetHashCode();
                 if (this.Tradingsymbol != null)
                     hashCode = hashCode * 59 + this.Tradingsymbol.GetHashCode();
+                if (this.TradingSymbol != null)
+                    hashCode = hashCode * 59 + this.TradingSymbol.GetHashCode();
                 if (this.InstrumentToken != null)
                     hashCode = hashCode * 59 + this.InstrumentToken.GetHashCode();
                 if (this.OrderType != null)

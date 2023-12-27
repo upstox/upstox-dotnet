@@ -315,6 +315,13 @@ namespace UpstoxClient.Model
         public string Tradingsymbol { get; private set; }
 
         /// <summary>
+        /// Shows the trading symbol of the instrument
+        /// </summary>
+        /// <value>Shows the trading symbol of the instrument</value>
+        [DataMember(Name="trading_symbol", EmitDefaultValue=false)]
+        public string TradingSymbol { get; private set; }
+
+        /// <summary>
         /// User readable timestamp at which the order was placed
         /// </summary>
         /// <value>User readable timestamp at which the order was placed</value>
@@ -377,6 +384,7 @@ namespace UpstoxClient.Model
             sb.Append("  OrderType: ").Append(OrderType).Append("\n");
             sb.Append("  ParentOrderId: ").Append(ParentOrderId).Append("\n");
             sb.Append("  Tradingsymbol: ").Append(Tradingsymbol).Append("\n");
+            sb.Append("  TradingSymbol: ").Append(TradingSymbol).Append("\n");
             sb.Append("  OrderTimestamp: ").Append(OrderTimestamp).Append("\n");
             sb.Append("  FilledQuantity: ").Append(FilledQuantity).Append("\n");
             sb.Append("  TransactionType: ").Append(TransactionType).Append("\n");
@@ -513,6 +521,11 @@ namespace UpstoxClient.Model
                     this.Tradingsymbol.Equals(input.Tradingsymbol))
                 ) && 
                 (
+                    this.TradingSymbol == input.TradingSymbol ||
+                    (this.TradingSymbol != null &&
+                    this.TradingSymbol.Equals(input.TradingSymbol))
+                ) && 
+                (
                     this.OrderTimestamp == input.OrderTimestamp ||
                     (this.OrderTimestamp != null &&
                     this.OrderTimestamp.Equals(input.OrderTimestamp))
@@ -591,6 +604,8 @@ namespace UpstoxClient.Model
                     hashCode = hashCode * 59 + this.ParentOrderId.GetHashCode();
                 if (this.Tradingsymbol != null)
                     hashCode = hashCode * 59 + this.Tradingsymbol.GetHashCode();
+                if (this.TradingSymbol != null)
+                    hashCode = hashCode * 59 + this.TradingSymbol.GetHashCode();
                 if (this.OrderTimestamp != null)
                     hashCode = hashCode * 59 + this.OrderTimestamp.GetHashCode();
                 if (this.FilledQuantity != null)
