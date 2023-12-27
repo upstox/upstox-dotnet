@@ -262,6 +262,13 @@ namespace UpstoxClient.Model
         [DataMember(Name="tradingsymbol", EmitDefaultValue=false)]
         public string Tradingsymbol { get; private set; }
 
+        /// <summary>
+        /// Shows the trading symbol of the instrument
+        /// </summary>
+        /// <value>Shows the trading symbol of the instrument</value>
+        [DataMember(Name="trading_symbol", EmitDefaultValue=false)]
+        public string TradingSymbol { get; private set; }
+
 
 
         /// <summary>
@@ -395,6 +402,7 @@ namespace UpstoxClient.Model
             sb.Append("  InstrumentToken: ").Append(InstrumentToken).Append("\n");
             sb.Append("  PlacedBy: ").Append(PlacedBy).Append("\n");
             sb.Append("  Tradingsymbol: ").Append(Tradingsymbol).Append("\n");
+            sb.Append("  TradingSymbol: ").Append(TradingSymbol).Append("\n");
             sb.Append("  OrderType: ").Append(OrderType).Append("\n");
             sb.Append("  Validity: ").Append(Validity).Append("\n");
             sb.Append("  TriggerPrice: ").Append(TriggerPrice).Append("\n");
@@ -497,6 +505,11 @@ namespace UpstoxClient.Model
                     this.Tradingsymbol == input.Tradingsymbol ||
                     (this.Tradingsymbol != null &&
                     this.Tradingsymbol.Equals(input.Tradingsymbol))
+                ) && 
+                (
+                    this.TradingSymbol == input.TradingSymbol ||
+                    (this.TradingSymbol != null &&
+                    this.TradingSymbol.Equals(input.TradingSymbol))
                 ) && 
                 (
                     this.OrderType == input.OrderType ||
@@ -624,6 +637,8 @@ namespace UpstoxClient.Model
                     hashCode = hashCode * 59 + this.PlacedBy.GetHashCode();
                 if (this.Tradingsymbol != null)
                     hashCode = hashCode * 59 + this.Tradingsymbol.GetHashCode();
+                if (this.TradingSymbol != null)
+                    hashCode = hashCode * 59 + this.TradingSymbol.GetHashCode();
                 if (this.OrderType != null)
                     hashCode = hashCode * 59 + this.OrderType.GetHashCode();
                 if (this.Validity != null)

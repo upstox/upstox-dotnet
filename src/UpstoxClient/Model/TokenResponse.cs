@@ -214,6 +214,13 @@ namespace UpstoxClient.Model
         public string AccessToken { get; private set; }
 
         /// <summary>
+        /// The authentication token that is to used with every subsequent API requests
+        /// </summary>
+        /// <value>The authentication token that is to used with every subsequent API requests</value>
+        [DataMember(Name="extended_token", EmitDefaultValue=false)]
+        public string ExtendedToken { get; private set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -232,6 +239,7 @@ namespace UpstoxClient.Model
             sb.Append("  Poa: ").Append(Poa).Append("\n");
             sb.Append("  IsActive: ").Append(IsActive).Append("\n");
             sb.Append("  AccessToken: ").Append(AccessToken).Append("\n");
+            sb.Append("  ExtendedToken: ").Append(ExtendedToken).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -323,6 +331,11 @@ namespace UpstoxClient.Model
                     this.AccessToken == input.AccessToken ||
                     (this.AccessToken != null &&
                     this.AccessToken.Equals(input.AccessToken))
+                ) && 
+                (
+                    this.ExtendedToken == input.ExtendedToken ||
+                    (this.ExtendedToken != null &&
+                    this.ExtendedToken.Equals(input.ExtendedToken))
                 );
         }
 
@@ -357,6 +370,8 @@ namespace UpstoxClient.Model
                     hashCode = hashCode * 59 + this.IsActive.GetHashCode();
                 if (this.AccessToken != null)
                     hashCode = hashCode * 59 + this.AccessToken.GetHashCode();
+                if (this.ExtendedToken != null)
+                    hashCode = hashCode * 59 + this.ExtendedToken.GetHashCode();
                 return hashCode;
             }
         }

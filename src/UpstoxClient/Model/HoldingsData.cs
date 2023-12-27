@@ -140,6 +140,13 @@ namespace UpstoxClient.Model
         public string Tradingsymbol { get; private set; }
 
         /// <summary>
+        /// Shows the trading symbol of the instrument
+        /// </summary>
+        /// <value>Shows the trading symbol of the instrument</value>
+        [DataMember(Name="trading_symbol", EmitDefaultValue=false)]
+        public string TradingSymbol { get; private set; }
+
+        /// <summary>
         /// The last traded price of the instrument
         /// </summary>
         /// <value>The last traded price of the instrument</value>
@@ -225,6 +232,7 @@ namespace UpstoxClient.Model
             sb.Append("  Product: ").Append(Product).Append("\n");
             sb.Append("  Quantity: ").Append(Quantity).Append("\n");
             sb.Append("  Tradingsymbol: ").Append(Tradingsymbol).Append("\n");
+            sb.Append("  TradingSymbol: ").Append(TradingSymbol).Append("\n");
             sb.Append("  LastPrice: ").Append(LastPrice).Append("\n");
             sb.Append("  ClosePrice: ").Append(ClosePrice).Append("\n");
             sb.Append("  Pnl: ").Append(Pnl).Append("\n");
@@ -311,6 +319,11 @@ namespace UpstoxClient.Model
                     this.Tradingsymbol.Equals(input.Tradingsymbol))
                 ) && 
                 (
+                    this.TradingSymbol == input.TradingSymbol ||
+                    (this.TradingSymbol != null &&
+                    this.TradingSymbol.Equals(input.TradingSymbol))
+                ) && 
+                (
                     this.LastPrice == input.LastPrice ||
                     (this.LastPrice != null &&
                     this.LastPrice.Equals(input.LastPrice))
@@ -392,6 +405,8 @@ namespace UpstoxClient.Model
                     hashCode = hashCode * 59 + this.Quantity.GetHashCode();
                 if (this.Tradingsymbol != null)
                     hashCode = hashCode * 59 + this.Tradingsymbol.GetHashCode();
+                if (this.TradingSymbol != null)
+                    hashCode = hashCode * 59 + this.TradingSymbol.GetHashCode();
                 if (this.LastPrice != null)
                     hashCode = hashCode * 59 + this.LastPrice.GetHashCode();
                 if (this.ClosePrice != null)

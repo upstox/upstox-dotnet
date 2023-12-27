@@ -72,7 +72,7 @@ namespace UpstoxClient.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://api-v2.upstox.com")
+        public ApiClient(String basePath = "https://api.upstox.com/v2")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
