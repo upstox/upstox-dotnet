@@ -3,8 +3,7 @@ using System.Text;
 public class WebsocketClientExample
 {
     private const string WebSocketUri = "wss://api.upstox.com/v2/feed/portfolio-stream-feed";
-    private const string AccessToken = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI3UEJDNkQiLCJqdGkiOiI2NWRjMjQ4NjI3ZWFkOTMzYjUzODhmYWQiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaXNBY3RpdmUiOnRydWUsInNjb3BlIjpbImludGVyYWN0aXZlIiwiaGlzdG9yaWNhbCJdLCJpYXQiOjE3MDg5MjYwODYsImlzcyI6InVkYXBpLWdhdGV3YXktc2VydmljZSIsImV4cCI6MTcwODk4NDgwMH0.ICP337V_C5u0Mucb5EoTIeILd2oAiYfQ5Gofx8SrRr4";
-    
+    private const string AccessToken = <ACCESS_TOKEN>;
     static async Task Main(string[] args)
     {
         using (ClientWebSocket webSocket = new ClientWebSocket())
