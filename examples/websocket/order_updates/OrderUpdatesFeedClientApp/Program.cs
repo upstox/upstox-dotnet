@@ -30,10 +30,8 @@ public class WebsocketClientExample
         {
             while (webSocket.State == WebSocketState.Open)
             {
-                ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[1024]);
-                WebSocketReceiveResult result = webSocket.ReceiveAsync(buffer, CancellationToken.None).Result;
-                byte[] byteArray = new byte[buffer.Count];
-                Array.Copy(buffer.Array, buffer.Offset, byteArray, 0, buffer.Count);
+                byte[] byteArray = new byte[1024];
+                WebSocketReceiveResult result = await webSocket.ReceiveAsync(byteArray, CancellationToken.None);
 
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
