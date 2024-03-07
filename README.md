@@ -139,7 +139,7 @@ namespace Example
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api-v2.upstox.com*
+All URIs are relative to *https://api.upstox.com/v2/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
