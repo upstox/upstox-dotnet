@@ -278,7 +278,7 @@ namespace UpstoxClient.Client
         /// <param name="response">The HTTP response.</param>
         /// <param name="type">Object type.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        public object Deserialize(IRestResponse response, Type type)
+        public object Deserialize(IRestResponse response, System.Type type)
         {
             IList<Parameter> headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
@@ -419,7 +419,7 @@ namespace UpstoxClient.Client
         /// <param name="fromObject">Object to be casted</param>
         /// <param name="toObject">Target type</param>
         /// <returns>Casted object</returns>
-        public static dynamic ConvertType(dynamic fromObject, Type toObject)
+        public static dynamic ConvertType(dynamic fromObject, System.Type toObject)
         {
             return Convert.ChangeType(fromObject, toObject);
         }

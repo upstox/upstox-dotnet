@@ -6,7 +6,7 @@
         <title>Upstox DotNet SDK</title>
 
         <!-- The package version number that is used when resolving dependencies -->
-        <version>1.1.0</version>
+        <version>1.2.0</version>
 
         <!-- Authors contain text that appears directly on the gallery -->
         <authors>Upstox</authors>
@@ -27,7 +27,7 @@
             <dependency id="NewtonSoft.Json" version="13.0.1" />
             <dependency id="JsonSubTypes" version="1.2.0" />
             <dependency id="RestSharp" version="105.1.0" />
-
+            <dependency id="Google.Protobuf" version="3.6.1" />
         </dependencies>
 
         <projectUrl>https://github.com/upstox/upstox-dotnet</projectUrl>

@@ -64,6 +64,12 @@ OpenAPI spec version: v0
         <HintPath Condition="Exists('..\..\packages')">..\..\packages\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
       <HintPath Condition="Exists('..\..\vendor')">..\..\vendor\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf">
+        <HintPath Condition="Exists('$(SolutionDir)\packages')">$(SolutionDir)\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+        <HintPath Condition="Exists('..\packages')">..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+        <HintPath Condition="Exists('..\..\packages')">..\..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+      <HintPath Condition="Exists('..\..\vendor')">..\..\vendor\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs"
