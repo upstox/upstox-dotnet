@@ -150,7 +150,7 @@ Both functions are designed to simplify the process of subscribing to essential 
 
 The `MarketDataStreamer` interface is designed for effortless connection to the market WebSocket, enabling users to receive instantaneous updates on various instruments. The following example demonstrates how to quickly set up and start receiving market updates for selected instrument keys:
 
-```dotnet
+```csharp
 public class MarketFeederTest {
 
         static MarketDataStreamer Streamer;
@@ -209,7 +209,7 @@ The following documentation includes examples to illustrate the usage of these f
 
 1. Subscribing to Market Data on Connection Open with MarketDataStreamer
 
-```dotnet
+```csharp
 public class MarketFeederTest {
         static MarketDataStreamer Streamer;
 
@@ -245,7 +245,7 @@ public class MarketFeederTest {
 
 2. Subscribing to Instruments with Delays
 
-```dotnet
+```csharp
 public class MarketFeederTest {
 
         static MarketDataStreamer Streamer;
@@ -288,7 +288,7 @@ public class MarketFeederTest {
 
 3. Subscribing and Unsubscribing to Instruments
 
-```dotnet
+```csharp
 public class MarketFeederTest {
 
         static MarketDataStreamer Streamer;
@@ -329,7 +329,7 @@ public class MarketFeederTest {
 
 4. Subscribe, Change Mode and Unsubscribe
 
-```dotnet
+```csharp
 public class MarketFeederTest {
 
         static MarketDataStreamer Streamer;
@@ -376,7 +376,7 @@ public class MarketFeederTest {
 
 5. Disable Auto-Reconnect
 
-```dotnet
+```csharp
 public class MarketFeederTest {
 
         static MarketDataStreamer Streamer;
@@ -405,7 +405,7 @@ public class MarketFeederTest {
 
 6. Modify Auto-Reconnect parameters
 
-```dotnet
+```csharp
 public class MarketFeederTest {
 
         static MarketDataStreamer Streamer;
@@ -436,7 +436,7 @@ public class MarketFeederTest {
 
 Connecting to the Portfolio WebSocket for real-time order updates is straightforward with the PortfolioDataStreamer class. Below is a concise guide to get you started on receiving updates:
 
-```dotnet
+```csharp
 public class PortfolioFeederTest {
 
         static PortfolioDataStreamer Streamer;
