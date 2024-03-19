@@ -96,47 +96,6 @@ nuget pack -Build -OutputDirectory out UpstoxClient.csproj
 
 Then, publish to a [local feed](https://docs.microsoft.com/en-us/nuget/hosting-packages/local-feeds) or [other host](https://docs.microsoft.com/en-us/nuget/hosting-packages/overview) and consume the new package via Nuget as usual.
 
-## Getting Started
-
-```csharp
-using System;
-using System.Diagnostics;
-using UpstoxClient.Api;
-using UpstoxClient.Client;
-using UpstoxClient.Model;
-
-namespace Example
-{
-    public class Example
-    {
-        public void main()
-        {
-            // Configure OAuth2 access token for authorization: OAUTH2
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new ChargeApi();
-            var instrumentToken = instrumentToken_example;  // string | Key of the instrument
-            var quantity = 56;  // int? | Quantity with which the order is to be placed
-            var product = product_example;  // string | Product with which the order is to be placed
-            var transactionType = transactionType_example;  // string | Indicates whether its a BUY or SELL order
-            var price = 3.4;  // float? | Price with which the order is to be placed
-            var apiVersion = apiVersion_example;  // string | API Version Header
-
-            try
-            {
-                // Brokerage details
-                GetBrokerageResponse result = apiInstance.GetBrokerage(instrumentToken, quantity, product, transactionType, price, apiVersion);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling ChargeApi.GetBrokerage: " + e.Message );
-            }
-        }
-    }
-}
-```
-
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://api-v2.upstox.com*
@@ -172,6 +131,353 @@ Class | Method | HTTP request | Description
 *WebsocketApi* | [**GetMarketDataFeedAuthorize**](docs/WebsocketApi.md#getmarketdatafeedauthorize) | **GET** /feed/market-data-feed/authorize | Market Data Feed Authorize
 *WebsocketApi* | [**GetPortfolioStreamFeed**](docs/WebsocketApi.md#getportfoliostreamfeed) | **GET** /feed/portfolio-stream-feed | Portfolio Stream Feed
 *WebsocketApi* | [**GetPortfolioStreamFeedAuthorize**](docs/WebsocketApi.md#getportfoliostreamfeedauthorize) | **GET** /feed/portfolio-stream-feed/authorize | Portfolio Stream Feed Authorize
+
+
+<br/>
+
+## Documentation for Feeder Interfaces
+
+Connecting to the WebSocket for market and portfolio updates is streamlined through two primary Feeder functions:
+
+1. **MarketDataStreamer**: Offers real-time market updates, providing a seamless way to receive instantaneous information on various market instruments.
+2. **PortfolioDataStreamer**: Delivers updates related to the user's orders, enhancing the ability to track order status and portfolio changes effectively.
+
+Both functions are designed to simplify the process of subscribing to essential data streams, ensuring users have quick and easy access to the information they need.
+
+### Detailed Explanation of Feeder Interfaces
+
+### MarketDataStreamer
+
+The `MarketDataStreamer` interface is designed for effortless connection to the market WebSocket, enabling users to receive instantaneous updates on various instruments. The following example demonstrates how to quickly set up and start receiving market updates for selected instrument keys:
+
+```csharp
+public class MarketFeederTest {
+
+        static MarketDataStreamer Streamer;
+        public static void OnMarketUpdateHandler(MarketUpdate marketUpdate)
+        {
+            Console.WriteLine(marketUpdate);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+            HashSet<string> InstrumentKeys = new HashSet<string> { "NSE_INDEX|Nifty 50", "NSE_INDEX|Bank Nifty" };
+            Mode Mode = Mode.Full;
+
+            Streamer = new MarketDataStreamer(InstrumentKeys, Mode);
+
+            Streamer.OnMarketUpdate += OnMarketUpdateHandler;
+
+            await Streamer.Connect();
+        }
+}
+```
+
+In this example, you first authenticate using an access token, then instantiate MarketDataStreamer with specific instrument keys and a subscription mode. Upon connecting, the streamer listens for market updates, which are logged to the console as they arrive.
+
+Feel free to adjust the access token placeholder and any other specifics to better fit your actual implementation or usage scenario.
+
+### Exploring the MarketDataStreamer Functionality
+
+#### Modes
+- **Mode.Ltpc**: ltpc provides information solely about the most recent trade, encompassing details such as the last trade price, time of the last trade, quantity traded, and the closing price from the previous day.
+- **Mode.Full**: The full option offers comprehensive information, including the latest trade prices, D5 depth, 1-minute, 30-minute, and daily candlestick data, along with some additional details.
+
+#### Functions
+1. **constructor MarketDataStreamer()**: Initializes the streamer.
+1. **constructor MarketDataStreamer(instrumentKeys, mode)**: Initializes the streamer with instrument keys and mode (`Mode.Full` or `Mode.Ltpc`).
+2. **Connect()**: Establishes the WebSocket connection.
+3. **Subscribe(instrumentKeys, mode)**: Subscribes to updates for given instrument keys in the specified mode. Both parameters are mandatory.
+4. **Unsubscribe(instrumentKeys)**: Stops updates for the specified instrument keys.
+5. **ChangeMode(instrumentKeys, mode)**: Switches the mode for already subscribed instrument keys.
+6. **Disconnect()**: Ends the active WebSocket connection.
+7. **AutoReconnect(enable)**: Enable/Disable the auto reconnect capability.
+7. **AutoReconnect(enable, interval, retryCount)**: Customizes auto-reconnect functionality. Parameters include a flag to enable/disable it, the interval(in seconds) between attempts, and the maximum number of retries.
+
+#### Events Listeners
+- **OnOpen**: Called on successful connection establishment.
+- **OnClose**: Called when WebSocket connection has been closed.
+- **OnMarketUpdate**: Delivers market updates.
+- **OnError**: Signals an error has occurred.
+- **OnReconnecting**: Announced when a reconnect attempt is initiated.
+- **OnAutoReconnectStopped**: Informs when auto-reconnect efforts have ceased after exhausting the retry count.
+
+The following documentation includes examples to illustrate the usage of these functions and events, providing a practical understanding of how to interact with the MarketDataStreamer effectively.
+
+<br/>
+
+1. Subscribing to Market Data on Connection Open with MarketDataStreamer
+
+```csharp
+public class MarketFeederTest {
+        static MarketDataStreamer Streamer;
+
+        public static async void OnOpenHandler()
+        {
+            Console.WriteLine("Connection Established");
+
+            HashSet<string> InstrumentKeys = new HashSet<string> { "NSE_INDEX|Nifty 50", "NSE_INDEX|Bank Nifty" };
+            Mode Mode = Mode.Ltpc;
+
+            await Streamer.Subscribe(InstrumentKeys, Mode);
+        }
+        public static void OnMarketUpdateHandler(MarketUpdate marketUpdate)
+        {
+            Console.WriteLine(marketUpdate);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new MarketDataStreamer();
+
+            Streamer.OnOpen += OnOpenHandler;
+            Streamer.OnMarketUpdate += OnMarketUpdateHandler;
+
+            await Streamer.Connect();
+        }
+}
+```
+
+<br/>
+
+2. Subscribing to Instruments with Delays
+
+```csharp
+public class MarketFeederTest {
+
+        static MarketDataStreamer Streamer;
+
+        public static async void OnOpenHandler()
+        {
+            Console.WriteLine("Connection Established");
+
+            HashSet<string> InstrumentKeys = new HashSet<string> { "NSE_INDEX|Nifty 50" };
+            Mode Mode = Mode.Ltpc;
+
+            await Streamer.Subscribe(InstrumentKeys, Mode);
+
+            await Task.Delay(5000);
+
+            InstrumentKeys = new HashSet<string> { "NSE_INDEX|Bank Nifty" };
+
+            await Streamer.Subscribe(InstrumentKeys, Mode);
+        }
+        public static void OnMarketUpdateHandler(MarketUpdate marketUpdate)
+        {
+            Console.WriteLine(marketUpdate);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new MarketDataStreamer();
+
+            Streamer.OnOpen += OnOpenHandler;
+            Streamer.OnMarketUpdate += OnMarketUpdateHandler;
+
+            await Streamer.Connect();
+        }
+}
+```
+
+<br/>
+
+3. Subscribing and Unsubscribing to Instruments
+
+```csharp
+public class MarketFeederTest {
+
+        static MarketDataStreamer Streamer;
+
+        public static async void OnOpenHandler()
+        {
+            Console.WriteLine("Connection Established");
+
+            HashSet<string> InstrumentKeys = new HashSet<string> { "NSE_INDEX|Nifty 50" };
+            Mode Mode = Mode.Ltpc;
+
+            await Streamer.Subscribe(InstrumentKeys, Mode);
+
+            await Task.Delay(5000);
+
+            await Streamer.Unsubscribe(InstrumentKeys);
+        }
+        public static void OnMarketUpdateHandler(MarketUpdate marketUpdate)
+        {
+            Console.WriteLine(marketUpdate);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new MarketDataStreamer();
+
+            Streamer.OnOpen += OnOpenHandler;
+            Streamer.OnMarketUpdate += OnMarketUpdateHandler;
+
+            await Streamer.Connect();
+        }
+}
+```
+
+<br/>
+
+4. Subscribe, Change Mode and Unsubscribe
+
+```csharp
+public class MarketFeederTest {
+
+        static MarketDataStreamer Streamer;
+
+        public static async void OnOpenHandler()
+        {
+            Console.WriteLine("Connection Established");
+
+            HashSet<string> InstrumentKeys = new HashSet<string> { "NSE_INDEX|Nifty 50" };
+            Mode Mode = Mode.Ltpc;
+
+            await Streamer.Subscribe(InstrumentKeys, Mode);
+
+            await Task.Delay(5000);
+
+            Mode = Mode.Full;
+
+            await Streamer.ChangeMode(InstrumentKeys, Mode);
+
+            await Task.Delay(5000);
+
+            await Streamer.Unsubscribe(InstrumentKeys);
+        }
+        public static void OnMarketUpdateHandler(MarketUpdate marketUpdate)
+        {
+            Console.WriteLine(marketUpdate);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new MarketDataStreamer();
+
+            Streamer.OnOpen += OnOpenHandler;
+            Streamer.OnMarketUpdate += OnMarketUpdateHandler;
+
+            await Streamer.Connect();
+        }
+}
+```
+
+<br/>
+
+5. Disable Auto-Reconnect
+
+```csharp
+public class MarketFeederTest {
+
+        static MarketDataStreamer Streamer;
+
+        public static void OnAutoReconnectStoppedHandler(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new MarketDataStreamer();
+
+            Streamer.OnAutoReconnectStopped += OnAutoReconnectStoppedHandler;
+
+            Streamer.AutoReconnect(false);
+            
+            await Streamer.Connect();
+        }
+}
+```
+
+<br/>
+
+6. Modify Auto-Reconnect parameters
+
+```csharp
+public class MarketFeederTest {
+
+        static MarketDataStreamer Streamer;
+
+        public static void OnAutoReconnectStoppedHandler(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new MarketDataStreamer();
+
+            Streamer.OnAutoReconnectStopped += OnAutoReconnectStoppedHandler;
+
+            Streamer.AutoReconnect(true, 10, 3);
+
+            await Streamer.Connect();
+        }
+}
+```
+
+<br/>
+
+### PortfolioDataStreamer
+
+Connecting to the Portfolio WebSocket for real-time order updates is straightforward with the PortfolioDataStreamer class. Below is a concise guide to get you started on receiving updates:
+
+```csharp
+public class PortfolioFeederTest {
+
+        static PortfolioDataStreamer Streamer;
+        public static void OnOrderUpdateHandler(OrderUpdate orderUpdate)
+        {
+            Console.WriteLine(orderUpdate.ToString());
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Configuration.Default.AccessToken = <ACCESS_TOKEN>;
+
+            Streamer = new PortfolioDataStreamer();
+
+            Streamer.OnOrderUpdate += OnOrderUpdateHandler;
+
+            await Streamer.Connect();
+        }
+}
+```
+
+This example demonstrates initializing the PortfolioDataStreamer, connecting it to the WebSocket, and setting up an event listener to receive and print order updates. Replace <ACCESS_TOKEN> with your valid access token to authenticate the session.
+
+### Exploring the PortfolioDataStreamer Functionality
+
+#### Functions
+1. **constructor PortfolioDataStreamer()**: Initializes the streamer.
+2. **Connect()**: Establishes the WebSocket connection.
+6. **Disconnect()**: Ends the active WebSocket connection.
+7. **AutoReconnect(enable)**: Enable/Disable the auto reconnect capability.
+7. **AutoReconnect(enable, interval, retryCount)**: Customizes auto-reconnect functionality. Parameters include a flag to enable/disable it, the interval(in seconds) between attempts, and the maximum number of retries.
+
+#### Events Listeners
+- **OnOpen**: Called on successful connection establishment.
+- **OnClose**: Called when WebSocket connection has been closed.
+- **OnOrderUpdate**: Delivers order updates.
+- **OnError**: Signals an error has occurred.
+- **OnReconnecting**: Announced when a reconnect attempt is initiated.
+- **OnAutoReconnectStopped**: Informs when auto-reconnect efforts have ceased after exhausting the retry count.
+
+<br/>
 
 ## Documentation for Models
 
