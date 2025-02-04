@@ -321,6 +321,13 @@ namespace UpstoxClient.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+            
             if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
             if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
 
@@ -390,6 +397,13 @@ namespace UpstoxClient.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
             if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
             if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
 
@@ -458,6 +472,13 @@ namespace UpstoxClient.Api
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
@@ -536,6 +557,13 @@ namespace UpstoxClient.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
             if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -611,6 +639,13 @@ namespace UpstoxClient.Api
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
@@ -688,6 +723,13 @@ namespace UpstoxClient.Api
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))

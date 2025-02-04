@@ -52,12 +52,12 @@ namespace UpstoxClient.Client
         public ApiClient()
         {
             Configuration = UpstoxClient.Client.Configuration.Default;
-            RestClient = new RestClient("https://api-v2.upstox.com");
+            RestClient = new RestClient("https://api.upstox.com");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (https://api-v2.upstox.com).
+        /// with default base path (https://api.upstox.com).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config)
@@ -72,7 +72,7 @@ namespace UpstoxClient.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://api.upstox.com/v2")
+        public ApiClient(String basePath = "https://api.upstox.com")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
