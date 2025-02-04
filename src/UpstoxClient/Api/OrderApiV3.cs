@@ -20,7 +20,7 @@ namespace UpstoxClient.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IOrderControllerV3Api : IApiAccessor
+        public interface IOrderApiV3 : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -31,9 +31,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>CancelOrderV3Response</returns>
-        CancelOrderV3Response CancelOrder (string orderId, string origin = null);
+        CancelOrderV3Response CancelOrder (string orderId);
 
         /// <summary>
         /// 
@@ -43,9 +42,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ApiResponse of CancelOrderV3Response</returns>
-        ApiResponse<CancelOrderV3Response> CancelOrderWithHttpInfo (string orderId, string origin = null);
+        ApiResponse<CancelOrderV3Response> CancelOrderWithHttpInfo (string orderId);
         /// <summary>
         /// 
         /// </summary>
@@ -54,9 +52,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ModifyOrderV3Response</returns>
-        ModifyOrderV3Response ModifyOrder (ModifyOrderRequest body, string origin = null);
+        ModifyOrderV3Response ModifyOrder (ModifyOrderRequest body);
 
         /// <summary>
         /// 
@@ -66,9 +63,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ApiResponse of ModifyOrderV3Response</returns>
-        ApiResponse<ModifyOrderV3Response> ModifyOrderWithHttpInfo (ModifyOrderRequest body, string origin = null);
+        ApiResponse<ModifyOrderV3Response> ModifyOrderWithHttpInfo (ModifyOrderRequest body);
         /// <summary>
         /// 
         /// </summary>
@@ -77,9 +73,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>PlaceOrderV3Response</returns>
-        PlaceOrderV3Response PlaceOrder (PlaceOrderV3Request body, string origin = null);
+        PlaceOrderV3Response PlaceOrder (PlaceOrderV3Request body);
 
         /// <summary>
         /// 
@@ -89,9 +84,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ApiResponse of PlaceOrderV3Response</returns>
-        ApiResponse<PlaceOrderV3Response> PlaceOrderWithHttpInfo (PlaceOrderV3Request body, string origin = null);
+        ApiResponse<PlaceOrderV3Response> PlaceOrderWithHttpInfo (PlaceOrderV3Request body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -102,9 +96,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of CancelOrderV3Response</returns>
-        System.Threading.Tasks.Task<CancelOrderV3Response> CancelOrderAsync (string orderId, string origin = null);
+        System.Threading.Tasks.Task<CancelOrderV3Response> CancelOrderAsync (string orderId);
 
         /// <summary>
         /// 
@@ -114,9 +107,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ApiResponse (CancelOrderV3Response)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CancelOrderV3Response>> CancelOrderAsyncWithHttpInfo (string orderId, string origin = null);
+        System.Threading.Tasks.Task<ApiResponse<CancelOrderV3Response>> CancelOrderAsyncWithHttpInfo (string orderId);
         /// <summary>
         /// 
         /// </summary>
@@ -125,9 +117,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ModifyOrderV3Response</returns>
-        System.Threading.Tasks.Task<ModifyOrderV3Response> ModifyOrderAsync (ModifyOrderRequest body, string origin = null);
+        System.Threading.Tasks.Task<ModifyOrderV3Response> ModifyOrderAsync (ModifyOrderRequest body);
 
         /// <summary>
         /// 
@@ -137,9 +128,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ApiResponse (ModifyOrderV3Response)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ModifyOrderV3Response>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body, string origin = null);
+        System.Threading.Tasks.Task<ApiResponse<ModifyOrderV3Response>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body);
         /// <summary>
         /// 
         /// </summary>
@@ -148,9 +138,8 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of PlaceOrderV3Response</returns>
-        System.Threading.Tasks.Task<PlaceOrderV3Response> PlaceOrderAsync (PlaceOrderV3Request body, string origin = null);
+        System.Threading.Tasks.Task<PlaceOrderV3Response> PlaceOrderAsync (PlaceOrderV3Request body);
 
         /// <summary>
         /// 
@@ -160,24 +149,23 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ApiResponse (PlaceOrderV3Response)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PlaceOrderV3Response>> PlaceOrderAsyncWithHttpInfo (PlaceOrderV3Request body, string origin = null);
+        System.Threading.Tasks.Task<ApiResponse<PlaceOrderV3Response>> PlaceOrderAsyncWithHttpInfo (PlaceOrderV3Request body);
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class OrderControllerV3Api : IOrderControllerV3Api
+        public partial class OrderApiV3 : IOrderApiV3
     {
         private UpstoxClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrderControllerV3Api"/> class.
+        /// Initializes a new instance of the <see cref="OrderApiV3"/> class.
         /// </summary>
         /// <returns></returns>
-        public OrderControllerV3Api(String basePath)
+        public OrderApiV3(String basePath)
         {
             this.Configuration = new UpstoxClient.Client.Configuration { BasePath = basePath };
 
@@ -185,10 +173,10 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrderControllerV3Api"/> class
+        /// Initializes a new instance of the <see cref="OrderApiV3"/> class
         /// </summary>
         /// <returns></returns>
-        public OrderControllerV3Api()
+        public OrderApiV3()
         {
             this.Configuration = UpstoxClient.Client.Configuration.Default;
 
@@ -196,12 +184,12 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrderControllerV3Api"/> class
+        /// Initializes a new instance of the <see cref="OrderApiV3"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public OrderControllerV3Api(UpstoxClient.Client.Configuration configuration = null)
+        public OrderApiV3(UpstoxClient.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = UpstoxClient.Client.Configuration.Default;
@@ -279,11 +267,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>CancelOrderV3Response</returns>
-        public CancelOrderV3Response CancelOrder (string orderId, string origin = null)
+        public CancelOrderV3Response CancelOrder (string orderId)
         {
-             ApiResponse<CancelOrderV3Response> localVarResponse = CancelOrderWithHttpInfo(orderId, origin);
+             ApiResponse<CancelOrderV3Response> localVarResponse = CancelOrderWithHttpInfo(orderId);
              return localVarResponse.Data;
         }
 
@@ -292,13 +279,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ApiResponse of CancelOrderV3Response</returns>
-        public ApiResponse< CancelOrderV3Response > CancelOrderWithHttpInfo (string orderId, string origin = null)
+        public ApiResponse< CancelOrderV3Response > CancelOrderWithHttpInfo (string orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
-                throw new ApiException(400, "Missing required parameter 'orderId' when calling OrderControllerV3Api->CancelOrder");
+                throw new ApiException(400, "Missing required parameter 'orderId' when calling OrderApiV3->CancelOrder");
 
             var localVarPath = "/v3/order/cancel";
             var localVarPathParams = new Dictionary<String, String>();
@@ -329,7 +315,6 @@ namespace UpstoxClient.Api
             }
             
             if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
-            if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
@@ -354,11 +339,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of CancelOrderV3Response</returns>
-        public async System.Threading.Tasks.Task<CancelOrderV3Response> CancelOrderAsync (string orderId, string origin = null)
+        public async System.Threading.Tasks.Task<CancelOrderV3Response> CancelOrderAsync (string orderId)
         {
-             ApiResponse<CancelOrderV3Response> localVarResponse = await CancelOrderAsyncWithHttpInfo(orderId, origin);
+             ApiResponse<CancelOrderV3Response> localVarResponse = await CancelOrderAsyncWithHttpInfo(orderId);
              return localVarResponse.Data;
 
         }
@@ -368,13 +352,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ApiResponse (CancelOrderV3Response)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<CancelOrderV3Response>> CancelOrderAsyncWithHttpInfo (string orderId, string origin = null)
+        public async System.Threading.Tasks.Task<ApiResponse<CancelOrderV3Response>> CancelOrderAsyncWithHttpInfo (string orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
-                throw new ApiException(400, "Missing required parameter 'orderId' when calling OrderControllerV3Api->CancelOrder");
+                throw new ApiException(400, "Missing required parameter 'orderId' when calling OrderApiV3->CancelOrder");
 
             var localVarPath = "/v3/order/cancel";
             var localVarPathParams = new Dictionary<String, String>();
@@ -405,7 +388,6 @@ namespace UpstoxClient.Api
             }
 
             if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
-            if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
@@ -430,11 +412,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ModifyOrderV3Response</returns>
-        public ModifyOrderV3Response ModifyOrder (ModifyOrderRequest body, string origin = null)
+        public ModifyOrderV3Response ModifyOrder (ModifyOrderRequest body)
         {
-             ApiResponse<ModifyOrderV3Response> localVarResponse = ModifyOrderWithHttpInfo(body, origin);
+             ApiResponse<ModifyOrderV3Response> localVarResponse = ModifyOrderWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -443,13 +424,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ApiResponse of ModifyOrderV3Response</returns>
-        public ApiResponse< ModifyOrderV3Response > ModifyOrderWithHttpInfo (ModifyOrderRequest body, string origin = null)
+        public ApiResponse< ModifyOrderV3Response > ModifyOrderWithHttpInfo (ModifyOrderRequest body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling OrderControllerV3Api->ModifyOrder");
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->ModifyOrder");
 
             var localVarPath = "/v3/order/modify";
             var localVarPathParams = new Dictionary<String, String>();
@@ -480,7 +460,6 @@ namespace UpstoxClient.Api
                 localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
             }
 
-            if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -513,11 +492,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ModifyOrderV3Response</returns>
-        public async System.Threading.Tasks.Task<ModifyOrderV3Response> ModifyOrderAsync (ModifyOrderRequest body, string origin = null)
+        public async System.Threading.Tasks.Task<ModifyOrderV3Response> ModifyOrderAsync (ModifyOrderRequest body)
         {
-             ApiResponse<ModifyOrderV3Response> localVarResponse = await ModifyOrderAsyncWithHttpInfo(body, origin);
+             ApiResponse<ModifyOrderV3Response> localVarResponse = await ModifyOrderAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -527,13 +505,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ApiResponse (ModifyOrderV3Response)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ModifyOrderV3Response>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body, string origin = null)
+        public async System.Threading.Tasks.Task<ApiResponse<ModifyOrderV3Response>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling OrderControllerV3Api->ModifyOrder");
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->ModifyOrder");
 
             var localVarPath = "/v3/order/modify";
             var localVarPathParams = new Dictionary<String, String>();
@@ -564,7 +541,6 @@ namespace UpstoxClient.Api
                 localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
             }
 
-            if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -597,11 +573,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>PlaceOrderV3Response</returns>
-        public PlaceOrderV3Response PlaceOrder (PlaceOrderV3Request body, string origin = null)
+        public PlaceOrderV3Response PlaceOrder (PlaceOrderV3Request body)
         {
-             ApiResponse<PlaceOrderV3Response> localVarResponse = PlaceOrderWithHttpInfo(body, origin);
+             ApiResponse<PlaceOrderV3Response> localVarResponse = PlaceOrderWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -610,13 +585,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>ApiResponse of PlaceOrderV3Response</returns>
-        public ApiResponse< PlaceOrderV3Response > PlaceOrderWithHttpInfo (PlaceOrderV3Request body, string origin = null)
+        public ApiResponse< PlaceOrderV3Response > PlaceOrderWithHttpInfo (PlaceOrderV3Request body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling OrderControllerV3Api->PlaceOrder");
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->PlaceOrder");
 
             var localVarPath = "/v3/order/place";
             var localVarPathParams = new Dictionary<String, String>();
@@ -647,7 +621,6 @@ namespace UpstoxClient.Api
                 localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
             }
 
-            if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -680,11 +653,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of PlaceOrderV3Response</returns>
-        public async System.Threading.Tasks.Task<PlaceOrderV3Response> PlaceOrderAsync (PlaceOrderV3Request body, string origin = null)
+        public async System.Threading.Tasks.Task<PlaceOrderV3Response> PlaceOrderAsync (PlaceOrderV3Request body)
         {
-             ApiResponse<PlaceOrderV3Response> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body, origin);
+             ApiResponse<PlaceOrderV3Response> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -694,13 +666,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="origin"> (optional)</param>
         /// <returns>Task of ApiResponse (PlaceOrderV3Response)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PlaceOrderV3Response>> PlaceOrderAsyncWithHttpInfo (PlaceOrderV3Request body, string origin = null)
+        public async System.Threading.Tasks.Task<ApiResponse<PlaceOrderV3Response>> PlaceOrderAsyncWithHttpInfo (PlaceOrderV3Request body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling OrderControllerV3Api->PlaceOrder");
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->PlaceOrder");
 
             var localVarPath = "/v3/order/place";
             var localVarPathParams = new Dictionary<String, String>();
@@ -731,7 +702,6 @@ namespace UpstoxClient.Api
                 localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
             }
 
-            if (origin != null) localVarHeaderParams.Add("Origin", this.Configuration.ApiClient.ParameterToString(origin)); // header parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
