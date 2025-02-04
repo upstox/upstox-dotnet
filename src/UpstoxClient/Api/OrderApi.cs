@@ -24,6 +24,29 @@ namespace UpstoxClient.Api
     {
         #region Synchronous Operations
         /// <summary>
+        /// Cancel multi order
+        /// </summary>
+        /// <remarks>
+        /// API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>CancelOrExitMultiOrderResponse</returns>
+        CancelOrExitMultiOrderResponse CancelMultiOrder (string tag = null, string segment = null);
+
+        /// <summary>
+        /// Cancel multi order
+        /// </summary>
+        /// <remarks>
+        /// API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>ApiResponse of CancelOrExitMultiOrderResponse</returns>
+        ApiResponse<CancelOrExitMultiOrderResponse> CancelMultiOrderWithHttpInfo (string tag = null, string segment = null);
+        /// <summary>
         /// Cancel order
         /// </summary>
         /// <remarks>
@@ -46,6 +69,29 @@ namespace UpstoxClient.Api
         /// <param name="apiVersion">API Version Header</param>
         /// <returns>ApiResponse of CancelOrderResponse</returns>
         ApiResponse<CancelOrderResponse> CancelOrderWithHttpInfo (string orderId, string apiVersion);
+        /// <summary>
+        /// Exit all positions
+        /// </summary>
+        /// <remarks>
+        /// This API provides the functionality to exit all the positions 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>CancelOrExitMultiOrderResponse</returns>
+        CancelOrExitMultiOrderResponse ExitPositions (string tag = null, string segment = null);
+
+        /// <summary>
+        /// Exit all positions
+        /// </summary>
+        /// <remarks>
+        /// This API provides the functionality to exit all the positions 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>ApiResponse of CancelOrExitMultiOrderResponse</returns>
+        ApiResponse<CancelOrExitMultiOrderResponse> ExitPositionsWithHttpInfo (string tag = null, string segment = null);
         /// <summary>
         /// Get order book
         /// </summary>
@@ -92,6 +138,27 @@ namespace UpstoxClient.Api
         /// <param name="tag">The unique tag of the order for which the order history is being requested (optional)</param>
         /// <returns>ApiResponse of GetOrderResponse</returns>
         ApiResponse<GetOrderResponse> GetOrderDetailsWithHttpInfo (string apiVersion, string orderId = null, string tag = null);
+        /// <summary>
+        /// Get order details
+        /// </summary>
+        /// <remarks>
+        /// This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>GetOrderDetailsResponse</returns>
+        GetOrderDetailsResponse GetOrderStatus (string orderId = null);
+
+        /// <summary>
+        /// Get order details
+        /// </summary>
+        /// <remarks>
+        /// This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>ApiResponse of GetOrderDetailsResponse</returns>
+        ApiResponse<GetOrderDetailsResponse> GetOrderStatusWithHttpInfo (string orderId = null);
         /// <summary>
         /// Get trades
         /// </summary>
@@ -160,6 +227,27 @@ namespace UpstoxClient.Api
         /// <returns>ApiResponse of ModifyOrderResponse</returns>
         ApiResponse<ModifyOrderResponse> ModifyOrderWithHttpInfo (ModifyOrderRequest body, string apiVersion);
         /// <summary>
+        /// Place multi order
+        /// </summary>
+        /// <remarks>
+        /// This API allows you to place multiple orders to the exchange via Upstox.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>MultiOrderResponse</returns>
+        MultiOrderResponse PlaceMultiOrder (List<MultiOrderRequest> body);
+
+        /// <summary>
+        /// Place multi order
+        /// </summary>
+        /// <remarks>
+        /// This API allows you to place multiple orders to the exchange via Upstox.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of MultiOrderResponse</returns>
+        ApiResponse<MultiOrderResponse> PlaceMultiOrderWithHttpInfo (List<MultiOrderRequest> body);
+        /// <summary>
         /// Place order
         /// </summary>
         /// <remarks>
@@ -185,6 +273,29 @@ namespace UpstoxClient.Api
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
+        /// Cancel multi order
+        /// </summary>
+        /// <remarks>
+        /// API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>Task of CancelOrExitMultiOrderResponse</returns>
+        System.Threading.Tasks.Task<CancelOrExitMultiOrderResponse> CancelMultiOrderAsync (string tag = null, string segment = null);
+
+        /// <summary>
+        /// Cancel multi order
+        /// </summary>
+        /// <remarks>
+        /// API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>Task of ApiResponse (CancelOrExitMultiOrderResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<CancelOrExitMultiOrderResponse>> CancelMultiOrderAsyncWithHttpInfo (string tag = null, string segment = null);
+        /// <summary>
         /// Cancel order
         /// </summary>
         /// <remarks>
@@ -207,6 +318,29 @@ namespace UpstoxClient.Api
         /// <param name="apiVersion">API Version Header</param>
         /// <returns>Task of ApiResponse (CancelOrderResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<CancelOrderResponse>> CancelOrderAsyncWithHttpInfo (string orderId, string apiVersion);
+        /// <summary>
+        /// Exit all positions
+        /// </summary>
+        /// <remarks>
+        /// This API provides the functionality to exit all the positions 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>Task of CancelOrExitMultiOrderResponse</returns>
+        System.Threading.Tasks.Task<CancelOrExitMultiOrderResponse> ExitPositionsAsync (string tag = null, string segment = null);
+
+        /// <summary>
+        /// Exit all positions
+        /// </summary>
+        /// <remarks>
+        /// This API provides the functionality to exit all the positions 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>Task of ApiResponse (CancelOrExitMultiOrderResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<CancelOrExitMultiOrderResponse>> ExitPositionsAsyncWithHttpInfo (string tag = null, string segment = null);
         /// <summary>
         /// Get order book
         /// </summary>
@@ -253,6 +387,27 @@ namespace UpstoxClient.Api
         /// <param name="tag">The unique tag of the order for which the order history is being requested (optional)</param>
         /// <returns>Task of ApiResponse (GetOrderResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<GetOrderResponse>> GetOrderDetailsAsyncWithHttpInfo (string apiVersion, string orderId = null, string tag = null);
+        /// <summary>
+        /// Get order details
+        /// </summary>
+        /// <remarks>
+        /// This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>Task of GetOrderDetailsResponse</returns>
+        System.Threading.Tasks.Task<GetOrderDetailsResponse> GetOrderStatusAsync (string orderId = null);
+
+        /// <summary>
+        /// Get order details
+        /// </summary>
+        /// <remarks>
+        /// This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>Task of ApiResponse (GetOrderDetailsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetOrderDetailsResponse>> GetOrderStatusAsyncWithHttpInfo (string orderId = null);
         /// <summary>
         /// Get trades
         /// </summary>
@@ -320,6 +475,27 @@ namespace UpstoxClient.Api
         /// <param name="apiVersion">API Version Header</param>
         /// <returns>Task of ApiResponse (ModifyOrderResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ModifyOrderResponse>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body, string apiVersion);
+        /// <summary>
+        /// Place multi order
+        /// </summary>
+        /// <remarks>
+        /// This API allows you to place multiple orders to the exchange via Upstox.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of MultiOrderResponse</returns>
+        System.Threading.Tasks.Task<MultiOrderResponse> PlaceMultiOrderAsync (List<MultiOrderRequest> body);
+
+        /// <summary>
+        /// Place multi order
+        /// </summary>
+        /// <remarks>
+        /// This API allows you to place multiple orders to the exchange via Upstox.
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of ApiResponse (MultiOrderResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MultiOrderResponse>> PlaceMultiOrderAsyncWithHttpInfo (List<MultiOrderRequest> body);
         /// <summary>
         /// Place order
         /// </summary>
@@ -452,6 +628,151 @@ namespace UpstoxClient.Api
         public void AddDefaultHeader(string key, string value)
         {
             this.Configuration.AddDefaultHeader(key, value);
+        }
+
+        /// <summary>
+        /// Cancel multi order API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>CancelOrExitMultiOrderResponse</returns>
+        public CancelOrExitMultiOrderResponse CancelMultiOrder (string tag = null, string segment = null)
+        {
+             ApiResponse<CancelOrExitMultiOrderResponse> localVarResponse = CancelMultiOrderWithHttpInfo(tag, segment);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Cancel multi order API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>ApiResponse of CancelOrExitMultiOrderResponse</returns>
+        public ApiResponse< CancelOrExitMultiOrderResponse > CancelMultiOrderWithHttpInfo (string tag = null, string segment = null)
+        {
+
+            var localVarPath = "/v2/order/multi/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tag != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "tag", tag)); // query parameter
+            if (segment != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "segment", segment)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelMultiOrder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CancelOrExitMultiOrderResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CancelOrExitMultiOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrExitMultiOrderResponse)));
+        }
+
+        /// <summary>
+        /// Cancel multi order API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>Task of CancelOrExitMultiOrderResponse</returns>
+        public async System.Threading.Tasks.Task<CancelOrExitMultiOrderResponse> CancelMultiOrderAsync (string tag = null, string segment = null)
+        {
+             ApiResponse<CancelOrExitMultiOrderResponse> localVarResponse = await CancelMultiOrderAsyncWithHttpInfo(tag, segment);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Cancel multi order API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the orders for which the orders must be cancelled (optional)</param>
+        /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
+        /// <returns>Task of ApiResponse (CancelOrExitMultiOrderResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<CancelOrExitMultiOrderResponse>> CancelMultiOrderAsyncWithHttpInfo (string tag = null, string segment = null)
+        {
+
+            var localVarPath = "/v2/order/multi/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tag != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "tag", tag)); // query parameter
+            if (segment != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "segment", segment)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelMultiOrder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CancelOrExitMultiOrderResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CancelOrExitMultiOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrExitMultiOrderResponse)));
         }
 
         /// <summary>
@@ -609,6 +930,151 @@ namespace UpstoxClient.Api
             return new ApiResponse<CancelOrderResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (CancelOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrderResponse)));
+        }
+
+        /// <summary>
+        /// Exit all positions This API provides the functionality to exit all the positions 
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>CancelOrExitMultiOrderResponse</returns>
+        public CancelOrExitMultiOrderResponse ExitPositions (string tag = null, string segment = null)
+        {
+             ApiResponse<CancelOrExitMultiOrderResponse> localVarResponse = ExitPositionsWithHttpInfo(tag, segment);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Exit all positions This API provides the functionality to exit all the positions 
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>ApiResponse of CancelOrExitMultiOrderResponse</returns>
+        public ApiResponse< CancelOrExitMultiOrderResponse > ExitPositionsWithHttpInfo (string tag = null, string segment = null)
+        {
+
+            var localVarPath = "/v2/order/positions/exit";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tag != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "tag", tag)); // query parameter
+            if (segment != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "segment", segment)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ExitPositions", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CancelOrExitMultiOrderResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CancelOrExitMultiOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrExitMultiOrderResponse)));
+        }
+
+        /// <summary>
+        /// Exit all positions This API provides the functionality to exit all the positions 
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>Task of CancelOrExitMultiOrderResponse</returns>
+        public async System.Threading.Tasks.Task<CancelOrExitMultiOrderResponse> ExitPositionsAsync (string tag = null, string segment = null)
+        {
+             ApiResponse<CancelOrExitMultiOrderResponse> localVarResponse = await ExitPositionsAsyncWithHttpInfo(tag, segment);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Exit all positions This API provides the functionality to exit all the positions 
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">The tag associated with the positions for which the positions must be exit (optional)</param>
+        /// <param name="segment">The segment for which the positions must be exit (optional)</param>
+        /// <returns>Task of ApiResponse (CancelOrExitMultiOrderResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<CancelOrExitMultiOrderResponse>> ExitPositionsAsyncWithHttpInfo (string tag = null, string segment = null)
+        {
+
+            var localVarPath = "/v2/order/positions/exit";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tag != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "tag", tag)); // query parameter
+            if (segment != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "segment", segment)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ExitPositions", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CancelOrExitMultiOrderResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CancelOrExitMultiOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrExitMultiOrderResponse)));
         }
 
         /// <summary>
@@ -911,6 +1377,145 @@ namespace UpstoxClient.Api
             return new ApiResponse<GetOrderResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (GetOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOrderResponse)));
+        }
+
+        /// <summary>
+        /// Get order details This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>GetOrderDetailsResponse</returns>
+        public GetOrderDetailsResponse GetOrderStatus (string orderId = null)
+        {
+             ApiResponse<GetOrderDetailsResponse> localVarResponse = GetOrderStatusWithHttpInfo(orderId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get order details This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>ApiResponse of GetOrderDetailsResponse</returns>
+        public ApiResponse< GetOrderDetailsResponse > GetOrderStatusWithHttpInfo (string orderId = null)
+        {
+
+            var localVarPath = "/v2/order/details";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetOrderStatus", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetOrderDetailsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetOrderDetailsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOrderDetailsResponse)));
+        }
+
+        /// <summary>
+        /// Get order details This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>Task of GetOrderDetailsResponse</returns>
+        public async System.Threading.Tasks.Task<GetOrderDetailsResponse> GetOrderStatusAsync (string orderId = null)
+        {
+             ApiResponse<GetOrderDetailsResponse> localVarResponse = await GetOrderStatusAsyncWithHttpInfo(orderId);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get order details This API provides the recent detail of the particular order the user has placed. The orders placed by the user is transient for a day and are cleared by the end of the trading session.\\n\\nThe order details can be requested using order_id.  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">The order reference ID for which the order details is required (optional)</param>
+        /// <returns>Task of ApiResponse (GetOrderDetailsResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetOrderDetailsResponse>> GetOrderStatusAsyncWithHttpInfo (string orderId = null)
+        {
+
+            var localVarPath = "/v2/order/details";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetOrderStatus", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetOrderDetailsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetOrderDetailsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOrderDetailsResponse)));
         }
 
         /// <summary>
@@ -1387,6 +1992,168 @@ namespace UpstoxClient.Api
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (ModifyOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModifyOrderResponse)));
         }
+		
+		/// <summary>
+        /// Place multi order This API allows you to place multiple orders to the exchange via Upstox.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>MultiOrderResponse</returns>
+        public MultiOrderResponse PlaceMultiOrder (List<MultiOrderRequest> body)
+        {
+             ApiResponse<MultiOrderResponse> localVarResponse = PlaceMultiOrderWithHttpInfo(body);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Place multi order This API allows you to place multiple orders to the exchange via Upstox.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of MultiOrderResponse</returns>
+        public ApiResponse< MultiOrderResponse > PlaceMultiOrderWithHttpInfo (List<MultiOrderRequest> body)
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApi->PlaceMultiOrder");
+
+            var localVarPath = "/v2/order/multi/place";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "*/*",
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("PlaceMultiOrder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<MultiOrderResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (MultiOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(MultiOrderResponse)));
+        }
+
+        /// <summary>
+        /// Place multi order This API allows you to place multiple orders to the exchange via Upstox.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of MultiOrderResponse</returns>
+        public async System.Threading.Tasks.Task<MultiOrderResponse> PlaceMultiOrderAsync (List<MultiOrderRequest> body)
+        {
+             ApiResponse<MultiOrderResponse> localVarResponse = await PlaceMultiOrderAsyncWithHttpInfo(body);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Place multi order This API allows you to place multiple orders to the exchange via Upstox.
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of ApiResponse (MultiOrderResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<MultiOrderResponse>> PlaceMultiOrderAsyncWithHttpInfo (List<MultiOrderRequest> body)
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApi->PlaceMultiOrder");
+
+            var localVarPath = "/v2/order/multi/place";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "*/*",
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("PlaceMultiOrder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<MultiOrderResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (MultiOrderResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(MultiOrderResponse)));
+        }
+		
 
         /// <summary>
         /// Place order This API allows you to place an order to the exchange via Upstox.
