@@ -248,7 +248,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetProfile");
 
-            var localVarPath = "/user/profile";
+            var localVarPath = "/v2/user/profile";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -321,7 +321,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetProfile");
 
-            var localVarPath = "/user/profile";
+            var localVarPath = "/v2/user/profile";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -395,7 +395,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetUserFundMargin");
 
-            var localVarPath = "/user/get-funds-and-margin";
+            var localVarPath = "/v2/user/get-funds-and-margin";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -471,7 +471,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetUserFundMargin");
 
-            var localVarPath = "/user/get-funds-and-margin";
+            var localVarPath = "/v2/user/get-funds-and-margin";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);

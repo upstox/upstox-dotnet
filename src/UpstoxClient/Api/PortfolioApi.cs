@@ -295,7 +295,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->ConvertPositions");
 
-            var localVarPath = "/portfolio/convert-position";
+            var localVarPath = "/v2/portfolio/convert-position";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -382,7 +382,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->ConvertPositions");
 
-            var localVarPath = "/portfolio/convert-position";
+            var localVarPath = "/v2/portfolio/convert-position";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -463,7 +463,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetHoldings");
 
-            var localVarPath = "/portfolio/long-term-holdings";
+            var localVarPath = "/v2/portfolio/long-term-holdings";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -536,7 +536,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetHoldings");
 
-            var localVarPath = "/portfolio/long-term-holdings";
+            var localVarPath = "/v2/portfolio/long-term-holdings";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -608,7 +608,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetPositions");
 
-            var localVarPath = "/portfolio/short-term-positions";
+            var localVarPath = "/v2/portfolio/short-term-positions";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -681,7 +681,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetPositions");
 
-            var localVarPath = "/portfolio/short-term-positions";
+            var localVarPath = "/v2/portfolio/short-term-positions";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);

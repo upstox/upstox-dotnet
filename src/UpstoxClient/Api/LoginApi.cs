@@ -335,7 +335,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling LoginApi->Authorize");
 
-            var localVarPath = "/login/authorization/dialog";
+            var localVarPath = "/v2/login/authorization/dialog";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -419,7 +419,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling LoginApi->Authorize");
 
-            var localVarPath = "/login/authorization/dialog";
+            var localVarPath = "/v2/login/authorization/dialog";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -489,7 +489,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling LoginApi->Logout");
 
-            var localVarPath = "/logout";
+            var localVarPath = "/v2/logout";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -562,7 +562,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling LoginApi->Logout");
 
-            var localVarPath = "/logout";
+            var localVarPath = "/v2/logout";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -644,7 +644,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling LoginApi->Token");
 
-            var localVarPath = "/login/authorization/token";
+            var localVarPath = "/v2/login/authorization/token";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -727,7 +727,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling LoginApi->Token");
 
-            var localVarPath = "/login/authorization/token";
+            var localVarPath = "/v2/login/authorization/token";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);

@@ -307,7 +307,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling MarketQuoteApi->GetFullMarketQuote");
 
-            var localVarPath = "/market-quote/quotes";
+            var localVarPath = "/v2/market-quote/quotes";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -386,7 +386,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling MarketQuoteApi->GetFullMarketQuote");
 
-            var localVarPath = "/market-quote/quotes";
+            var localVarPath = "/v2/market-quote/quotes";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -469,7 +469,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling MarketQuoteApi->GetMarketQuoteOHLC");
 
-            var localVarPath = "/market-quote/ohlc";
+            var localVarPath = "/v2/market-quote/ohlc";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -554,7 +554,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling MarketQuoteApi->GetMarketQuoteOHLC");
 
-            var localVarPath = "/market-quote/ohlc";
+            var localVarPath = "/v2/market-quote/ohlc";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -633,7 +633,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling MarketQuoteApi->Ltp");
 
-            var localVarPath = "/market-quote/ltp";
+            var localVarPath = "/v2/market-quote/ltp";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -712,7 +712,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling MarketQuoteApi->Ltp");
 
-            var localVarPath = "/market-quote/ltp";
+            var localVarPath = "/v2/market-quote/ltp";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);

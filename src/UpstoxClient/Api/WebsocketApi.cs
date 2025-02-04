@@ -327,7 +327,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeed");
 
-            var localVarPath = "/feed/market-data-feed";
+            var localVarPath = "/v2/feed/market-data-feed";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -398,7 +398,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeed");
 
-            var localVarPath = "/feed/market-data-feed";
+            var localVarPath = "/v2/feed/market-data-feed";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -469,7 +469,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeedAuthorize");
 
-            var localVarPath = "/feed/market-data-feed/authorize";
+            var localVarPath = "/v2/feed/market-data-feed/authorize";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -542,7 +542,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeedAuthorize");
 
-            var localVarPath = "/feed/market-data-feed/authorize";
+            var localVarPath = "/v2/feed/market-data-feed/authorize";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -613,7 +613,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeed");
 
-            var localVarPath = "/feed/portfolio-stream-feed";
+            var localVarPath = "/v2/feed/portfolio-stream-feed";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -684,7 +684,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeed");
 
-            var localVarPath = "/feed/portfolio-stream-feed";
+            var localVarPath = "/v2/feed/portfolio-stream-feed";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -755,7 +755,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeedAuthorize");
 
-            var localVarPath = "/feed/portfolio-stream-feed/authorize";
+            var localVarPath = "/v2/feed/portfolio-stream-feed/authorize";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -828,7 +828,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeedAuthorize");
 
-            var localVarPath = "/feed/portfolio-stream-feed/authorize";
+            var localVarPath = "/v2/feed/portfolio-stream-feed/authorize";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);

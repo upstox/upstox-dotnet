@@ -356,7 +356,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling TradeProfitAndLossApi->GetProfitAndLossCharges");
 
-            var localVarPath = "/trade/profit-loss/charges";
+            var localVarPath = "/v2/trade/profit-loss/charges";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -447,7 +447,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling TradeProfitAndLossApi->GetProfitAndLossCharges");
 
-            var localVarPath = "/trade/profit-loss/charges";
+            var localVarPath = "/v2/trade/profit-loss/charges";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -547,7 +547,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling TradeProfitAndLossApi->GetTradeWiseProfitAndLossData");
 
-            var localVarPath = "/trade/profit-loss/data";
+            var localVarPath = "/v2/trade/profit-loss/data";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -650,7 +650,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling TradeProfitAndLossApi->GetTradeWiseProfitAndLossData");
 
-            var localVarPath = "/trade/profit-loss/data";
+            var localVarPath = "/v2/trade/profit-loss/data";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -742,7 +742,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling TradeProfitAndLossApi->GetTradeWiseProfitAndLossMetaData");
 
-            var localVarPath = "/trade/profit-loss/metadata";
+            var localVarPath = "/v2/trade/profit-loss/metadata";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -833,7 +833,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling TradeProfitAndLossApi->GetTradeWiseProfitAndLossMetaData");
 
-            var localVarPath = "/trade/profit-loss/metadata";
+            var localVarPath = "/v2/trade/profit-loss/metadata";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
