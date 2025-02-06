@@ -53,6 +53,29 @@ namespace UpstoxClient.Api
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> AuthorizeWithHttpInfo (string clientId, string redirectUri, string apiVersion, string state = null, string scope = null);
         /// <summary>
+        /// Init token API
+        /// </summary>
+        /// <remarks>
+        /// This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>IndieUserInitTokenResponse</returns>
+        IndieUserInitTokenResponse InitTokenRequestForIndieUser (IndieUserTokenRequest body, string clientId);
+
+        /// <summary>
+        /// Init token API
+        /// </summary>
+        /// <remarks>
+        /// This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>ApiResponse of IndieUserInitTokenResponse</returns>
+        ApiResponse<IndieUserInitTokenResponse> InitTokenRequestForIndieUserWithHttpInfo (IndieUserTokenRequest body, string clientId);
+        /// <summary>
         /// Logout
         /// </summary>
         /// <remarks>
@@ -135,6 +158,29 @@ namespace UpstoxClient.Api
         /// <param name="scope"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> AuthorizeAsyncWithHttpInfo (string clientId, string redirectUri, string apiVersion, string state = null, string scope = null);
+        /// <summary>
+        /// Init token API
+        /// </summary>
+        /// <remarks>
+        /// This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>Task of IndieUserInitTokenResponse</returns>
+        System.Threading.Tasks.Task<IndieUserInitTokenResponse> InitTokenRequestForIndieUserAsync (IndieUserTokenRequest body, string clientId);
+
+        /// <summary>
+        /// Init token API
+        /// </summary>
+        /// <remarks>
+        /// This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>Task of ApiResponse (IndieUserInitTokenResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<IndieUserInitTokenResponse>> InitTokenRequestForIndieUserAsyncWithHttpInfo (IndieUserTokenRequest body, string clientId);
         /// <summary>
         /// Logout
         /// </summary>
@@ -463,6 +509,167 @@ namespace UpstoxClient.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 null);
+        }
+
+        /// <summary>
+        /// Init token API This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>IndieUserInitTokenResponse</returns>
+        public IndieUserInitTokenResponse InitTokenRequestForIndieUser (IndieUserTokenRequest body, string clientId)
+        {
+             ApiResponse<IndieUserInitTokenResponse> localVarResponse = InitTokenRequestForIndieUserWithHttpInfo(body, clientId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Init token API This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>ApiResponse of IndieUserInitTokenResponse</returns>
+        public ApiResponse< IndieUserInitTokenResponse > InitTokenRequestForIndieUserWithHttpInfo (IndieUserTokenRequest body, string clientId)
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling LoginApi->InitTokenRequestForIndieUser");
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new ApiException(400, "Missing required parameter 'clientId' when calling LoginApi->InitTokenRequestForIndieUser");
+
+            var localVarPath = "/v3/login/auth/token/request/{client_id}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (clientId != null) localVarPathParams.Add("client_id", this.Configuration.ApiClient.ParameterToString(clientId)); // path parameter
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("InitTokenRequestForIndieUser", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<IndieUserInitTokenResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (IndieUserInitTokenResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(IndieUserInitTokenResponse)));
+        }
+
+        /// <summary>
+        /// Init token API This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>Task of IndieUserInitTokenResponse</returns>
+        public async System.Threading.Tasks.Task<IndieUserInitTokenResponse> InitTokenRequestForIndieUserAsync (IndieUserTokenRequest body, string clientId)
+        {
+             ApiResponse<IndieUserInitTokenResponse> localVarResponse = await InitTokenRequestForIndieUserAsyncWithHttpInfo(body, clientId);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Init token API This API provides the initialize the generate token and it&#x27;s expiry for an indie user
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <param name="clientId"></param>
+        /// <returns>Task of ApiResponse (IndieUserInitTokenResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<IndieUserInitTokenResponse>> InitTokenRequestForIndieUserAsyncWithHttpInfo (IndieUserTokenRequest body, string clientId)
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling LoginApi->InitTokenRequestForIndieUser");
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new ApiException(400, "Missing required parameter 'clientId' when calling LoginApi->InitTokenRequestForIndieUser");
+
+            var localVarPath = "/v3/login/auth/token/request/{client_id}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (clientId != null) localVarPathParams.Add("client_id", this.Configuration.ApiClient.ParameterToString(clientId)); // path parameter
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("InitTokenRequestForIndieUser", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<IndieUserInitTokenResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (IndieUserInitTokenResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(IndieUserInitTokenResponse)));
         }
 
         /// <summary>

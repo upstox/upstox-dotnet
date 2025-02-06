@@ -112,6 +112,12 @@ namespace UpstoxClient.Client
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
         {
+            if(IsOrderPath(path)){
+                RestClient.BaseUrl = new Uri("https://api-hft.upstox.com");
+            }
+            else {
+                RestClient.BaseUrl = new Uri("https://api.upstox.com");
+            }
             var request = new RestRequest(path, method);
 
             // add path parameter, if any
@@ -530,5 +536,11 @@ namespace UpstoxClient.Client
         {
             return value is IList || value is ICollection;
         }
+
+        private static bool IsOrderPath(string path)
+        {
+        return path.Contains("/order/place") || path.Contains("/order/modify") || path.Contains("/order/cancel");
+        }
+
     }
 }
