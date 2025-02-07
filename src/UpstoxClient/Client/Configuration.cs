@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics.Contracts;
 
 namespace UpstoxClient.Client
 {
@@ -40,6 +41,18 @@ namespace UpstoxClient.Client
         #endregion Constants
 
         #region Static Members
+
+        public static readonly HashSet<string> SandboxPaths = new HashSet<string>
+        {
+            "/v2/order/place",
+            "/v2/order/modify",
+            "/v2/order/cancel",
+            "/v2/order/multi/place",
+            "/v3/order/place",
+            "/v3/order/modify",
+            "/v3/order/cancel"
+        };
+        public static Boolean Sandbox = false;
 
         private static readonly object GlobalConfigSync = new { };
         private static Configuration _globalConfiguration;

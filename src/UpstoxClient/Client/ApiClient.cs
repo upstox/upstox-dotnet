@@ -112,14 +112,17 @@ namespace UpstoxClient.Client
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
         {
-            if(IsOrderPath(path)){
+            if (UpstoxClient.Client.Configuration.Sandbox) {
+                if(!UpstoxClient.Client.Configuration.SandboxPaths.Contains(path))
+                    throw new ApiException(400, "This API is not available in sandbox mode.");
+                RestClient.BaseUrl = new Uri("https://api-sandbox.upstox.com");
+            }
+            else if (IsOrderPath(path))
                 RestClient.BaseUrl = new Uri("https://api-hft.upstox.com");
-            }
-            else {
+            else
                 RestClient.BaseUrl = new Uri("https://api.upstox.com");
-            }
-            var request = new RestRequest(path, method);
 
+            var request = new RestRequest(path, method);
             // add path parameter, if any
             foreach(var param in pathParams)
                 request.AddParameter(param.Key, param.Value, ParameterType.UrlSegment);
