@@ -312,7 +312,11 @@ namespace UpstoxClient.Api
         /// <returns></returns>
         public void GetMarketDataFeed (string apiVersion)
         {
-             GetMarketDataFeedWithHttpInfo(apiVersion);
+             GetMarketDataFeedWithHttpInfo("2.0");
+        }
+
+        public void GetMarketDataFeedV3(){
+            GetMarketDataFeedWithHttpInfo("3.0");
         }
 
         /// <summary>
@@ -327,7 +331,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeed");
 
-            var localVarPath = "/v2/feed/market-data-feed";
+            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed" : "/v3/feed/market-data-feed";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -398,7 +402,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeed");
 
-            var localVarPath = "/v2/feed/market-data-feed";
+            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed" : "/v3/feed/market-data-feed";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -453,7 +457,13 @@ namespace UpstoxClient.Api
         /// <returns>WebsocketAuthRedirectResponse</returns>
         public WebsocketAuthRedirectResponse GetMarketDataFeedAuthorize (string apiVersion)
         {
-             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = GetMarketDataFeedAuthorizeWithHttpInfo(apiVersion);
+             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = GetMarketDataFeedAuthorizeWithHttpInfo("2.0");
+             return localVarResponse.Data;
+        }
+
+        public WebsocketAuthRedirectResponse GetMarketDataFeedAuthorizeV3 ()
+        {
+             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = GetMarketDataFeedAuthorizeWithHttpInfo("3.0");
              return localVarResponse.Data;
         }
 
@@ -469,7 +479,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeedAuthorize");
 
-            var localVarPath = "/v2/feed/market-data-feed/authorize";
+            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed/authorize" :  "/v3/feed/market-data-feed/authorize";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -542,7 +552,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeedAuthorize");
 
-            var localVarPath = "/v2/feed/market-data-feed/authorize";
+            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed/authorize" :  "/v3/feed/market-data-feed/authorize";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
