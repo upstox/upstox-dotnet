@@ -129,6 +129,8 @@ namespace UpstoxClient.Client
             UserAgent = "Swagger-Codegen/1.0.0/csharp";
             BasePath = "https://api.upstox.com";
             DefaultHeader = new ConcurrentDictionary<string, string>();
+            AddDefaultHeader("X-Upstox-SDK-Version", "1.2");
+            AddDefaultHeader("X-Upstox-SDK-Language", "dotnet");
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
 
