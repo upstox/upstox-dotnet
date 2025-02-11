@@ -20,194 +20,190 @@ namespace UpstoxClient.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IWebsocketApi : IApiAccessor
+        public interface IMarketHolidaysAndTimingsApi : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
-        /// Market Data Feed
+        /// Get Exchange Timings on particular date
         /// </summary>
         /// <remarks>
-        ///  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// This API provides the functionality to retrieve the exchange timings on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns></returns>
-        void GetMarketDataFeed (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>GetExchangeTimingResponse</returns>
+        GetExchangeTimingResponse GetExchangeTimings (string date);
 
         /// <summary>
-        /// Market Data Feed
+        /// Get Exchange Timings on particular date
         /// </summary>
         /// <remarks>
-        ///  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// This API provides the functionality to retrieve the exchange timings on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetMarketDataFeedWithHttpInfo (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>ApiResponse of GetExchangeTimingResponse</returns>
+        ApiResponse<GetExchangeTimingResponse> GetExchangeTimingsWithHttpInfo (string date);
         /// <summary>
-        /// Market Data Feed Authorize
+        /// Get Holiday on particular date
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the socket endpoint URI for Market updates.
+        /// This API provides the functionality to retrieve the holiday on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>WebsocketAuthRedirectResponse</returns>
-        WebsocketAuthRedirectResponse GetMarketDataFeedAuthorize (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>GetHolidayResponse</returns>
+        GetHolidayResponse GetHoliday (string date);
 
         /// <summary>
-        /// Market Data Feed Authorize
+        /// Get Holiday on particular date
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the socket endpoint URI for Market updates.
+        /// This API provides the functionality to retrieve the holiday on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of WebsocketAuthRedirectResponse</returns>
-        ApiResponse<WebsocketAuthRedirectResponse> GetMarketDataFeedAuthorizeWithHttpInfo (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>ApiResponse of GetHolidayResponse</returns>
+        ApiResponse<GetHolidayResponse> GetHolidayWithHttpInfo (string date);
         /// <summary>
-        /// Portfolio Stream Feed
+        /// Get Holiday list of current year
         /// </summary>
         /// <remarks>
-        /// This API redirects the client to the respective socket endpoint to receive Portfolio updates.
+        /// This API provides the functionality to retrieve the holiday list of current year
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns></returns>
-        void GetPortfolioStreamFeed (string apiVersion);
+        /// <returns>GetHolidayResponse</returns>
+        GetHolidayResponse GetHolidays ();
 
         /// <summary>
-        /// Portfolio Stream Feed
+        /// Get Holiday list of current year
         /// </summary>
         /// <remarks>
-        /// This API redirects the client to the respective socket endpoint to receive Portfolio updates.
+        /// This API provides the functionality to retrieve the holiday list of current year
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetPortfolioStreamFeedWithHttpInfo (string apiVersion);
+        /// <returns>ApiResponse of GetHolidayResponse</returns>
+        ApiResponse<GetHolidayResponse> GetHolidaysWithHttpInfo ();
         /// <summary>
-        /// Portfolio Stream Feed Authorize
+        /// Get Market status for particular exchange
         /// </summary>
         /// <remarks>
-        ///  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
+        /// This API provides the functionality to retrieve the market status for particular exchange
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>WebsocketAuthRedirectResponse</returns>
-        WebsocketAuthRedirectResponse GetPortfolioStreamFeedAuthorize (string apiVersion);
+        /// <param name="exchange"></param>
+        /// <returns>GetMarketStatusResponse</returns>
+        GetMarketStatusResponse GetMarketStatus (string exchange);
 
         /// <summary>
-        /// Portfolio Stream Feed Authorize
+        /// Get Market status for particular exchange
         /// </summary>
         /// <remarks>
-        ///  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
+        /// This API provides the functionality to retrieve the market status for particular exchange
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of WebsocketAuthRedirectResponse</returns>
-        ApiResponse<WebsocketAuthRedirectResponse> GetPortfolioStreamFeedAuthorizeWithHttpInfo (string apiVersion);
+        /// <param name="exchange"></param>
+        /// <returns>ApiResponse of GetMarketStatusResponse</returns>
+        ApiResponse<GetMarketStatusResponse> GetMarketStatusWithHttpInfo (string exchange);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
-        /// Market Data Feed
+        /// Get Exchange Timings on particular date
         /// </summary>
         /// <remarks>
-        ///  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// This API provides the functionality to retrieve the exchange timings on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetMarketDataFeedAsync (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>Task of GetExchangeTimingResponse</returns>
+        System.Threading.Tasks.Task<GetExchangeTimingResponse> GetExchangeTimingsAsync (string date);
 
         /// <summary>
-        /// Market Data Feed
+        /// Get Exchange Timings on particular date
         /// </summary>
         /// <remarks>
-        ///  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// This API provides the functionality to retrieve the exchange timings on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetMarketDataFeedAsyncWithHttpInfo (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>Task of ApiResponse (GetExchangeTimingResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetExchangeTimingResponse>> GetExchangeTimingsAsyncWithHttpInfo (string date);
         /// <summary>
-        /// Market Data Feed Authorize
+        /// Get Holiday on particular date
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the socket endpoint URI for Market updates.
+        /// This API provides the functionality to retrieve the holiday on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of WebsocketAuthRedirectResponse</returns>
-        System.Threading.Tasks.Task<WebsocketAuthRedirectResponse> GetMarketDataFeedAuthorizeAsync (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>Task of GetHolidayResponse</returns>
+        System.Threading.Tasks.Task<GetHolidayResponse> GetHolidayAsync (string date);
 
         /// <summary>
-        /// Market Data Feed Authorize
+        /// Get Holiday on particular date
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the socket endpoint URI for Market updates.
+        /// This API provides the functionality to retrieve the holiday on particular date
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (WebsocketAuthRedirectResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<WebsocketAuthRedirectResponse>> GetMarketDataFeedAuthorizeAsyncWithHttpInfo (string apiVersion);
+        /// <param name="date"></param>
+        /// <returns>Task of ApiResponse (GetHolidayResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetHolidayResponse>> GetHolidayAsyncWithHttpInfo (string date);
         /// <summary>
-        /// Portfolio Stream Feed
+        /// Get Holiday list of current year
         /// </summary>
         /// <remarks>
-        /// This API redirects the client to the respective socket endpoint to receive Portfolio updates.
+        /// This API provides the functionality to retrieve the holiday list of current year
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetPortfolioStreamFeedAsync (string apiVersion);
+        /// <returns>Task of GetHolidayResponse</returns>
+        System.Threading.Tasks.Task<GetHolidayResponse> GetHolidaysAsync ();
 
         /// <summary>
-        /// Portfolio Stream Feed
+        /// Get Holiday list of current year
         /// </summary>
         /// <remarks>
-        /// This API redirects the client to the respective socket endpoint to receive Portfolio updates.
+        /// This API provides the functionality to retrieve the holiday list of current year
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetPortfolioStreamFeedAsyncWithHttpInfo (string apiVersion);
+        /// <returns>Task of ApiResponse (GetHolidayResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetHolidayResponse>> GetHolidaysAsyncWithHttpInfo ();
         /// <summary>
-        /// Portfolio Stream Feed Authorize
+        /// Get Market status for particular exchange
         /// </summary>
         /// <remarks>
-        ///  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
+        /// This API provides the functionality to retrieve the market status for particular exchange
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of WebsocketAuthRedirectResponse</returns>
-        System.Threading.Tasks.Task<WebsocketAuthRedirectResponse> GetPortfolioStreamFeedAuthorizeAsync (string apiVersion);
+        /// <param name="exchange"></param>
+        /// <returns>Task of GetMarketStatusResponse</returns>
+        System.Threading.Tasks.Task<GetMarketStatusResponse> GetMarketStatusAsync (string exchange);
 
         /// <summary>
-        /// Portfolio Stream Feed Authorize
+        /// Get Market status for particular exchange
         /// </summary>
         /// <remarks>
-        ///  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
+        /// This API provides the functionality to retrieve the market status for particular exchange
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (WebsocketAuthRedirectResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<WebsocketAuthRedirectResponse>> GetPortfolioStreamFeedAuthorizeAsyncWithHttpInfo (string apiVersion);
+        /// <param name="exchange"></param>
+        /// <returns>Task of ApiResponse (GetMarketStatusResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetMarketStatusResponse>> GetMarketStatusAsyncWithHttpInfo (string exchange);
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class WebsocketApi : IWebsocketApi
+        public partial class MarketHolidaysAndTimingsApi : IMarketHolidaysAndTimingsApi
     {
         private UpstoxClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebsocketApi"/> class.
+        /// Initializes a new instance of the <see cref="MarketHolidaysAndTimingsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public WebsocketApi(String basePath)
+        public MarketHolidaysAndTimingsApi(String basePath)
         {
             this.Configuration = new UpstoxClient.Client.Configuration { BasePath = basePath };
 
@@ -215,10 +211,10 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebsocketApi"/> class
+        /// Initializes a new instance of the <see cref="MarketHolidaysAndTimingsApi"/> class
         /// </summary>
         /// <returns></returns>
-        public WebsocketApi()
+        public MarketHolidaysAndTimingsApi()
         {
             this.Configuration = UpstoxClient.Client.Configuration.Default;
 
@@ -226,12 +222,12 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebsocketApi"/> class
+        /// Initializes a new instance of the <see cref="MarketHolidaysAndTimingsApi"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public WebsocketApi(UpstoxClient.Client.Configuration configuration = null)
+        public MarketHolidaysAndTimingsApi(UpstoxClient.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = UpstoxClient.Client.Configuration.Default;
@@ -305,33 +301,30 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Market Data Feed  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// Get Exchange Timings on particular date This API provides the functionality to retrieve the exchange timings on particular date
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns></returns>
-        public void GetMarketDataFeed (string apiVersion)
+        /// <param name="date"></param>
+        /// <returns>GetExchangeTimingResponse</returns>
+        public GetExchangeTimingResponse GetExchangeTimings (string date)
         {
-             GetMarketDataFeedWithHttpInfo("2.0");
-        }
-
-        public void GetMarketDataFeedV3(){
-            GetMarketDataFeedWithHttpInfo("3.0");
+             ApiResponse<GetExchangeTimingResponse> localVarResponse = GetExchangeTimingsWithHttpInfo(date);
+             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Market Data Feed  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// Get Exchange Timings on particular date This API provides the functionality to retrieve the exchange timings on particular date
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> GetMarketDataFeedWithHttpInfo (string apiVersion)
+        /// <param name="date"></param>
+        /// <returns>ApiResponse of GetExchangeTimingResponse</returns>
+        public ApiResponse< GetExchangeTimingResponse > GetExchangeTimingsWithHttpInfo (string date)
         {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeed");
+            // verify the required parameter 'date' is set
+            if (date == null)
+                throw new ApiException(400, "Missing required parameter 'date' when calling MarketHolidaysAndTimingsApi->GetExchangeTimings");
 
-            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed" : "/v3/feed/market-data-feed";
+            var localVarPath = "/v2/market/timings/{date}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -346,13 +339,401 @@ namespace UpstoxClient.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
                 "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
+            if (date != null) localVarPathParams.Add("date", this.Configuration.ApiClient.ParameterToString(date)); // path parameter
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetExchangeTimings", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetExchangeTimingResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetExchangeTimingResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetExchangeTimingResponse)));
+        }
+
+        /// <summary>
+        /// Get Exchange Timings on particular date This API provides the functionality to retrieve the exchange timings on particular date
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="date"></param>
+        /// <returns>Task of GetExchangeTimingResponse</returns>
+        public async System.Threading.Tasks.Task<GetExchangeTimingResponse> GetExchangeTimingsAsync (string date)
+        {
+             ApiResponse<GetExchangeTimingResponse> localVarResponse = await GetExchangeTimingsAsyncWithHttpInfo(date);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get Exchange Timings on particular date This API provides the functionality to retrieve the exchange timings on particular date
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="date"></param>
+        /// <returns>Task of ApiResponse (GetExchangeTimingResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetExchangeTimingResponse>> GetExchangeTimingsAsyncWithHttpInfo (string date)
+        {
+            // verify the required parameter 'date' is set
+            if (date == null)
+                throw new ApiException(400, "Missing required parameter 'date' when calling MarketHolidaysAndTimingsApi->GetExchangeTimings");
+
+            var localVarPath = "/v2/market/timings/{date}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (date != null) localVarPathParams.Add("date", this.Configuration.ApiClient.ParameterToString(date)); // path parameter
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetExchangeTimings", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetExchangeTimingResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetExchangeTimingResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetExchangeTimingResponse)));
+        }
+
+        /// <summary>
+        /// Get Holiday on particular date This API provides the functionality to retrieve the holiday on particular date
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="date"></param>
+        /// <returns>GetHolidayResponse</returns>
+        public GetHolidayResponse GetHoliday (string date)
+        {
+             ApiResponse<GetHolidayResponse> localVarResponse = GetHolidayWithHttpInfo(date);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get Holiday on particular date This API provides the functionality to retrieve the holiday on particular date
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="date"></param>
+        /// <returns>ApiResponse of GetHolidayResponse</returns>
+        public ApiResponse< GetHolidayResponse > GetHolidayWithHttpInfo (string date)
+        {
+            // verify the required parameter 'date' is set
+            if (date == null)
+                throw new ApiException(400, "Missing required parameter 'date' when calling MarketHolidaysAndTimingsApi->GetHoliday");
+
+            var localVarPath = "/v2/market/holidays/{date}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (date != null) localVarPathParams.Add("date", this.Configuration.ApiClient.ParameterToString(date)); // path parameter
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetHoliday", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetHolidayResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetHolidayResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetHolidayResponse)));
+        }
+
+        /// <summary>
+        /// Get Holiday on particular date This API provides the functionality to retrieve the holiday on particular date
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="date"></param>
+        /// <returns>Task of GetHolidayResponse</returns>
+        public async System.Threading.Tasks.Task<GetHolidayResponse> GetHolidayAsync (string date)
+        {
+             ApiResponse<GetHolidayResponse> localVarResponse = await GetHolidayAsyncWithHttpInfo(date);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get Holiday on particular date This API provides the functionality to retrieve the holiday on particular date
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="date"></param>
+        /// <returns>Task of ApiResponse (GetHolidayResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetHolidayResponse>> GetHolidayAsyncWithHttpInfo (string date)
+        {
+            // verify the required parameter 'date' is set
+            if (date == null)
+                throw new ApiException(400, "Missing required parameter 'date' when calling MarketHolidaysAndTimingsApi->GetHoliday");
+
+            var localVarPath = "/v2/market/holidays/{date}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (date != null) localVarPathParams.Add("date", this.Configuration.ApiClient.ParameterToString(date)); // path parameter
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetHoliday", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetHolidayResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetHolidayResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetHolidayResponse)));
+        }
+
+        /// <summary>
+        /// Get Holiday list of current year This API provides the functionality to retrieve the holiday list of current year
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>GetHolidayResponse</returns>
+        public GetHolidayResponse GetHolidays ()
+        {
+             ApiResponse<GetHolidayResponse> localVarResponse = GetHolidaysWithHttpInfo();
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get Holiday list of current year This API provides the functionality to retrieve the holiday list of current year
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of GetHolidayResponse</returns>
+        public ApiResponse< GetHolidayResponse > GetHolidaysWithHttpInfo ()
+        {
+
+            var localVarPath = "/v2/market/holidays";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetHolidays", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetHolidayResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetHolidayResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetHolidayResponse)));
+        }
+
+        /// <summary>
+        /// Get Holiday list of current year This API provides the functionality to retrieve the holiday list of current year
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of GetHolidayResponse</returns>
+        public async System.Threading.Tasks.Task<GetHolidayResponse> GetHolidaysAsync ()
+        {
+             ApiResponse<GetHolidayResponse> localVarResponse = await GetHolidaysAsyncWithHttpInfo();
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get Holiday list of current year This API provides the functionality to retrieve the holiday list of current year
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (GetHolidayResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetHolidayResponse>> GetHolidaysAsyncWithHttpInfo ()
+        {
+
+            var localVarPath = "/v2/market/holidays";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetHolidays", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetHolidayResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetHolidayResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetHolidayResponse)));
+        }
+
+        /// <summary>
+        /// Get Market status for particular exchange This API provides the functionality to retrieve the market status for particular exchange
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="exchange"></param>
+        /// <returns>GetMarketStatusResponse</returns>
+        public GetMarketStatusResponse GetMarketStatus (string exchange)
+        {
+             ApiResponse<GetMarketStatusResponse> localVarResponse = GetMarketStatusWithHttpInfo(exchange);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get Market status for particular exchange This API provides the functionality to retrieve the market status for particular exchange
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="exchange"></param>
+        /// <returns>ApiResponse of GetMarketStatusResponse</returns>
+        public ApiResponse< GetMarketStatusResponse > GetMarketStatusWithHttpInfo (string exchange)
+        {
+            // verify the required parameter 'exchange' is set
+            if (exchange == null)
+                throw new ApiException(400, "Missing required parameter 'exchange' when calling MarketHolidaysAndTimingsApi->GetMarketStatus");
+
+            var localVarPath = "/v2/market/status/{exchange}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (exchange != null) localVarPathParams.Add("exchange", this.Configuration.ApiClient.ParameterToString(exchange)); // path parameter
             // authentication (OAUTH2) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
@@ -369,40 +750,41 @@ namespace UpstoxClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetMarketDataFeed", localVarResponse);
+                Exception exception = ExceptionFactory("GetMarketStatus", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<GetMarketStatusResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                null);
+                (GetMarketStatusResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetMarketStatusResponse)));
         }
 
         /// <summary>
-        /// Market Data Feed  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// Get Market status for particular exchange This API provides the functionality to retrieve the market status for particular exchange
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetMarketDataFeedAsync (string apiVersion)
+        /// <param name="exchange"></param>
+        /// <returns>Task of GetMarketStatusResponse</returns>
+        public async System.Threading.Tasks.Task<GetMarketStatusResponse> GetMarketStatusAsync (string exchange)
         {
-             await GetMarketDataFeedAsyncWithHttpInfo(apiVersion);
+             ApiResponse<GetMarketStatusResponse> localVarResponse = await GetMarketStatusAsyncWithHttpInfo(exchange);
+             return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Market Data Feed  This API redirects the client to the respective socket endpoint to receive Market updates.
+        /// Get Market status for particular exchange This API provides the functionality to retrieve the market status for particular exchange
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> GetMarketDataFeedAsyncWithHttpInfo (string apiVersion)
+        /// <param name="exchange"></param>
+        /// <returns>Task of ApiResponse (GetMarketStatusResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetMarketStatusResponse>> GetMarketStatusAsyncWithHttpInfo (string exchange)
         {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeed");
+            // verify the required parameter 'exchange' is set
+            if (exchange == null)
+                throw new ApiException(400, "Missing required parameter 'exchange' when calling MarketHolidaysAndTimingsApi->GetMarketStatus");
 
-            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed" : "/v3/feed/market-data-feed";
+            var localVarPath = "/v2/market/status/{exchange}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -417,13 +799,14 @@ namespace UpstoxClient.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
                 "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
+            if (exchange != null) localVarPathParams.Add("exchange", this.Configuration.ApiClient.ParameterToString(exchange)); // path parameter
             // authentication (OAUTH2) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
@@ -440,450 +823,13 @@ namespace UpstoxClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetMarketDataFeed", localVarResponse);
+                Exception exception = ExceptionFactory("GetMarketStatus", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<GetMarketStatusResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                null);
-        }
-
-        /// <summary>
-        /// Market Data Feed Authorize This API provides the functionality to retrieve the socket endpoint URI for Market updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>WebsocketAuthRedirectResponse</returns>
-        public WebsocketAuthRedirectResponse GetMarketDataFeedAuthorize (string apiVersion)
-        {
-             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = GetMarketDataFeedAuthorizeWithHttpInfo("2.0");
-             return localVarResponse.Data;
-        }
-
-        public WebsocketAuthRedirectResponse GetMarketDataFeedAuthorizeV3 ()
-        {
-             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = GetMarketDataFeedAuthorizeWithHttpInfo("3.0");
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Market Data Feed Authorize This API provides the functionality to retrieve the socket endpoint URI for Market updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of WebsocketAuthRedirectResponse</returns>
-        public ApiResponse< WebsocketAuthRedirectResponse > GetMarketDataFeedAuthorizeWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeedAuthorize");
-
-            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed/authorize" :  "/v3/feed/market-data-feed/authorize";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetMarketDataFeedAuthorize", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<WebsocketAuthRedirectResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (WebsocketAuthRedirectResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(WebsocketAuthRedirectResponse)));
-        }
-
-        /// <summary>
-        /// Market Data Feed Authorize This API provides the functionality to retrieve the socket endpoint URI for Market updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of WebsocketAuthRedirectResponse</returns>
-        public async System.Threading.Tasks.Task<WebsocketAuthRedirectResponse> GetMarketDataFeedAuthorizeAsync (string apiVersion)
-        {
-             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = await GetMarketDataFeedAuthorizeAsyncWithHttpInfo(apiVersion);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// Market Data Feed Authorize This API provides the functionality to retrieve the socket endpoint URI for Market updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (WebsocketAuthRedirectResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<WebsocketAuthRedirectResponse>> GetMarketDataFeedAuthorizeAsyncWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetMarketDataFeedAuthorize");
-
-            var localVarPath = apiVersion == "2.0" ? "/v2/feed/market-data-feed/authorize" :  "/v3/feed/market-data-feed/authorize";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetMarketDataFeedAuthorize", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<WebsocketAuthRedirectResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (WebsocketAuthRedirectResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(WebsocketAuthRedirectResponse)));
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed This API redirects the client to the respective socket endpoint to receive Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns></returns>
-        public void GetPortfolioStreamFeed (string apiVersion)
-        {
-             GetPortfolioStreamFeedWithHttpInfo(apiVersion);
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed This API redirects the client to the respective socket endpoint to receive Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> GetPortfolioStreamFeedWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeed");
-
-            var localVarPath = "/v2/feed/portfolio-stream-feed";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetPortfolioStreamFeed", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                null);
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed This API redirects the client to the respective socket endpoint to receive Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetPortfolioStreamFeedAsync (string apiVersion)
-        {
-             await GetPortfolioStreamFeedAsyncWithHttpInfo(apiVersion);
-
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed This API redirects the client to the respective socket endpoint to receive Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> GetPortfolioStreamFeedAsyncWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeed");
-
-            var localVarPath = "/v2/feed/portfolio-stream-feed";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetPortfolioStreamFeed", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                null);
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed Authorize  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>WebsocketAuthRedirectResponse</returns>
-        public WebsocketAuthRedirectResponse GetPortfolioStreamFeedAuthorize (string apiVersion)
-        {
-             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = GetPortfolioStreamFeedAuthorizeWithHttpInfo(apiVersion);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed Authorize  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of WebsocketAuthRedirectResponse</returns>
-        public ApiResponse< WebsocketAuthRedirectResponse > GetPortfolioStreamFeedAuthorizeWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeedAuthorize");
-
-            var localVarPath = "/v2/feed/portfolio-stream-feed/authorize";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetPortfolioStreamFeedAuthorize", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<WebsocketAuthRedirectResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (WebsocketAuthRedirectResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(WebsocketAuthRedirectResponse)));
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed Authorize  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of WebsocketAuthRedirectResponse</returns>
-        public async System.Threading.Tasks.Task<WebsocketAuthRedirectResponse> GetPortfolioStreamFeedAuthorizeAsync (string apiVersion)
-        {
-             ApiResponse<WebsocketAuthRedirectResponse> localVarResponse = await GetPortfolioStreamFeedAuthorizeAsyncWithHttpInfo(apiVersion);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// Portfolio Stream Feed Authorize  This API provides the functionality to retrieve the socket endpoint URI for Portfolio updates.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (WebsocketAuthRedirectResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<WebsocketAuthRedirectResponse>> GetPortfolioStreamFeedAuthorizeAsyncWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling WebsocketApi->GetPortfolioStreamFeedAuthorize");
-
-            var localVarPath = "/v2/feed/portfolio-stream-feed/authorize";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetPortfolioStreamFeedAuthorize", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<WebsocketAuthRedirectResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (WebsocketAuthRedirectResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(WebsocketAuthRedirectResponse)));
+                (GetMarketStatusResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetMarketStatusResponse)));
         }
 
     }

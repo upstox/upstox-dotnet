@@ -337,7 +337,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling HistoryApi->GetHistoricalCandleData");
 
-            var localVarPath = "/historical-candle/{instrumentKey}/{interval}/{to_date}";
+            var localVarPath = "/v2/historical-candle/{instrumentKey}/{interval}/{to_date}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -422,7 +422,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling HistoryApi->GetHistoricalCandleData");
 
-            var localVarPath = "/historical-candle/{instrumentKey}/{interval}/{to_date}";
+            var localVarPath = "/v2/historical-candle/{instrumentKey}/{interval}/{to_date}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -511,7 +511,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling HistoryApi->GetHistoricalCandleData1");
 
-            var localVarPath = "/historical-candle/{instrumentKey}/{interval}/{to_date}/{from_date}";
+            var localVarPath = "/v2/historical-candle/{instrumentKey}/{interval}/{to_date}/{from_date}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -602,7 +602,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling HistoryApi->GetHistoricalCandleData1");
 
-            var localVarPath = "/historical-candle/{instrumentKey}/{interval}/{to_date}/{from_date}";
+            var localVarPath = "/v2/historical-candle/{instrumentKey}/{interval}/{to_date}/{from_date}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -682,7 +682,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling HistoryApi->GetIntraDayCandleData");
 
-            var localVarPath = "/historical-candle/intraday/{instrumentKey}/{interval}";
+            var localVarPath = "/v2/historical-candle/intraday/{instrumentKey}/{interval}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -761,7 +761,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling HistoryApi->GetIntraDayCandleData");
 
-            var localVarPath = "/historical-candle/intraday/{instrumentKey}/{interval}";
+            var localVarPath = "/v2/historical-candle/intraday/{instrumentKey}/{interval}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
