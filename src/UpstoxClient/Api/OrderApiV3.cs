@@ -20,156 +20,152 @@ namespace UpstoxClient.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IPortfolioApi : IApiAccessor
+        public interface IOrderApiV3 : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
-        /// Convert Positions
+        /// 
         /// </summary>
         /// <remarks>
-        /// Convert the margin product of an open position
+        /// 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>CancelOrderV3Response</returns>
+        CancelOrderV3Response CancelOrder (string orderId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>ApiResponse of CancelOrderV3Response</returns>
+        ApiResponse<CancelOrderV3Response> CancelOrderWithHttpInfo (string orderId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ConvertPositionResponse</returns>
-        ConvertPositionResponse ConvertPositions (ConvertPositionRequest body, string apiVersion);
+        /// <returns>ModifyOrderV3Response</returns>
+        ModifyOrderV3Response ModifyOrder (ModifyOrderRequest body);
 
         /// <summary>
-        /// Convert Positions
+        /// 
         /// </summary>
         /// <remarks>
-        /// Convert the margin product of an open position
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of ConvertPositionResponse</returns>
-        ApiResponse<ConvertPositionResponse> ConvertPositionsWithHttpInfo (ConvertPositionRequest body, string apiVersion);
+        /// <returns>ApiResponse of ModifyOrderV3Response</returns>
+        ApiResponse<ModifyOrderV3Response> ModifyOrderWithHttpInfo (ModifyOrderRequest body);
         /// <summary>
-        /// Get Holdings
+        /// 
         /// </summary>
         /// <remarks>
-        /// Fetches the holdings which the user has bought/sold in previous trading sessions.
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>GetHoldingsResponse</returns>
-        GetHoldingsResponse GetHoldings (string apiVersion);
+        /// <param name="body"></param>
+        /// <returns>PlaceOrderV3Response</returns>
+        PlaceOrderV3Response PlaceOrder (PlaceOrderV3Request body);
 
         /// <summary>
-        /// Get Holdings
+        /// 
         /// </summary>
         /// <remarks>
-        /// Fetches the holdings which the user has bought/sold in previous trading sessions.
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of GetHoldingsResponse</returns>
-        ApiResponse<GetHoldingsResponse> GetHoldingsWithHttpInfo (string apiVersion);
-        /// <summary>
-        /// Get Positions
-        /// </summary>
-        /// <remarks>
-        /// Fetches the current positions for the user for the current day.
-        /// </remarks>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>GetPositionResponse</returns>
-        GetPositionResponse GetPositions (string apiVersion);
-
-        /// <summary>
-        /// Get Positions
-        /// </summary>
-        /// <remarks>
-        /// Fetches the current positions for the user for the current day.
-        /// </remarks>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of GetPositionResponse</returns>
-        ApiResponse<GetPositionResponse> GetPositionsWithHttpInfo (string apiVersion);
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of PlaceOrderV3Response</returns>
+        ApiResponse<PlaceOrderV3Response> PlaceOrderWithHttpInfo (PlaceOrderV3Request body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
-        /// Convert Positions
+        /// 
         /// </summary>
         /// <remarks>
-        /// Convert the margin product of an open position
+        /// 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>Task of CancelOrderV3Response</returns>
+        System.Threading.Tasks.Task<CancelOrderV3Response> CancelOrderAsync (string orderId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>Task of ApiResponse (CancelOrderV3Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<CancelOrderV3Response>> CancelOrderAsyncWithHttpInfo (string orderId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ConvertPositionResponse</returns>
-        System.Threading.Tasks.Task<ConvertPositionResponse> ConvertPositionsAsync (ConvertPositionRequest body, string apiVersion);
+        /// <returns>Task of ModifyOrderV3Response</returns>
+        System.Threading.Tasks.Task<ModifyOrderV3Response> ModifyOrderAsync (ModifyOrderRequest body);
 
         /// <summary>
-        /// Convert Positions
+        /// 
         /// </summary>
         /// <remarks>
-        /// Convert the margin product of an open position
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (ConvertPositionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ConvertPositionResponse>> ConvertPositionsAsyncWithHttpInfo (ConvertPositionRequest body, string apiVersion);
+        /// <returns>Task of ApiResponse (ModifyOrderV3Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ModifyOrderV3Response>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body);
         /// <summary>
-        /// Get Holdings
+        /// 
         /// </summary>
         /// <remarks>
-        /// Fetches the holdings which the user has bought/sold in previous trading sessions.
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of GetHoldingsResponse</returns>
-        System.Threading.Tasks.Task<GetHoldingsResponse> GetHoldingsAsync (string apiVersion);
+        /// <param name="body"></param>
+        /// <returns>Task of PlaceOrderV3Response</returns>
+        System.Threading.Tasks.Task<PlaceOrderV3Response> PlaceOrderAsync (PlaceOrderV3Request body);
 
         /// <summary>
-        /// Get Holdings
+        /// 
         /// </summary>
         /// <remarks>
-        /// Fetches the holdings which the user has bought/sold in previous trading sessions.
+        /// 
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (GetHoldingsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<GetHoldingsResponse>> GetHoldingsAsyncWithHttpInfo (string apiVersion);
-        /// <summary>
-        /// Get Positions
-        /// </summary>
-        /// <remarks>
-        /// Fetches the current positions for the user for the current day.
-        /// </remarks>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of GetPositionResponse</returns>
-        System.Threading.Tasks.Task<GetPositionResponse> GetPositionsAsync (string apiVersion);
-
-        /// <summary>
-        /// Get Positions
-        /// </summary>
-        /// <remarks>
-        /// Fetches the current positions for the user for the current day.
-        /// </remarks>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (GetPositionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<GetPositionResponse>> GetPositionsAsyncWithHttpInfo (string apiVersion);
+        /// <param name="body"></param>
+        /// <returns>Task of ApiResponse (PlaceOrderV3Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PlaceOrderV3Response>> PlaceOrderAsyncWithHttpInfo (PlaceOrderV3Request body);
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class PortfolioApi : IPortfolioApi
+        public partial class OrderApiV3 : IOrderApiV3
     {
         private UpstoxClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PortfolioApi"/> class.
+        /// Initializes a new instance of the <see cref="OrderApiV3"/> class.
         /// </summary>
         /// <returns></returns>
-        public PortfolioApi(String basePath)
+        public OrderApiV3(String basePath)
         {
             this.Configuration = new UpstoxClient.Client.Configuration { BasePath = basePath };
 
@@ -177,10 +173,10 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PortfolioApi"/> class
+        /// Initializes a new instance of the <see cref="OrderApiV3"/> class
         /// </summary>
         /// <returns></returns>
-        public PortfolioApi()
+        public OrderApiV3()
         {
             this.Configuration = UpstoxClient.Client.Configuration.Default;
 
@@ -188,12 +184,12 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PortfolioApi"/> class
+        /// Initializes a new instance of the <see cref="OrderApiV3"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public PortfolioApi(UpstoxClient.Client.Configuration configuration = null)
+        public OrderApiV3(UpstoxClient.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = UpstoxClient.Client.Configuration.Default;
@@ -267,35 +263,175 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Convert Positions Convert the margin product of an open position
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ConvertPositionResponse</returns>
-        public ConvertPositionResponse ConvertPositions (ConvertPositionRequest body, string apiVersion)
+        /// <param name="orderId"></param>
+        /// <returns>CancelOrderV3Response</returns>
+        public CancelOrderV3Response CancelOrder (string orderId)
         {
-             ApiResponse<ConvertPositionResponse> localVarResponse = ConvertPositionsWithHttpInfo(body, apiVersion);
+             ApiResponse<CancelOrderV3Response> localVarResponse = CancelOrderWithHttpInfo(orderId);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Convert Positions Convert the margin product of an open position
+        ///  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>ApiResponse of CancelOrderV3Response</returns>
+        public ApiResponse< CancelOrderV3Response > CancelOrderWithHttpInfo (string orderId)
+        {
+            // verify the required parameter 'orderId' is set
+            if (orderId == null)
+                throw new ApiException(400, "Missing required parameter 'orderId' when calling OrderApiV3->CancelOrder");
+
+            var localVarPath = "/v3/order/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+            
+            if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelOrder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CancelOrderV3Response>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CancelOrderV3Response) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrderV3Response)));
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>Task of CancelOrderV3Response</returns>
+        public async System.Threading.Tasks.Task<CancelOrderV3Response> CancelOrderAsync (string orderId)
+        {
+             ApiResponse<CancelOrderV3Response> localVarResponse = await CancelOrderAsyncWithHttpInfo(orderId);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId"></param>
+        /// <returns>Task of ApiResponse (CancelOrderV3Response)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<CancelOrderV3Response>> CancelOrderAsyncWithHttpInfo (string orderId)
+        {
+            // verify the required parameter 'orderId' is set
+            if (orderId == null)
+                throw new ApiException(400, "Missing required parameter 'orderId' when calling OrderApiV3->CancelOrder");
+
+            var localVarPath = "/v3/order/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            if (orderId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "order_id", orderId)); // query parameter
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelOrder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CancelOrderV3Response>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CancelOrderV3Response) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CancelOrderV3Response)));
+        }
+
+        /// <summary>
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of ConvertPositionResponse</returns>
-        public ApiResponse< ConvertPositionResponse > ConvertPositionsWithHttpInfo (ConvertPositionRequest body, string apiVersion)
+        /// <returns>ModifyOrderV3Response</returns>
+        public ModifyOrderV3Response ModifyOrder (ModifyOrderRequest body)
+        {
+             ApiResponse<ModifyOrderV3Response> localVarResponse = ModifyOrderWithHttpInfo(body);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of ModifyOrderV3Response</returns>
+        public ApiResponse< ModifyOrderV3Response > ModifyOrderWithHttpInfo (ModifyOrderRequest body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling PortfolioApi->ConvertPositions");
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->ConvertPositions");
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->ModifyOrder");
 
-            var localVarPath = "/v2/portfolio/convert-position";
+            var localVarPath = "/v3/order/modify";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -311,14 +447,19 @@ namespace UpstoxClient.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
+                "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -326,12 +467,6 @@ namespace UpstoxClient.Api
             else
             {
                 localVarPostBody = body; // byte array
-            }
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
             }
 
             // make the HTTP request
@@ -343,46 +478,41 @@ namespace UpstoxClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ConvertPositions", localVarResponse);
+                Exception exception = ExceptionFactory("ModifyOrder", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ConvertPositionResponse>(localVarStatusCode,
+            return new ApiResponse<ModifyOrderV3Response>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ConvertPositionResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConvertPositionResponse)));
+                (ModifyOrderV3Response) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModifyOrderV3Response)));
         }
 
         /// <summary>
-        /// Convert Positions Convert the margin product of an open position
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ConvertPositionResponse</returns>
-        public async System.Threading.Tasks.Task<ConvertPositionResponse> ConvertPositionsAsync (ConvertPositionRequest body, string apiVersion)
+        /// <returns>Task of ModifyOrderV3Response</returns>
+        public async System.Threading.Tasks.Task<ModifyOrderV3Response> ModifyOrderAsync (ModifyOrderRequest body)
         {
-             ApiResponse<ConvertPositionResponse> localVarResponse = await ConvertPositionsAsyncWithHttpInfo(body, apiVersion);
+             ApiResponse<ModifyOrderV3Response> localVarResponse = await ModifyOrderAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Convert Positions Convert the margin product of an open position
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (ConvertPositionResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ConvertPositionResponse>> ConvertPositionsAsyncWithHttpInfo (ConvertPositionRequest body, string apiVersion)
+        /// <returns>Task of ApiResponse (ModifyOrderV3Response)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ModifyOrderV3Response>> ModifyOrderAsyncWithHttpInfo (ModifyOrderRequest body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling PortfolioApi->ConvertPositions");
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->ConvertPositions");
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->ModifyOrder");
 
-            var localVarPath = "/v2/portfolio/convert-position";
+            var localVarPath = "/v3/order/modify";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -398,14 +528,19 @@ namespace UpstoxClient.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
+                "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -413,12 +548,6 @@ namespace UpstoxClient.Api
             else
             {
                 localVarPostBody = body; // byte array
-            }
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
             }
 
             // make the HTTP request
@@ -430,40 +559,40 @@ namespace UpstoxClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ConvertPositions", localVarResponse);
+                Exception exception = ExceptionFactory("ModifyOrder", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ConvertPositionResponse>(localVarStatusCode,
+            return new ApiResponse<ModifyOrderV3Response>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ConvertPositionResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConvertPositionResponse)));
+                (ModifyOrderV3Response) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModifyOrderV3Response)));
         }
 
         /// <summary>
-        /// Get Holdings Fetches the holdings which the user has bought/sold in previous trading sessions.
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>GetHoldingsResponse</returns>
-        public GetHoldingsResponse GetHoldings (string apiVersion)
+        /// <param name="body"></param>
+        /// <returns>PlaceOrderV3Response</returns>
+        public PlaceOrderV3Response PlaceOrder (PlaceOrderV3Request body)
         {
-             ApiResponse<GetHoldingsResponse> localVarResponse = GetHoldingsWithHttpInfo(apiVersion);
+             ApiResponse<PlaceOrderV3Response> localVarResponse = PlaceOrderWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get Holdings Fetches the holdings which the user has bought/sold in previous trading sessions.
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of GetHoldingsResponse</returns>
-        public ApiResponse< GetHoldingsResponse > GetHoldingsWithHttpInfo (string apiVersion)
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of PlaceOrderV3Response</returns>
+        public ApiResponse< PlaceOrderV3Response > PlaceOrderWithHttpInfo (PlaceOrderV3Request body)
         {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetHoldings");
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->PlaceOrder");
 
-            var localVarPath = "/v2/portfolio/long-term-holdings";
+            var localVarPath = "/v3/order/place";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -473,70 +602,78 @@ namespace UpstoxClient.Api
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
+                "application/json"
             };
             String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
+                "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
             // authentication (OAUTH2) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
             {
                 localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
             }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
-
+                
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetHoldings", localVarResponse);
+                Exception exception = ExceptionFactory("PlaceOrder", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<GetHoldingsResponse>(localVarStatusCode,
+            return new ApiResponse<PlaceOrderV3Response>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetHoldingsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetHoldingsResponse)));
+                (PlaceOrderV3Response) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PlaceOrderV3Response)));
         }
 
         /// <summary>
-        /// Get Holdings Fetches the holdings which the user has bought/sold in previous trading sessions.
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of GetHoldingsResponse</returns>
-        public async System.Threading.Tasks.Task<GetHoldingsResponse> GetHoldingsAsync (string apiVersion)
+        /// <param name="body"></param>
+        /// <returns>Task of PlaceOrderV3Response</returns>
+        public async System.Threading.Tasks.Task<PlaceOrderV3Response> PlaceOrderAsync (PlaceOrderV3Request body)
         {
-             ApiResponse<GetHoldingsResponse> localVarResponse = await GetHoldingsAsyncWithHttpInfo(apiVersion);
+             ApiResponse<PlaceOrderV3Response> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Get Holdings Fetches the holdings which the user has bought/sold in previous trading sessions.
+        ///  
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (GetHoldingsResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<GetHoldingsResponse>> GetHoldingsAsyncWithHttpInfo (string apiVersion)
+        /// <param name="body"></param>
+        /// <returns>Task of ApiResponse (PlaceOrderV3Response)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PlaceOrderV3Response>> PlaceOrderAsyncWithHttpInfo (PlaceOrderV3Request body)
         {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetHoldings");
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling OrderApiV3->PlaceOrder");
 
-            var localVarPath = "/v2/portfolio/long-term-holdings";
+            var localVarPath = "/v3/order/place";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -546,187 +683,50 @@ namespace UpstoxClient.Api
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
+                "application/json"
             };
             String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
+                "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
             // authentication (OAUTH2) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
             {
                 localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
             }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetHoldings", localVarResponse);
+                Exception exception = ExceptionFactory("PlaceOrder", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<GetHoldingsResponse>(localVarStatusCode,
+            return new ApiResponse<PlaceOrderV3Response>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetHoldingsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetHoldingsResponse)));
-        }
-
-        /// <summary>
-        /// Get Positions Fetches the current positions for the user for the current day.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>GetPositionResponse</returns>
-        public GetPositionResponse GetPositions (string apiVersion)
-        {
-             ApiResponse<GetPositionResponse> localVarResponse = GetPositionsWithHttpInfo(apiVersion);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Get Positions Fetches the current positions for the user for the current day.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of GetPositionResponse</returns>
-        public ApiResponse< GetPositionResponse > GetPositionsWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetPositions");
-
-            var localVarPath = "/v2/portfolio/short-term-positions";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetPositions", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<GetPositionResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetPositionResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetPositionResponse)));
-        }
-
-        /// <summary>
-        /// Get Positions Fetches the current positions for the user for the current day.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of GetPositionResponse</returns>
-        public async System.Threading.Tasks.Task<GetPositionResponse> GetPositionsAsync (string apiVersion)
-        {
-             ApiResponse<GetPositionResponse> localVarResponse = await GetPositionsAsyncWithHttpInfo(apiVersion);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// Get Positions Fetches the current positions for the user for the current day.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (GetPositionResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<GetPositionResponse>> GetPositionsAsyncWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling PortfolioApi->GetPositions");
-
-            var localVarPath = "/v2/portfolio/short-term-positions";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetPositions", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<GetPositionResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetPositionResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetPositionResponse)));
+                (PlaceOrderV3Response) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PlaceOrderV3Response)));
         }
 
     }

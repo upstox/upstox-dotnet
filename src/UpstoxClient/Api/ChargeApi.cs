@@ -54,6 +54,27 @@ namespace UpstoxClient.Api
         /// <param name="apiVersion">API Version Header</param>
         /// <returns>ApiResponse of GetBrokerageResponse</returns>
         ApiResponse<GetBrokerageResponse> GetBrokerageWithHttpInfo (string instrumentToken, int? quantity, string product, string transactionType, float? price, string apiVersion);
+		/// <summary>
+        /// Calculate Margin
+        /// </summary>
+        /// <remarks>
+        /// Compute Margin
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>PostMarginResponse</returns>
+        PostMarginResponse PostMargin (MarginRequest body);
+
+        /// <summary>
+        /// Calculate Margin
+        /// </summary>
+        /// <remarks>
+        /// Compute Margin
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of PostMarginResponse</returns>
+        ApiResponse<PostMarginResponse> PostMarginWithHttpInfo (MarginRequest body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -87,6 +108,27 @@ namespace UpstoxClient.Api
         /// <param name="apiVersion">API Version Header</param>
         /// <returns>Task of ApiResponse (GetBrokerageResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<GetBrokerageResponse>> GetBrokerageAsyncWithHttpInfo (string instrumentToken, int? quantity, string product, string transactionType, float? price, string apiVersion);
+ 		/// <summary>
+        /// Calculate Margin
+        /// </summary>
+        /// <remarks>
+        /// Compute Margin
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of PostMarginResponse</returns>
+        System.Threading.Tasks.Task<PostMarginResponse> PostMarginAsync (MarginRequest body);
+
+        /// <summary>
+        /// Calculate Margin
+        /// </summary>
+        /// <remarks>
+        /// Compute Margin
+        /// </remarks>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of ApiResponse (PostMarginResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PostMarginResponse>> PostMarginAsyncWithHttpInfo (MarginRequest body);
         #endregion Asynchronous Operations
     }
 
@@ -247,7 +289,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling ChargeApi->GetBrokerage");
 
-            var localVarPath = "/charges/brokerage";
+            var localVarPath = "/v2/charges/brokerage";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -350,7 +392,7 @@ namespace UpstoxClient.Api
             if (apiVersion == null)
                 throw new ApiException(400, "Missing required parameter 'apiVersion' when calling ChargeApi->GetBrokerage");
 
-            var localVarPath = "/charges/brokerage";
+            var localVarPath = "/v2/charges/brokerage";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -401,6 +443,167 @@ namespace UpstoxClient.Api
             return new ApiResponse<GetBrokerageResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (GetBrokerageResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetBrokerageResponse)));
+        }
+
+        /// <summary>
+        /// Calculate Margin Compute Margin
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>PostMarginResponse</returns>
+        public PostMarginResponse PostMargin (MarginRequest body)
+        {
+             ApiResponse<PostMarginResponse> localVarResponse = PostMarginWithHttpInfo(body);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Calculate Margin Compute Margin
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse of PostMarginResponse</returns>
+        public ApiResponse< PostMarginResponse > PostMarginWithHttpInfo (MarginRequest body)
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling ChargeApi->PostMargin");
+
+            var localVarPath = "/v2/charges/margin";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("PostMargin", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PostMarginResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (PostMarginResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PostMarginResponse)));
+        }
+
+        /// <summary>
+        /// Calculate Margin Compute Margin
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of PostMarginResponse</returns>
+        public async System.Threading.Tasks.Task<PostMarginResponse> PostMarginAsync (MarginRequest body)
+        {
+             ApiResponse<PostMarginResponse> localVarResponse = await PostMarginAsyncWithHttpInfo(body);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Calculate Margin Compute Margin
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"></param>
+        /// <returns>Task of ApiResponse (PostMarginResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PostMarginResponse>> PostMarginAsyncWithHttpInfo (MarginRequest body)
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+                throw new ApiException(400, "Missing required parameter 'body' when calling ChargeApi->PostMargin");
+
+            var localVarPath = "/v2/charges/margin";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("PostMargin", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PostMarginResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (PostMarginResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PostMarginResponse)));
         }
 
     }

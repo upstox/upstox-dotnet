@@ -52,12 +52,12 @@ namespace UpstoxClient.Client
         public ApiClient()
         {
             Configuration = UpstoxClient.Client.Configuration.Default;
-            RestClient = new RestClient("https://api-v2.upstox.com");
+            RestClient = new RestClient("https://api.upstox.com");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (https://api-v2.upstox.com).
+        /// with default base path (https://api.upstox.com).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config)
@@ -72,7 +72,7 @@ namespace UpstoxClient.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://api.upstox.com/v2")
+        public ApiClient(String basePath = "https://api.upstox.com")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
@@ -112,8 +112,17 @@ namespace UpstoxClient.Client
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
         {
-            var request = new RestRequest(path, method);
+            if (UpstoxClient.Client.Configuration.Sandbox) {
+                if(!UpstoxClient.Client.Configuration.SandboxPaths.Contains(path))
+                    throw new ApiException(400, "This API is not available in sandbox mode.");
+                RestClient.BaseUrl = new Uri("https://api-sandbox.upstox.com");
+            }
+            else if (IsOrderPath(path))
+                RestClient.BaseUrl = new Uri("https://api-hft.upstox.com");
+            else
+                RestClient.BaseUrl = new Uri("https://api.upstox.com");
 
+            var request = new RestRequest(path, method);
             // add path parameter, if any
             foreach(var param in pathParams)
                 request.AddParameter(param.Key, param.Value, ParameterType.UrlSegment);
@@ -530,5 +539,11 @@ namespace UpstoxClient.Client
         {
             return value is IList || value is ICollection;
         }
+
+        private static bool IsOrderPath(string path)
+        {
+        return path.Contains("/order/place") || path.Contains("/order/modify") || path.Contains("/order/cancel");
+        }
+
     }
 }

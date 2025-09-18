@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics.Contracts;
 
 namespace UpstoxClient.Client
 {
@@ -40,6 +41,18 @@ namespace UpstoxClient.Client
         #endregion Constants
 
         #region Static Members
+
+        public static readonly HashSet<string> SandboxPaths = new HashSet<string>
+        {
+            "/v2/order/place",
+            "/v2/order/modify",
+            "/v2/order/cancel",
+            "/v2/order/multi/place",
+            "/v3/order/place",
+            "/v3/order/modify",
+            "/v3/order/cancel"
+        };
+        public static Boolean Sandbox = false;
 
         private static readonly object GlobalConfigSync = new { };
         private static Configuration _globalConfiguration;
@@ -114,8 +127,10 @@ namespace UpstoxClient.Client
         public Configuration()
         {
             UserAgent = "Swagger-Codegen/1.0.0/csharp";
-            BasePath = "https://api-v2.upstox.com";
+            BasePath = "https://api.upstox.com";
             DefaultHeader = new ConcurrentDictionary<string, string>();
+            AddDefaultHeader("X-Upstox-SDK-Version", "1.2");
+            AddDefaultHeader("X-Upstox-SDK-Language", "dotnet");
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
 
@@ -129,7 +144,7 @@ namespace UpstoxClient.Client
             IDictionary<string, string> defaultHeader,
             IDictionary<string, string> apiKey,
             IDictionary<string, string> apiKeyPrefix,
-            string basePath = "https://api-v2.upstox.com") : this()
+            string basePath = "https://api.upstox.com") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");

@@ -20,114 +20,118 @@ namespace UpstoxClient.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IUserApi : IApiAccessor
+        public interface IOptionsApi : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
-        /// Get profile
+        /// Get option contracts
         /// </summary>
         /// <remarks>
-        /// This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
+        /// This API provides the functionality to retrieve the option contracts
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>GetProfileResponse</returns>
-        GetProfileResponse GetProfile (string apiVersion);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>GetOptionContractResponse</returns>
+        GetOptionContractResponse GetOptionContracts (string instrumentKey, string expiryDate = null);
 
         /// <summary>
-        /// Get profile
+        /// Get option contracts
         /// </summary>
         /// <remarks>
-        /// This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
+        /// This API provides the functionality to retrieve the option contracts
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of GetProfileResponse</returns>
-        ApiResponse<GetProfileResponse> GetProfileWithHttpInfo (string apiVersion);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>ApiResponse of GetOptionContractResponse</returns>
+        ApiResponse<GetOptionContractResponse> GetOptionContractsWithHttpInfo (string instrumentKey, string expiryDate = null);
         /// <summary>
-        /// Get User Fund And Margin
+        /// Get option chain
         /// </summary>
         /// <remarks>
-        /// Shows the balance of the user in equity and commodity market.
+        /// This API provides the functionality to retrieve the option chain
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>GetUserFundMarginResponse</returns>
-        GetUserFundMarginResponse GetUserFundMargin (string apiVersion, string segment = null);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>GetOptionChainResponse</returns>
+        GetOptionChainResponse GetPutCallOptionChain (string instrumentKey, string expiryDate);
 
         /// <summary>
-        /// Get User Fund And Margin
+        /// Get option chain
         /// </summary>
         /// <remarks>
-        /// Shows the balance of the user in equity and commodity market.
+        /// This API provides the functionality to retrieve the option chain
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>ApiResponse of GetUserFundMarginResponse</returns>
-        ApiResponse<GetUserFundMarginResponse> GetUserFundMarginWithHttpInfo (string apiVersion, string segment = null);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>ApiResponse of GetOptionChainResponse</returns>
+        ApiResponse<GetOptionChainResponse> GetPutCallOptionChainWithHttpInfo (string instrumentKey, string expiryDate);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
-        /// Get profile
+        /// Get option contracts
         /// </summary>
         /// <remarks>
-        /// This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
+        /// This API provides the functionality to retrieve the option contracts
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of GetProfileResponse</returns>
-        System.Threading.Tasks.Task<GetProfileResponse> GetProfileAsync (string apiVersion);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>Task of GetOptionContractResponse</returns>
+        System.Threading.Tasks.Task<GetOptionContractResponse> GetOptionContractsAsync (string instrumentKey, string expiryDate = null);
 
         /// <summary>
-        /// Get profile
+        /// Get option contracts
         /// </summary>
         /// <remarks>
-        /// This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
+        /// This API provides the functionality to retrieve the option contracts
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (GetProfileResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<GetProfileResponse>> GetProfileAsyncWithHttpInfo (string apiVersion);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>Task of ApiResponse (GetOptionContractResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetOptionContractResponse>> GetOptionContractsAsyncWithHttpInfo (string instrumentKey, string expiryDate = null);
         /// <summary>
-        /// Get User Fund And Margin
+        /// Get option chain
         /// </summary>
         /// <remarks>
-        /// Shows the balance of the user in equity and commodity market.
+        /// This API provides the functionality to retrieve the option chain
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>Task of GetUserFundMarginResponse</returns>
-        System.Threading.Tasks.Task<GetUserFundMarginResponse> GetUserFundMarginAsync (string apiVersion, string segment = null);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>Task of GetOptionChainResponse</returns>
+        System.Threading.Tasks.Task<GetOptionChainResponse> GetPutCallOptionChainAsync (string instrumentKey, string expiryDate);
 
         /// <summary>
-        /// Get User Fund And Margin
+        /// Get option chain
         /// </summary>
         /// <remarks>
-        /// Shows the balance of the user in equity and commodity market.
+        /// This API provides the functionality to retrieve the option chain
         /// </remarks>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>Task of ApiResponse (GetUserFundMarginResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<GetUserFundMarginResponse>> GetUserFundMarginAsyncWithHttpInfo (string apiVersion, string segment = null);
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>Task of ApiResponse (GetOptionChainResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetOptionChainResponse>> GetPutCallOptionChainAsyncWithHttpInfo (string instrumentKey, string expiryDate);
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class UserApi : IUserApi
+        public partial class OptionsApi : IOptionsApi
     {
         private UpstoxClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserApi"/> class.
+        /// Initializes a new instance of the <see cref="OptionsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public UserApi(String basePath)
+        public OptionsApi(String basePath)
         {
             this.Configuration = new UpstoxClient.Client.Configuration { BasePath = basePath };
 
@@ -135,10 +139,10 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserApi"/> class
+        /// Initializes a new instance of the <see cref="OptionsApi"/> class
         /// </summary>
         /// <returns></returns>
-        public UserApi()
+        public OptionsApi()
         {
             this.Configuration = UpstoxClient.Client.Configuration.Default;
 
@@ -146,12 +150,12 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserApi"/> class
+        /// Initializes a new instance of the <see cref="OptionsApi"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public UserApi(UpstoxClient.Client.Configuration configuration = null)
+        public OptionsApi(UpstoxClient.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = UpstoxClient.Client.Configuration.Default;
@@ -225,177 +229,32 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Get profile This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
+        /// Get option contracts This API provides the functionality to retrieve the option contracts
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>GetProfileResponse</returns>
-        public GetProfileResponse GetProfile (string apiVersion)
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>GetOptionContractResponse</returns>
+        public GetOptionContractResponse GetOptionContracts (string instrumentKey, string expiryDate = null)
         {
-             ApiResponse<GetProfileResponse> localVarResponse = GetProfileWithHttpInfo(apiVersion);
+             ApiResponse<GetOptionContractResponse> localVarResponse = GetOptionContractsWithHttpInfo(instrumentKey, expiryDate);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get profile This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
+        /// Get option contracts This API provides the functionality to retrieve the option contracts
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>ApiResponse of GetProfileResponse</returns>
-        public ApiResponse< GetProfileResponse > GetProfileWithHttpInfo (string apiVersion)
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>ApiResponse of GetOptionContractResponse</returns>
+        public ApiResponse< GetOptionContractResponse > GetOptionContractsWithHttpInfo (string instrumentKey, string expiryDate = null)
         {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetProfile");
+            // verify the required parameter 'instrumentKey' is set
+            if (instrumentKey == null)
+                throw new ApiException(400, "Missing required parameter 'instrumentKey' when calling OptionsApi->GetOptionContracts");
 
-            var localVarPath = "/v2/user/profile";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetProfile", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<GetProfileResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetProfileResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetProfileResponse)));
-        }
-
-        /// <summary>
-        /// Get profile This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of GetProfileResponse</returns>
-        public async System.Threading.Tasks.Task<GetProfileResponse> GetProfileAsync (string apiVersion)
-        {
-             ApiResponse<GetProfileResponse> localVarResponse = await GetProfileAsyncWithHttpInfo(apiVersion);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// Get profile This API allows to fetch the complete information of the user who is logged in including the products, order types and exchanges enabled for the user
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <returns>Task of ApiResponse (GetProfileResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<GetProfileResponse>> GetProfileAsyncWithHttpInfo (string apiVersion)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetProfile");
-
-            var localVarPath = "/v2/user/profile";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*",
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
-            // authentication (OAUTH2) required
-            // oauth required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("GetProfile", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<GetProfileResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetProfileResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetProfileResponse)));
-        }
-
-        /// <summary>
-        /// Get User Fund And Margin Shows the balance of the user in equity and commodity market.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>GetUserFundMarginResponse</returns>
-        public GetUserFundMarginResponse GetUserFundMargin (string apiVersion, string segment = null)
-        {
-             ApiResponse<GetUserFundMarginResponse> localVarResponse = GetUserFundMarginWithHttpInfo(apiVersion, segment);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Get User Fund And Margin Shows the balance of the user in equity and commodity market.
-        /// </summary>
-        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>ApiResponse of GetUserFundMarginResponse</returns>
-        public ApiResponse< GetUserFundMarginResponse > GetUserFundMarginWithHttpInfo (string apiVersion, string segment = null)
-        {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetUserFundMargin");
-
-            var localVarPath = "/v2/user/get-funds-and-margin";
+            var localVarPath = "/v2/option/contract";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -417,8 +276,8 @@ namespace UpstoxClient.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (segment != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "segment", segment)); // query parameter
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
+            if (instrumentKey != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "instrument_key", instrumentKey)); // query parameter
+            if (expiryDate != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "expiry_date", expiryDate)); // query parameter
             // authentication (OAUTH2) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
@@ -435,43 +294,43 @@ namespace UpstoxClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetUserFundMargin", localVarResponse);
+                Exception exception = ExceptionFactory("GetOptionContracts", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<GetUserFundMarginResponse>(localVarStatusCode,
+            return new ApiResponse<GetOptionContractResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetUserFundMarginResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetUserFundMarginResponse)));
+                (GetOptionContractResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOptionContractResponse)));
         }
 
         /// <summary>
-        /// Get User Fund And Margin Shows the balance of the user in equity and commodity market.
+        /// Get option contracts This API provides the functionality to retrieve the option contracts
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>Task of GetUserFundMarginResponse</returns>
-        public async System.Threading.Tasks.Task<GetUserFundMarginResponse> GetUserFundMarginAsync (string apiVersion, string segment = null)
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>Task of GetOptionContractResponse</returns>
+        public async System.Threading.Tasks.Task<GetOptionContractResponse> GetOptionContractsAsync (string instrumentKey, string expiryDate = null)
         {
-             ApiResponse<GetUserFundMarginResponse> localVarResponse = await GetUserFundMarginAsyncWithHttpInfo(apiVersion, segment);
+             ApiResponse<GetOptionContractResponse> localVarResponse = await GetOptionContractsAsyncWithHttpInfo(instrumentKey, expiryDate);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Get User Fund And Margin Shows the balance of the user in equity and commodity market.
+        /// Get option contracts This API provides the functionality to retrieve the option contracts
         /// </summary>
         /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="apiVersion">API Version Header</param>
-        /// <param name="segment"> (optional)</param>
-        /// <returns>Task of ApiResponse (GetUserFundMarginResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<GetUserFundMarginResponse>> GetUserFundMarginAsyncWithHttpInfo (string apiVersion, string segment = null)
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd (optional)</param>
+        /// <returns>Task of ApiResponse (GetOptionContractResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetOptionContractResponse>> GetOptionContractsAsyncWithHttpInfo (string instrumentKey, string expiryDate = null)
         {
-            // verify the required parameter 'apiVersion' is set
-            if (apiVersion == null)
-                throw new ApiException(400, "Missing required parameter 'apiVersion' when calling UserApi->GetUserFundMargin");
+            // verify the required parameter 'instrumentKey' is set
+            if (instrumentKey == null)
+                throw new ApiException(400, "Missing required parameter 'instrumentKey' when calling OptionsApi->GetOptionContracts");
 
-            var localVarPath = "/v2/user/get-funds-and-margin";
+            var localVarPath = "/v2/option/contract";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -493,8 +352,8 @@ namespace UpstoxClient.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (segment != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "segment", segment)); // query parameter
-            if (apiVersion != null) localVarHeaderParams.Add("Api-Version", this.Configuration.ApiClient.ParameterToString(apiVersion)); // header parameter
+            if (instrumentKey != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "instrument_key", instrumentKey)); // query parameter
+            if (expiryDate != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "expiry_date", expiryDate)); // query parameter
             // authentication (OAUTH2) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
@@ -511,13 +370,170 @@ namespace UpstoxClient.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetUserFundMargin", localVarResponse);
+                Exception exception = ExceptionFactory("GetOptionContracts", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<GetUserFundMarginResponse>(localVarStatusCode,
+            return new ApiResponse<GetOptionContractResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (GetUserFundMarginResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetUserFundMarginResponse)));
+                (GetOptionContractResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOptionContractResponse)));
+        }
+
+        /// <summary>
+        /// Get option chain This API provides the functionality to retrieve the option chain
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>GetOptionChainResponse</returns>
+        public GetOptionChainResponse GetPutCallOptionChain (string instrumentKey, string expiryDate)
+        {
+             ApiResponse<GetOptionChainResponse> localVarResponse = GetPutCallOptionChainWithHttpInfo(instrumentKey, expiryDate);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get option chain This API provides the functionality to retrieve the option chain
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>ApiResponse of GetOptionChainResponse</returns>
+        public ApiResponse< GetOptionChainResponse > GetPutCallOptionChainWithHttpInfo (string instrumentKey, string expiryDate)
+        {
+            // verify the required parameter 'instrumentKey' is set
+            if (instrumentKey == null)
+                throw new ApiException(400, "Missing required parameter 'instrumentKey' when calling OptionsApi->GetPutCallOptionChain");
+            // verify the required parameter 'expiryDate' is set
+            if (expiryDate == null)
+                throw new ApiException(400, "Missing required parameter 'expiryDate' when calling OptionsApi->GetPutCallOptionChain");
+
+            var localVarPath = "/v2/option/chain";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (instrumentKey != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "instrument_key", instrumentKey)); // query parameter
+            if (expiryDate != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "expiry_date", expiryDate)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPutCallOptionChain", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetOptionChainResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetOptionChainResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOptionChainResponse)));
+        }
+
+        /// <summary>
+        /// Get option chain This API provides the functionality to retrieve the option chain
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>Task of GetOptionChainResponse</returns>
+        public async System.Threading.Tasks.Task<GetOptionChainResponse> GetPutCallOptionChainAsync (string instrumentKey, string expiryDate)
+        {
+             ApiResponse<GetOptionChainResponse> localVarResponse = await GetPutCallOptionChainAsyncWithHttpInfo(instrumentKey, expiryDate);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get option chain This API provides the functionality to retrieve the option chain
+        /// </summary>
+        /// <exception cref="UpstoxClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="instrumentKey">Instrument key for an underlying symbol</param>
+        /// <param name="expiryDate">Expiry date in format: YYYY-mm-dd</param>
+        /// <returns>Task of ApiResponse (GetOptionChainResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<GetOptionChainResponse>> GetPutCallOptionChainAsyncWithHttpInfo (string instrumentKey, string expiryDate)
+        {
+            // verify the required parameter 'instrumentKey' is set
+            if (instrumentKey == null)
+                throw new ApiException(400, "Missing required parameter 'instrumentKey' when calling OptionsApi->GetPutCallOptionChain");
+            // verify the required parameter 'expiryDate' is set
+            if (expiryDate == null)
+                throw new ApiException(400, "Missing required parameter 'expiryDate' when calling OptionsApi->GetPutCallOptionChain");
+
+            var localVarPath = "/v2/option/chain";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json",
+                "*/*"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (instrumentKey != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "instrument_key", instrumentKey)); // query parameter
+            if (expiryDate != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "expiry_date", expiryDate)); // query parameter
+            // authentication (OAUTH2) required
+            // oauth required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPutCallOptionChain", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<GetOptionChainResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (GetOptionChainResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(GetOptionChainResponse)));
         }
 
     }
