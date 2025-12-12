@@ -1,67 +1,34 @@
-using System;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder.Listener;
 
 namespace UpstoxClient.Feeder
 {
     public abstract class Feeder
     {
-        protected UpstoxClient.Client.Configuration Configuration { get; protected set; }
-        protected ClientWebSocket WebSocket { get; protected set; }
+        protected readonly IWebsocketApi WebsocketApi;
+        protected ClientWebSocket? WebSocket;
 
-        protected event Action OnOpen;
-        protected event Action<byte[], WebSocketReceiveResult> OnBinaryMessage;
-        protected event Action<string> OnTextMessage;
-        protected event Action<Exception> OnError;
-        protected event Action<int, string> OnClose;
+        protected IOnOpenListener? OnOpenListener;
+        protected IOnMessageListener? OnMessageListener;
+        protected IOnErrorListener? OnErrorListener;
+        protected IOnCloseListener? OnCloseListener;
 
-        public Feeder()
+        protected Feeder(IWebsocketApi websocketApi)
         {
+            WebsocketApi = websocketApi;
         }
-        protected void RaiseOnOpenEvent()
-        {
-            if (OnOpen != null)
-            {
-                OnOpen();
-            }
-        }
-        protected void RaiseOnBinaryMessageEvent(byte[] message, WebSocketReceiveResult result)
-        {
-            if (OnBinaryMessage != null)
-            {
-                OnBinaryMessage(message, result);
-            }
-        }
-        protected void RaiseOnTextMessageEvent(string message)
-        {
-            if (OnTextMessage != null)
-            {
-                OnTextMessage(message);
-            }
-        }
-        protected void RaiseOnErrorEvent(Exception exception)
-        {
-            if (OnError != null)
-            {
-                OnError(exception);
-            }
-        }
-        protected void RaiseOnCloseEvent(int code, string reason)
-        {
-            if (OnClose != null)
-            {
-                OnClose(code, reason);
-            }
-        }
-        public abstract Task ConnectAsync();
-        public async Task DisconnectAsync()
-        {
-            await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
 
-            if (OnClose != null)
+        public abstract Task ConnectAsync(CancellationToken cancellationToken = default);
+
+        public virtual async Task DisconnectAsync()
+        {
+            if (WebSocket != null)
             {
-                OnClose(1000, "User Initiated Shutdown");
+                await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "client disconnect", CancellationToken.None)
+                    .ConfigureAwait(false);
             }
         }
     }
