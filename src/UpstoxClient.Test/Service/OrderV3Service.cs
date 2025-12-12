@@ -35,7 +35,7 @@ namespace UpstoxClient.Test.Service
                 quantity: 1,
                 product: PlaceOrderV3Request.ProductEnum.I,
                 validity: PlaceOrderV3Request.ValidityEnum.DAY,
-                price: 12f,
+                price: 11f,
                 instrumentToken: "NSE_EQ|INE669E01016",
                 orderType: PlaceOrderV3Request.OrderTypeEnum.LIMIT,
                 transactionType: PlaceOrderV3Request.TransactionTypeEnum.BUY,
@@ -67,6 +67,51 @@ namespace UpstoxClient.Test.Service
             }
 
         }
+
+                /// <summary>
+        /// Minimal sanity check for PlaceOrder V3 flow
+        /// </summary>
+        public static async Task SanityAlgoPlaceOrderV3Test(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderV3Api>();
+
+            var orderRequest = new PlaceOrderV3Request(
+                quantity: 1,
+                product: PlaceOrderV3Request.ProductEnum.D,
+                validity: PlaceOrderV3Request.ValidityEnum.DAY,
+                price: 11f,
+                instrumentToken: "NSE_EQ|INE669E01016",
+                orderType: PlaceOrderV3Request.OrderTypeEnum.LIMIT,
+                transactionType: PlaceOrderV3Request.TransactionTypeEnum.BUY,
+                disclosedQuantity: 0,
+                triggerPrice: 0.0f,
+                isAmo: true,
+                tag: "sanity_place_order_v3"
+            );
+
+            var response = await orderApi.PlaceOrderAsync(orderRequest, algoName: "name");
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine("PlaceOrderV3 response is null");
+                return;
+            }
+
+            if (result.Status != PlaceOrderV3Response.StatusEnum.Success)
+            {
+                Console.WriteLine($"PlaceOrderV3 test failed with status: {result.Status}");
+                return;
+            }
+
+            if (result.Data == null || result.Data.OrderIds == null || result.Data.OrderIds.Count == 0)
+            {
+                Console.WriteLine("PlaceOrderV3 data is missing order ids");
+                return;
+            }
+
+        }
+
 
         /// <summary>
         /// Places an order with the specified parameters
@@ -357,6 +402,50 @@ namespace UpstoxClient.Test.Service
             }
         }
 
+
+        public static async Task SanityAlgoCancelGTTOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderV3Api>();
+            var cancelRequest = new GttCancelOrderRequest(
+                gttOrderId: "GTT-123412342"
+            );
+
+            var response = await orderApi.CancelGTTOrderAsync(
+                cancelRequest,
+                origin: "web", 
+                algoName: "name"
+            );
+
+            if (!string.IsNullOrEmpty(response.RawContent) &&
+                response.RawContent.Contains("UDAPI100010", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+            
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine("CancelGTTOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != GttTriggerOrderResponse.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("CancelGTTOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("CancelGTTOrder data is null");
+                return;
+            }
+        }
+
         /// <summary>
         /// Tests the CancelOrder API functionality
         /// </summary>
@@ -445,6 +534,44 @@ namespace UpstoxClient.Test.Service
                 return;
             }
         }
+
+        public static async Task SanityAlgoCancelOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderV3Api>();
+            var response = await orderApi.CancelOrderAsync(
+                orderId: "23421342",
+                algoName: "name"
+            );
+            if (!string.IsNullOrEmpty(response.RawContent) &&
+                response.RawContent.Contains("UDAPI100010", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine($"Response: {response.RawContent}");
+                Console.WriteLine("CancelOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != CancelOrderV3Response.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("CancelOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("CancelOrder data is null");
+                return;
+            }
+        }
+
 
         /// <summary>
         /// Tests the GetGttOrderDetails API functionality
@@ -672,6 +799,60 @@ namespace UpstoxClient.Test.Service
             }
         }
 
+        public static async Task SanityAlgoModifyGTTOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderV3Api>();
+            var rules = new List<GttRule>
+            {
+                new GttRule(
+                    strategy: GttRule.StrategyEnum.ENTRY,
+                    triggerType: GttRule.TriggerTypeEnum.ABOVE,
+                    triggerPrice: 950.0
+                )
+            };
+            var modifyRequest = new GttModifyOrderRequest(
+                rules: rules,
+                type: GttModifyOrderRequest.TypeEnum.SINGLE,
+                quantity: 1,
+                gttOrderId: "GTT-C25111200273"
+            );
+
+            var response = await orderApi.ModifyGTTOrderAsync(
+                modifyRequest,
+                origin: "web",
+                algoName: "name"
+            );
+            if (!string.IsNullOrEmpty(response.RawContent) &&
+                response.RawContent.Contains("UDAPI100010", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine($"Response: {response.RawContent}");
+                Console.WriteLine("ModifyGTTOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != GttTriggerOrderResponse.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("ModifyGTTOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("ModifyGTTOrder data is null");
+                return;
+            }
+        }
+
+
         /// <summary>
         /// Tests the ModifyOrder API functionality
         /// </summary>
@@ -747,6 +928,51 @@ namespace UpstoxClient.Test.Service
             );
 
             var response = await orderApi.ModifyOrderAsync(modifyRequest);
+            if (!string.IsNullOrEmpty(response.RawContent) &&
+                response.RawContent.Contains("UDAPI100010", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+            
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine($"Response: {response.RawContent}");
+                Console.WriteLine("ModifyOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != ModifyOrderV3Response.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("ModifyOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("ModifyOrder data is null");
+                return;
+            }
+        }
+
+        public static async Task SanityAlgoModifyOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderV3Api>();
+            var modifyRequest = new ModifyOrderRequest(
+                quantity: 1,
+                price: 1.5f,
+                orderId: "123242314",
+                orderType: ModifyOrderRequest.OrderTypeEnum.LIMIT,
+                triggerPrice: 0.0f,
+                disclosedQuantity: 0,
+                validity: ModifyOrderRequest.ValidityEnum.DAY
+            );
+
+            var response = await orderApi.ModifyOrderAsync(modifyRequest, algoName: "name");
             if (!string.IsNullOrEmpty(response.RawContent) &&
                 response.RawContent.Contains("UDAPI100010", StringComparison.OrdinalIgnoreCase))
             {
@@ -897,5 +1123,58 @@ namespace UpstoxClient.Test.Service
                 return;
             }
         }
+        
+
+        public static async Task SanityAlgoPlaceGTTOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderV3Api>();
+            var rules = new List<GttRule>
+            {
+                new GttRule(
+                    strategy: GttRule.StrategyEnum.ENTRY,
+                    triggerType: GttRule.TriggerTypeEnum.ABOVE,
+                    triggerPrice: 950.0
+                )
+            };
+            var placeRequest = new GttPlaceOrderRequest(
+                rules: rules,
+                type: GttPlaceOrderRequest.TypeEnum.SINGLE,
+                quantity: 1,
+                product: GttPlaceOrderRequest.ProductEnum.I,
+                instrumentToken: "NSE_EQ|INE669E01016",
+                transactionType: GttPlaceOrderRequest.TransactionTypeEnum.BUY
+            );
+
+            var response = await orderApi.PlaceGTTOrderAsync(
+                placeRequest,
+                origin: "web",
+                algoName: "name"
+            );
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine($"Response: {response.RawContent}");
+                Console.WriteLine("PlaceGTTOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != GttTriggerOrderResponse.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("PlaceGTTOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("PlaceGTTOrder data is null");
+                return;
+            }
+        }
+        
+
     }
 }

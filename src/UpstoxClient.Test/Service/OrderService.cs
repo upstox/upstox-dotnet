@@ -196,6 +196,48 @@ namespace UpstoxClient.Test.Service
         }
 
 
+        public static async Task SanityAlgoCancelMultiOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderApi>();
+            var response = await orderApi.CancelMultiOrderAsync(
+                tag: null,
+                segment: "NSE_EQ",
+                algoName: "name"
+            );
+
+            if (!string.IsNullOrEmpty(response.RawContent) &&
+                response.RawContent.Contains("UDAPI1109", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine($"Response: {response.RawContent}");
+                Console.WriteLine("CancelMultiOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != CancelOrExitMultiOrderResponse.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("CancelMultiOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("CancelMultiOrder data is null");
+                return;
+            }
+        }
+
+
+
         /// <summary>
         /// Tests the ExitPositions API functionality
         /// </summary>
@@ -275,6 +317,46 @@ namespace UpstoxClient.Test.Service
             var response = await orderApi.ExitPositionsAsync(
                 tag: null,
                 segment: "NSE_EQ"
+            );
+
+            if (!string.IsNullOrEmpty(response.RawContent) &&
+                response.RawContent.Contains("UDAPI1159", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine($"Response: {response.RawContent}");  
+                Console.WriteLine("ExitPositions response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != CancelOrExitMultiOrderResponse.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("ExitPositions test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("ExitPositions data is null");
+                return;
+            }
+        }
+
+        public static async Task SanityAlgoExitPositionsTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderApi>();
+            var response = await orderApi.ExitPositionsAsync(
+                tag: null,
+                segment: "NSE_EQ",
+                algoName: "name"
             );
 
             if (!string.IsNullOrEmpty(response.RawContent) &&
@@ -802,6 +884,72 @@ namespace UpstoxClient.Test.Service
             var response = await orderApi.PlaceMultiOrderAsync(
                 multiOrderRequest,
                 origin: "web"
+            );
+            var result = response.Ok();
+
+            if (result == null)
+            {
+                Console.WriteLine("PlaceMultiOrder response is null");
+                return;
+            }
+
+            // Check for success status
+            if (result.Status != MultiOrderResponse.StatusEnum.Success)
+            {
+                // TODO: Add valid error codes handling here
+                Console.WriteLine("PlaceMultiOrder test failed");
+                return;
+            }
+
+            // Validate data exists if applicable
+            if (result.Data == null)
+            {
+                Console.WriteLine("PlaceMultiOrder data is null");
+                return;
+            }
+        }
+
+        public static async Task SanityAlgoPlaceMultiOrderTest(IServiceProvider services)
+        {
+            var orderApi = services.GetRequiredService<IOrderApi>();
+            var multiOrderRequest = new List<MultiOrderRequest>
+            {
+                new MultiOrderRequest(
+                    instrumentToken: "NSE_EQ|INE669E01016",
+                    transactionType: MultiOrderRequest.TransactionTypeEnum.BUY,
+                    orderType: MultiOrderRequest.OrderTypeEnum.LIMIT,
+                    quantity: 1,
+                    price: 1000.0f,
+                    product: MultiOrderRequest.ProductEnum.I,
+                    validity: MultiOrderRequest.ValidityEnum.DAY,
+                    correlationId: "1",
+                    tag: "test_tag",
+                    slice: true,
+                    disclosedQuantity: 0,
+                    triggerPrice: 0.0f,
+                    isAmo: true
+                ),
+                new MultiOrderRequest(
+                    instrumentToken: "NSE_EQ|INE669E01016",
+                    transactionType: MultiOrderRequest.TransactionTypeEnum.BUY,
+                    orderType: MultiOrderRequest.OrderTypeEnum.LIMIT,
+                    quantity: 1,
+                    price: 1000.0f,
+                    product: MultiOrderRequest.ProductEnum.I,
+                    validity: MultiOrderRequest.ValidityEnum.DAY,
+                    correlationId: "2",
+                    tag: "test_tag",
+                    slice: true,
+                    disclosedQuantity: 0,
+                    triggerPrice: 0.0f,
+                    isAmo: true
+                )
+            };
+
+            var response = await orderApi.PlaceMultiOrderAsync(
+                multiOrderRequest,
+                origin: "web",
+                algoName: "name"
             );
             var result = response.Ok();
 

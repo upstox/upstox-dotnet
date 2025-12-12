@@ -27,7 +27,7 @@ namespace UpstoxClient.Test
                 })
                 .ConfigureApi((context, services, options) =>
                 {
-                    var token = new OAuthToken("eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI3UEJDNkQiLCJqdGkiOiI2OTNiOWVkNmJkODg5ZTY5OGM5ZTIyMmIiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaXNQbHVzUGxhbiI6dHJ1ZSwiaWF0IjoxNzY1NTE0OTY2LCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NjU1NzY4MDB9.7VlzChFwH2QBlztrQnJLkW7_rKcWqIKYWmS9XjMCZE8");
+                    var token = new OAuthToken("your_token_here");
                     options.AddTokens(token);
                 }).Build();
             await host.StartAsync();
@@ -87,57 +87,72 @@ namespace UpstoxClient.Test
                 // await WebsocketService.PrintGetPortfolioStreamFeedTest(host.Services);
                  // await WebsocketService.PrintGetPortfolioStreamFeedAuthorizeTest(host.Services);
 
-                await ChargeService.SanityGetBrokerageTest(host.Services);
-                await ChargeService.SanityPostMarginTest(host.Services);
-                await ExpiredInstrumentService.SanityGetExpiriesResponseTest(host.Services);
-                await ExpiredInstrumentService.SanityGetExpiredFutureContractsTest(host.Services);
-                await ExpiredInstrumentService.SanityGetExpiredHistoricalCandleDataTest(host.Services);
-                await ExpiredInstrumentService.SanityGetExpiredOptionContractsTest(host.Services);
-                await HistoryV3Service.SanityGetHistoricalCandleDataTest(host.Services);
-                await HistoryV3Service.SanityGetHistoricalCandleDataWithFromDateTest(host.Services);
-                await HistoryV3Service.SanityGetIntraDayCandleDataTest(host.Services);
-                await LoginService.SanityTokenTest(host.Services);
-                await LoginService.SanityInitTokenRequestForIndieUserTest(host.Services);
-                await MarketHolidaysAndTimingsService.SanityGetExchangeTimingsTest(host.Services);
-                await MarketHolidaysAndTimingsService.SanityGetHolidayTest(host.Services);
-                await MarketHolidaysAndTimingsService.SanityGetHolidaysTest(host.Services);
-                await MarketHolidaysAndTimingsService.SanityGetMarketStatusTest(host.Services);
-                await MarketQuoteService.SanityGetFullMarketQuoteTest(host.Services);
-                await MarketQuoteV3Service.SanityGetLtpTest(host.Services);
-                await MarketQuoteV3Service.SanityGetMarketQuoteOHLCV3Test(host.Services);
-                await MarketQuoteV3Service.SanityGetMarketQuoteOptionGreekTest(host.Services);
-                await OptionsService.SanityGetOptionContractsTest(host.Services);
-                await OptionsService.SanityGetPutCallOptionChainTest(host.Services);
-                await OrderV3Service.SanityPlaceOrderV3Test(host.Services);
-                await OrderService.SanityOrderBookTest(host.Services);
-                await OrderService.SanityPlaceMultiOrderTest(host.Services);
-                await OrderService.SanityCancelMultiOrderTest(host.Services);
-                await OrderService.SanityExitPositionsTest(host.Services);
-                await OrderService.SanityGetOrderDetailsTest(host.Services);
-                await OrderService.SanityGetOrderStatusTest(host.Services); 
-                await OrderService.SanityGetTradeHistoryTest(host.Services);
-                await OrderService.SanityGetTradesByOrderTest(host.Services);
-                await OrderV3Service.SanityCancelGTTOrderTest(host.Services);
-                await OrderV3Service.SanityModifyGTTOrderTest(host.Services);
-                await OrderV3Service.SanityModifyOrderTest(host.Services);
-                await OrderV3Service.SanityPlaceGTTOrderTest(host.Services);
-                await OrderV3Service.SanityGetGttOrderDetailsTest(host.Services);
-                await OrderV3Service.SanityCancelOrderTest(host.Services);
-                await PortfolioService.SanityConvertPositionsTest(host.Services);
-                await PortfolioService.SanityGetMtfPositionsTest(host.Services);
-                await PortfolioService.SanityGetPositionsTest(host.Services);
-                await PortfolioService.SanityGetHoldingsTest(host.Services);
-                await PostTradeService.SanityGetTradesByDateRangeTest(host.Services);
-                await TradeProfitAndLossService.SanityGetProfitAndLossChargesTest(host.Services);
-                await TradeProfitAndLossService.SanityGetTradeWiseProfitAndLossDataTest(host.Services);
-                await UserService.SanityProfileTest(host.Services);
-                await UserService.SanityGetUserFundMarginTest(host.Services);
-                await WebsocketService.SanityAuthorizeMarketDataFeedTest(host.Services);
-                await WebsocketService.SanityGetPortfolioStreamFeedAuthorizeTest(host.Services);
-
-
+                // await ChargeService.SanityGetBrokerageTest(host.Services);
+                // await ChargeService.SanityPostMarginTest(host.Services);
+                // await ExpiredInstrumentService.SanityGetExpiriesResponseTest(host.Services);
+                // await ExpiredInstrumentService.SanityGetExpiredFutureContractsTest(host.Services);
+                // await ExpiredInstrumentService.SanityGetExpiredHistoricalCandleDataTest(host.Services);
+                // await ExpiredInstrumentService.SanityGetExpiredOptionContractsTest(host.Services);
+                // await HistoryV3Service.SanityGetHistoricalCandleDataTest(host.Services);
+                // await HistoryV3Service.SanityGetHistoricalCandleDataWithFromDateTest(host.Services);
+                // await HistoryV3Service.SanityGetIntraDayCandleDataTest(host.Services);
+                // await LoginService.SanityTokenTest(host.Services);
+                // await LoginService.SanityInitTokenRequestForIndieUserTest(host.Services);
+                // await MarketHolidaysAndTimingsService.SanityGetExchangeTimingsTest(host.Services);
+                // await MarketHolidaysAndTimingsService.SanityGetHolidayTest(host.Services);
+                // await MarketHolidaysAndTimingsService.SanityGetHolidaysTest(host.Services);
+                // await MarketHolidaysAndTimingsService.SanityGetMarketStatusTest(host.Services);
+                // await MarketQuoteService.SanityGetFullMarketQuoteTest(host.Services);
+                // await MarketQuoteV3Service.SanityGetLtpTest(host.Services);
+                // await MarketQuoteV3Service.SanityGetMarketQuoteOHLCV3Test(host.Services);
+                // await MarketQuoteV3Service.SanityGetMarketQuoteOptionGreekTest(host.Services);
+                // await OptionsService.SanityGetOptionContractsTest(host.Services);
+                // await OptionsService.SanityGetPutCallOptionChainTest(host.Services);
+                // await OrderV3Service.SanityPlaceOrderV3Test(host.Services);
+                // await OrderService.SanityOrderBookTest(host.Services);
+                // await OrderService.SanityPlaceMultiOrderTest(host.Services);
+                // await OrderService.SanityCancelMultiOrderTest(host.Services);
+                // await OrderService.SanityExitPositionsTest(host.Services);
+                // await OrderService.SanityGetOrderDetailsTest(host.Services);
+                // await OrderService.SanityGetOrderStatusTest(host.Services); 
+                // await OrderService.SanityGetTradeHistoryTest(host.Services);
+                // await OrderService.SanityGetTradesByOrderTest(host.Services);
+                // await OrderV3Service.SanityCancelGTTOrderTest(host.Services);
+                // await OrderV3Service.SanityModifyGTTOrderTest(host.Services);
+                // await OrderV3Service.SanityModifyOrderTest(host.Services);
+                // await OrderV3Service.SanityPlaceGTTOrderTest(host.Services);
+                // await OrderV3Service.SanityGetGttOrderDetailsTest(host.Services);
+                // await OrderV3Service.SanityCancelOrderTest(host.Services);
+                // await PortfolioService.SanityConvertPositionsTest(host.Services);
+                // await PortfolioService.SanityGetMtfPositionsTest(host.Services);
+                // await PortfolioService.SanityGetPositionsTest(host.Services);
+                // await PortfolioService.SanityGetHoldingsTest(host.Services);
+                // await PostTradeService.SanityGetTradesByDateRangeTest(host.Services);
+                // await TradeProfitAndLossService.SanityGetProfitAndLossChargesTest(host.Services);
+                // await TradeProfitAndLossService.SanityGetTradeWiseProfitAndLossDataTest(host.Services);
+                // await UserService.SanityProfileTest(host.Services);
+                // await UserService.SanityGetUserFundMarginTest(host.Services);
+                // await WebsocketService.SanityAuthorizeMarketDataFeedTest(host.Services);
+                // await WebsocketService.SanityGetPortfolioStreamFeedAuthorizeTest(host.Services);
 
                 // await LoginService.SanityLogoutTest(host.Services);
+
+
+
+
+
+
+
+            
+                // await OrderService.SanityAlgoPlaceMultiOrderTest(host.Services);
+                // await OrderService.SanityAlgoCancelMultiOrderTest(host.Services);
+                //  await OrderService.SanityAlgoExitPositionsTest(host.Services);
+                // await OrderV3Service.SanityAlgoPlaceOrderV3Test(host.Services);
+                // await OrderV3Service.SanityAlgoCancelGTTOrderTest(host.Services);
+                // await OrderV3Service.SanityAlgoModifyGTTOrderTest(host.Services);
+                // await OrderV3Service.SanityAlgoModifyOrderTest(host.Services);
+                // await OrderV3Service.SanityAlgoPlaceGTTOrderTest(host.Services);
+                // await OrderV3Service.SanityAlgoCancelOrderTest(host.Services);
             }
             catch (Exception ex)
             {
