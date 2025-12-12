@@ -46,7 +46,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelGTTOrderApiResponse"/>&gt;</returns>
-        Task<ICancelGTTOrderApiResponse> CancelGTTOrderAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICancelGTTOrderApiResponse> CancelGTTOrderAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancel GTT order
@@ -58,7 +58,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelGTTOrderApiResponse"/>?&gt;</returns>
-        Task<ICancelGTTOrderApiResponse?> CancelGTTOrderOrDefaultAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICancelGTTOrderApiResponse?> CancelGTTOrderOrDefaultAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -70,7 +70,7 @@ namespace UpstoxClient.Api
         /// <param name="orderId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelOrderApiResponse"/>&gt;</returns>
-        Task<ICancelOrderApiResponse> CancelOrderAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICancelOrderApiResponse> CancelOrderAsync(string? orderId = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -81,7 +81,7 @@ namespace UpstoxClient.Api
         /// <param name="orderId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelOrderApiResponse"/>?&gt;</returns>
-        Task<ICancelOrderApiResponse?> CancelOrderOrDefaultAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICancelOrderApiResponse?> CancelOrderOrDefaultAsync(string? orderId = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get GTT order details
@@ -117,7 +117,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyGTTOrderApiResponse"/>&gt;</returns>
-        Task<IModifyGTTOrderApiResponse> ModifyGTTOrderAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IModifyGTTOrderApiResponse> ModifyGTTOrderAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Modify GTT order
@@ -129,7 +129,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyGTTOrderApiResponse"/>?&gt;</returns>
-        Task<IModifyGTTOrderApiResponse?> ModifyGTTOrderOrDefaultAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IModifyGTTOrderApiResponse?> ModifyGTTOrderOrDefaultAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -141,7 +141,7 @@ namespace UpstoxClient.Api
         /// <param name="modifyOrderRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyOrderApiResponse"/>&gt;</returns>
-        Task<IModifyOrderApiResponse> ModifyOrderAsync(ModifyOrderRequest modifyOrderRequest, System.Threading.CancellationToken cancellationToken = default);
+        Task<IModifyOrderApiResponse> ModifyOrderAsync(ModifyOrderRequest modifyOrderRequest, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -152,7 +152,7 @@ namespace UpstoxClient.Api
         /// <param name="modifyOrderRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyOrderApiResponse"/>?&gt;</returns>
-        Task<IModifyOrderApiResponse?> ModifyOrderOrDefaultAsync(ModifyOrderRequest modifyOrderRequest, System.Threading.CancellationToken cancellationToken = default);
+        Task<IModifyOrderApiResponse?> ModifyOrderOrDefaultAsync(ModifyOrderRequest modifyOrderRequest, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Place GTT order
@@ -165,7 +165,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceGTTOrderApiResponse"/>&gt;</returns>
-        Task<IPlaceGTTOrderApiResponse> PlaceGTTOrderAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IPlaceGTTOrderApiResponse> PlaceGTTOrderAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Place GTT order
@@ -177,7 +177,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceGTTOrderApiResponse"/>?&gt;</returns>
-        Task<IPlaceGTTOrderApiResponse?> PlaceGTTOrderOrDefaultAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IPlaceGTTOrderApiResponse?> PlaceGTTOrderOrDefaultAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -187,9 +187,10 @@ namespace UpstoxClient.Api
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="placeOrderV3Request"></param>
+        /// <param name="algoName"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceOrderApiResponse"/>&gt;</returns>
-        Task<IPlaceOrderApiResponse> PlaceOrderAsync(PlaceOrderV3Request placeOrderV3Request, System.Threading.CancellationToken cancellationToken = default);
+        Task<IPlaceOrderApiResponse> PlaceOrderAsync(PlaceOrderV3Request placeOrderV3Request, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -198,9 +199,10 @@ namespace UpstoxClient.Api
         /// 
         /// </remarks>
         /// <param name="placeOrderV3Request"></param>
+        /// <param name="algoName"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceOrderApiResponse"/>?&gt;</returns>
-        Task<IPlaceOrderApiResponse?> PlaceOrderOrDefaultAsync(PlaceOrderV3Request placeOrderV3Request, System.Threading.CancellationToken cancellationToken = default);
+        Task<IPlaceOrderApiResponse?> PlaceOrderOrDefaultAsync(PlaceOrderV3Request placeOrderV3Request, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -777,10 +779,10 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="gttCancelOrderRequest"></param>
         /// <param name="origin"></param>
-        private void OnErrorCancelGTTOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin)
+        private void OnErrorCancelGTTOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCancelGTTOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, gttCancelOrderRequest, origin);
+            OnErrorCancelGTTOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, gttCancelOrderRequest, origin, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -794,7 +796,7 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="gttCancelOrderRequest"></param>
         /// <param name="origin"></param>
-        partial void OnErrorCancelGTTOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin);
+        partial void OnErrorCancelGTTOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin, string? algoName);
 
         /// <summary>
         /// Cancel GTT order This API allows you to cancel GTT orders.
@@ -803,11 +805,11 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelGTTOrderApiResponse"/>&gt;</returns>
-        public async Task<ICancelGTTOrderApiResponse?> CancelGTTOrderOrDefaultAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICancelGTTOrderApiResponse?> CancelGTTOrderOrDefaultAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CancelGTTOrderAsync(gttCancelOrderRequest, origin, cancellationToken).ConfigureAwait(false);
+                return await CancelGTTOrderAsync(gttCancelOrderRequest, origin, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -823,7 +825,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelGTTOrderApiResponse"/>&gt;</returns>
-        public async Task<ICancelGTTOrderApiResponse> CancelGTTOrderAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICancelGTTOrderApiResponse> CancelGTTOrderAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -857,6 +859,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] contentTypes = new string[] {
                         "application/json"
@@ -909,7 +914,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorCancelGTTOrderDefaultImplementation(e, "/v3/order/gtt/cancel", uriBuilderLocalVar.Path, gttCancelOrderRequest, origin);
+                OnErrorCancelGTTOrderDefaultImplementation(e, "/v3/order/gtt/cancel", uriBuilderLocalVar.Path, gttCancelOrderRequest, origin, algoName);
                 Events.ExecuteOnErrorCancelGTTOrder(e);
                 throw;
             }
@@ -1266,10 +1271,10 @@ namespace UpstoxClient.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="orderId"></param>
-        private void OnErrorCancelOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? orderId)
+        private void OnErrorCancelOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? orderId, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCancelOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, orderId);
+            OnErrorCancelOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, orderId, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1282,7 +1287,7 @@ namespace UpstoxClient.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="orderId"></param>
-        partial void OnErrorCancelOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? orderId);
+        partial void OnErrorCancelOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? orderId, string? algoName);
 
         /// <summary>
         ///  
@@ -1290,11 +1295,11 @@ namespace UpstoxClient.Api
         /// <param name="orderId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelOrderApiResponse"/>&gt;</returns>
-        public async Task<ICancelOrderApiResponse?> CancelOrderOrDefaultAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICancelOrderApiResponse?> CancelOrderOrDefaultAsync(string? orderId = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CancelOrderAsync(orderId, cancellationToken).ConfigureAwait(false);
+                return await CancelOrderAsync(orderId, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1309,7 +1314,7 @@ namespace UpstoxClient.Api
         /// <param name="orderId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelOrderApiResponse"/>&gt;</returns>
-        public async Task<ICancelOrderApiResponse> CancelOrderAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICancelOrderApiResponse> CancelOrderAsync(string? orderId = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -1340,6 +1345,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] acceptLocalVars = new string[] {
                         "*/*"
@@ -1382,7 +1390,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorCancelOrderDefaultImplementation(e, "/v3/order/cancel", uriBuilderLocalVar.Path, orderId);
+                OnErrorCancelOrderDefaultImplementation(e, "/v3/order/cancel", uriBuilderLocalVar.Path, orderId, algoName);
                 Events.ExecuteOnErrorCancelOrder(e);
                 throw;
             }
@@ -2228,10 +2236,10 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="gttModifyOrderRequest"></param>
         /// <param name="origin"></param>
-        private void OnErrorModifyGTTOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin)
+        private void OnErrorModifyGTTOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorModifyGTTOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, gttModifyOrderRequest, origin);
+            OnErrorModifyGTTOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, gttModifyOrderRequest, origin, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2245,7 +2253,7 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="gttModifyOrderRequest"></param>
         /// <param name="origin"></param>
-        partial void OnErrorModifyGTTOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin);
+        partial void OnErrorModifyGTTOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin, string? algoName);
 
         /// <summary>
         /// Modify GTT order This API allows you to modify GTT orders.
@@ -2254,11 +2262,11 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyGTTOrderApiResponse"/>&gt;</returns>
-        public async Task<IModifyGTTOrderApiResponse?> ModifyGTTOrderOrDefaultAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IModifyGTTOrderApiResponse?> ModifyGTTOrderOrDefaultAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await ModifyGTTOrderAsync(gttModifyOrderRequest, origin, cancellationToken).ConfigureAwait(false);
+                return await ModifyGTTOrderAsync(gttModifyOrderRequest, origin, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2274,7 +2282,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyGTTOrderApiResponse"/>&gt;</returns>
-        public async Task<IModifyGTTOrderApiResponse> ModifyGTTOrderAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IModifyGTTOrderApiResponse> ModifyGTTOrderAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -2308,6 +2316,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] contentTypes = new string[] {
                         "application/json"
@@ -2360,7 +2371,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorModifyGTTOrderDefaultImplementation(e, "/v3/order/gtt/modify", uriBuilderLocalVar.Path, gttModifyOrderRequest, origin);
+                OnErrorModifyGTTOrderDefaultImplementation(e, "/v3/order/gtt/modify", uriBuilderLocalVar.Path, gttModifyOrderRequest, origin, algoName);
                 Events.ExecuteOnErrorModifyGTTOrder(e);
                 throw;
             }
@@ -2728,10 +2739,10 @@ namespace UpstoxClient.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="modifyOrderRequest"></param>
-        private void OnErrorModifyOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, ModifyOrderRequest modifyOrderRequest)
+        private void OnErrorModifyOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, ModifyOrderRequest modifyOrderRequest, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorModifyOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, modifyOrderRequest);
+            OnErrorModifyOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, modifyOrderRequest, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2744,7 +2755,7 @@ namespace UpstoxClient.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="modifyOrderRequest"></param>
-        partial void OnErrorModifyOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, ModifyOrderRequest modifyOrderRequest);
+        partial void OnErrorModifyOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, ModifyOrderRequest modifyOrderRequest, string? algoName);
 
         /// <summary>
         ///  
@@ -2752,11 +2763,11 @@ namespace UpstoxClient.Api
         /// <param name="modifyOrderRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyOrderApiResponse"/>&gt;</returns>
-        public async Task<IModifyOrderApiResponse?> ModifyOrderOrDefaultAsync(ModifyOrderRequest modifyOrderRequest, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IModifyOrderApiResponse?> ModifyOrderOrDefaultAsync(ModifyOrderRequest modifyOrderRequest, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await ModifyOrderAsync(modifyOrderRequest, cancellationToken).ConfigureAwait(false);
+                return await ModifyOrderAsync(modifyOrderRequest, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2771,7 +2782,7 @@ namespace UpstoxClient.Api
         /// <param name="modifyOrderRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyOrderApiResponse"/>&gt;</returns>
-        public async Task<IModifyOrderApiResponse> ModifyOrderAsync(ModifyOrderRequest modifyOrderRequest, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IModifyOrderApiResponse> ModifyOrderAsync(ModifyOrderRequest modifyOrderRequest, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -2802,6 +2813,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] contentTypes = new string[] {
                         "application/json"
@@ -2853,7 +2867,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorModifyOrderDefaultImplementation(e, "/v3/order/modify", uriBuilderLocalVar.Path, modifyOrderRequest);
+                OnErrorModifyOrderDefaultImplementation(e, "/v3/order/modify", uriBuilderLocalVar.Path, modifyOrderRequest, algoName);
                 Events.ExecuteOnErrorModifyOrder(e);
                 throw;
             }
@@ -3224,10 +3238,10 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="gttPlaceOrderRequest"></param>
         /// <param name="origin"></param>
-        private void OnErrorPlaceGTTOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin)
+        private void OnErrorPlaceGTTOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorPlaceGTTOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, gttPlaceOrderRequest, origin);
+            OnErrorPlaceGTTOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, gttPlaceOrderRequest, origin, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -3241,7 +3255,7 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="gttPlaceOrderRequest"></param>
         /// <param name="origin"></param>
-        partial void OnErrorPlaceGTTOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin);
+        partial void OnErrorPlaceGTTOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin, string? algoName);
 
         /// <summary>
         /// Place GTT order This API allows you to place GTT orders.
@@ -3250,11 +3264,11 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceGTTOrderApiResponse"/>&gt;</returns>
-        public async Task<IPlaceGTTOrderApiResponse?> PlaceGTTOrderOrDefaultAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IPlaceGTTOrderApiResponse?> PlaceGTTOrderOrDefaultAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await PlaceGTTOrderAsync(gttPlaceOrderRequest, origin, cancellationToken).ConfigureAwait(false);
+                return await PlaceGTTOrderAsync(gttPlaceOrderRequest, origin, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -3270,7 +3284,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceGTTOrderApiResponse"/>&gt;</returns>
-        public async Task<IPlaceGTTOrderApiResponse> PlaceGTTOrderAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IPlaceGTTOrderApiResponse> PlaceGTTOrderAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -3304,6 +3318,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] contentTypes = new string[] {
                         "application/json"
@@ -3356,7 +3373,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorPlaceGTTOrderDefaultImplementation(e, "/v3/order/gtt/place", uriBuilderLocalVar.Path, gttPlaceOrderRequest, origin);
+                OnErrorPlaceGTTOrderDefaultImplementation(e, "/v3/order/gtt/place", uriBuilderLocalVar.Path, gttPlaceOrderRequest, origin, algoName);
                 Events.ExecuteOnErrorPlaceGTTOrder(e);
                 throw;
             }
@@ -3724,10 +3741,11 @@ namespace UpstoxClient.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="placeOrderV3Request"></param>
-        private void OnErrorPlaceOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PlaceOrderV3Request placeOrderV3Request)
+        /// <param name="algoName"></param>
+        private void OnErrorPlaceOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PlaceOrderV3Request placeOrderV3Request, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorPlaceOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, placeOrderV3Request);
+            OnErrorPlaceOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, placeOrderV3Request, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -3740,19 +3758,21 @@ namespace UpstoxClient.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="placeOrderV3Request"></param>
-        partial void OnErrorPlaceOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PlaceOrderV3Request placeOrderV3Request);
+        /// <param name="algoName"></param>
+        partial void OnErrorPlaceOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PlaceOrderV3Request placeOrderV3Request, string? algoName);
 
         /// <summary>
         ///  
         /// </summary>
         /// <param name="placeOrderV3Request"></param>
+        /// <param name="algoName"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceOrderApiResponse"/>&gt;</returns>
-        public async Task<IPlaceOrderApiResponse?> PlaceOrderOrDefaultAsync(PlaceOrderV3Request placeOrderV3Request, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IPlaceOrderApiResponse?> PlaceOrderOrDefaultAsync(PlaceOrderV3Request placeOrderV3Request, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await PlaceOrderAsync(placeOrderV3Request, cancellationToken).ConfigureAwait(false);
+                return await PlaceOrderAsync(placeOrderV3Request, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -3765,9 +3785,10 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="placeOrderV3Request"></param>
+        /// <param name="algoName"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceOrderApiResponse"/>&gt;</returns>
-        public async Task<IPlaceOrderApiResponse> PlaceOrderAsync(PlaceOrderV3Request placeOrderV3Request, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IPlaceOrderApiResponse> PlaceOrderAsync(PlaceOrderV3Request placeOrderV3Request, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -3798,6 +3819,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] contentTypes = new string[] {
                         "application/json"
@@ -3849,7 +3873,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorPlaceOrderDefaultImplementation(e, "/v3/order/place", uriBuilderLocalVar.Path, placeOrderV3Request);
+                OnErrorPlaceOrderDefaultImplementation(e, "/v3/order/place", uriBuilderLocalVar.Path, placeOrderV3Request, algoName);
                 Events.ExecuteOnErrorPlaceOrder(e);
                 throw;
             }

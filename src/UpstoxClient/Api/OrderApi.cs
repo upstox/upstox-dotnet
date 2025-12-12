@@ -46,7 +46,7 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelMultiOrderApiResponse"/>&gt;</returns>
-        Task<ICancelMultiOrderApiResponse> CancelMultiOrderAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICancelMultiOrderApiResponse> CancelMultiOrderAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancel multi order
@@ -58,7 +58,7 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelMultiOrderApiResponse"/>?&gt;</returns>
-        Task<ICancelMultiOrderApiResponse?> CancelMultiOrderOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICancelMultiOrderApiResponse?> CancelMultiOrderOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -79,7 +79,7 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the positions must be exit (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IExitPositionsApiResponse"/>&gt;</returns>
-        Task<IExitPositionsApiResponse> ExitPositionsAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IExitPositionsApiResponse> ExitPositionsAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Exit all positions
@@ -91,7 +91,7 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the positions must be exit (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IExitPositionsApiResponse"/>?&gt;</returns>
-        Task<IExitPositionsApiResponse?> ExitPositionsOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IExitPositionsApiResponse?> ExitPositionsOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get order book
@@ -218,7 +218,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceMultiOrderApiResponse"/>&gt;</returns>
-        Task<IPlaceMultiOrderApiResponse> PlaceMultiOrderAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IPlaceMultiOrderApiResponse> PlaceMultiOrderAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Place multi order
@@ -230,7 +230,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceMultiOrderApiResponse"/>?&gt;</returns>
-        Task<IPlaceMultiOrderApiResponse?> PlaceMultiOrderOrDefaultAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IPlaceMultiOrderApiResponse?> PlaceMultiOrderOrDefaultAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default);
 
     }
 
@@ -870,10 +870,10 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="tag"></param>
         /// <param name="segment"></param>
-        private void OnErrorCancelMultiOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment)
+        private void OnErrorCancelMultiOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCancelMultiOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, tag, segment);
+            OnErrorCancelMultiOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, tag, segment, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -887,7 +887,7 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="tag"></param>
         /// <param name="segment"></param>
-        partial void OnErrorCancelMultiOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment);
+        partial void OnErrorCancelMultiOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment, string? algoName);
 
         partial void FormatPlaceMultiOrder(ref List<MultiOrderRequest> multiOrderRequest, ref Option<string?> origin);
 
@@ -922,10 +922,10 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="multiOrderRequest"></param>
         /// <param name="origin"></param>
-        private void OnErrorPlaceMultiOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, List<MultiOrderRequest> multiOrderRequest, Option<string?> origin)
+        private void OnErrorPlaceMultiOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, List<MultiOrderRequest> multiOrderRequest, Option<string?> origin, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorPlaceMultiOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, multiOrderRequest, origin);
+            OnErrorPlaceMultiOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, multiOrderRequest, origin, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -939,7 +939,7 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="multiOrderRequest"></param>
         /// <param name="origin"></param>
-        partial void OnErrorPlaceMultiOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, List<MultiOrderRequest> multiOrderRequest, Option<string?> origin);
+        partial void OnErrorPlaceMultiOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, List<MultiOrderRequest> multiOrderRequest, Option<string?> origin, string? algoName);
 
         /// <summary>
         /// Cancel multi order API to cancel all the open or pending orders which can be applied to both AMO and regular orders.
@@ -948,11 +948,11 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelMultiOrderApiResponse"/>&gt;</returns>
-        public async Task<ICancelMultiOrderApiResponse?> CancelMultiOrderOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICancelMultiOrderApiResponse?> CancelMultiOrderOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CancelMultiOrderAsync(tag, segment, cancellationToken).ConfigureAwait(false);
+                return await CancelMultiOrderAsync(tag, segment, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -968,7 +968,7 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the orders must be cancelled (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelMultiOrderApiResponse"/>&gt;</returns>
-        public async Task<ICancelMultiOrderApiResponse> CancelMultiOrderAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICancelMultiOrderApiResponse> CancelMultiOrderAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -1003,6 +1003,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] acceptLocalVars = new string[] {
                         "*/*",
@@ -1046,7 +1049,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorCancelMultiOrderDefaultImplementation(e, "/v2/order/multi/cancel", uriBuilderLocalVar.Path, tag, segment);
+                OnErrorCancelMultiOrderDefaultImplementation(e, "/v2/order/multi/cancel", uriBuilderLocalVar.Path, tag, segment, algoName);
                 Events.ExecuteOnErrorCancelMultiOrder(e);
                 throw;
             }
@@ -1060,11 +1063,11 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceMultiOrderApiResponse"/>&gt;</returns>
-        public async Task<IPlaceMultiOrderApiResponse?> PlaceMultiOrderOrDefaultAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IPlaceMultiOrderApiResponse?> PlaceMultiOrderOrDefaultAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await PlaceMultiOrderAsync(multiOrderRequest, origin, cancellationToken).ConfigureAwait(false);
+                return await PlaceMultiOrderAsync(multiOrderRequest, origin, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1080,7 +1083,7 @@ namespace UpstoxClient.Api
         /// <param name="origin"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceMultiOrderApiResponse"/>&gt;</returns>
-        public async Task<IPlaceMultiOrderApiResponse> PlaceMultiOrderAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IPlaceMultiOrderApiResponse> PlaceMultiOrderAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -1112,6 +1115,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] acceptLocalVars = new string[] {
                         "*/*"
@@ -1153,7 +1159,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorPlaceMultiOrderDefaultImplementation(e, "/v2/order/multi/place", uriBuilderLocalVar.Path, multiOrderRequest, origin);
+                OnErrorPlaceMultiOrderDefaultImplementation(e, "/v2/order/multi/place", uriBuilderLocalVar.Path, multiOrderRequest, origin, algoName);
                 Events.ExecuteOnErrorPlaceMultiOrder(e);
                 throw;
             }
@@ -1835,10 +1841,10 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="tag"></param>
         /// <param name="segment"></param>
-        private void OnErrorExitPositionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment)
+        private void OnErrorExitPositionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment, string? algoName)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorExitPositions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, tag, segment);
+            OnErrorExitPositions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, tag, segment, algoName);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1852,7 +1858,7 @@ namespace UpstoxClient.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="tag"></param>
         /// <param name="segment"></param>
-        partial void OnErrorExitPositions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment);
+        partial void OnErrorExitPositions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag, Option<string?> segment, string? algoName);
 
         /// <summary>
         /// Exit all positions This API provides the functionality to exit all the positions 
@@ -1861,11 +1867,11 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the positions must be exit (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IExitPositionsApiResponse"/>&gt;</returns>
-        public async Task<IExitPositionsApiResponse?> ExitPositionsOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IExitPositionsApiResponse?> ExitPositionsOrDefaultAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await ExitPositionsAsync(tag, segment, cancellationToken).ConfigureAwait(false);
+                return await ExitPositionsAsync(tag, segment, algoName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1881,7 +1887,7 @@ namespace UpstoxClient.Api
         /// <param name="segment">The segment for which the positions must be exit (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IExitPositionsApiResponse"/>&gt;</returns>
-        public async Task<IExitPositionsApiResponse> ExitPositionsAsync(Option<string?> tag = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IExitPositionsApiResponse> ExitPositionsAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -1916,6 +1922,9 @@ namespace UpstoxClient.Api
                     tokenBaseLocalVars.Add(oauthTokenLocalVar1);
 
                     oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    if (!string.IsNullOrEmpty(algoName))
+                        httpRequestMessageLocalVar.Headers.Add("X-Algo-Name", algoName);
 
                     string[] acceptLocalVars = new string[] {
                         "*/*",
@@ -1959,7 +1968,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorExitPositionsDefaultImplementation(e, "/v2/order/positions/exit", uriBuilderLocalVar.Path, tag, segment);
+                OnErrorExitPositionsDefaultImplementation(e, "/v2/order/positions/exit", uriBuilderLocalVar.Path, tag, segment, algoName);
                 Events.ExecuteOnErrorExitPositions(e);
                 throw;
             }
