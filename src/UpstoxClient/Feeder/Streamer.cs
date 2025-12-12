@@ -1,134 +1,122 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using UpstoxClient.Feeder.Listener;
 
 namespace UpstoxClient.Feeder
 {
     public abstract class Streamer
     {
-        protected Feeder Feeder;
-        public event Action OnOpen;
-        public event Action<Exception> OnError;
-        public event Action<int, string> OnClose;
-        public event Action<string> OnReconnecting;
-        public event Action<string> OnAutoReconnectStopped;
+        protected Feeder? Feeder;
 
-        protected bool DisconnectValid = false;
-        protected bool ReconnectInProgress = false;
+        protected IOnOpenListener? OnOpenListener;
+        protected IOnErrorListener? OnErrorListener;
+        protected IOnCloseListener? OnCloseListener;
+        protected IOnReconnectingListener? OnReconnectingListener;
+        protected IOnAutoReconnectStoppedListener? OnAutoReconnectStoppedListener;
+
+        protected bool DisconnectValid;
+        protected bool ReconnectInProgress;
         protected bool EnableAutoReconnect = true;
-        protected int Interval = 1; // Interval between reconnection attempts, in seconds
-        protected int RetryCount = 5; // Maximum number of reconnection attempts
-        protected int ReconnectAttempts = 0; // Current count of reconnection attempts
+        protected int IntervalSeconds = 1;
+        protected int RetryCount = 5;
+        protected int ReconnectAttempts;
 
-        protected void RaiseOnOpenEvent()
-        {
-            if (OnOpen != null)
-            {
-                OnOpen();
-            }
-        }
-        protected void RaiseOnErrorEvent(Exception exception)
-        {
-            if (OnError != null)
-            {
-                OnError(exception);
-            }
-        }
-        protected void RaiseOnCloseEvent(int code, string reason)
-        {
-            if (OnClose != null)
-            {
-                OnClose(code, reason);
-            }
-        }
-        public abstract Task Connect();
+        public void SetOnOpenListener(IOnOpenListener listener) => OnOpenListener = listener;
+        public void SetOnErrorListener(IOnErrorListener listener) => OnErrorListener = listener;
+        public void SetOnCloseListener(IOnCloseListener listener) => OnCloseListener = listener;
+        public void SetOnReconnectingListener(IOnReconnectingListener listener) => OnReconnectingListener = listener;
+        public void SetOnAutoReconnectStoppedListener(IOnAutoReconnectStoppedListener listener) => OnAutoReconnectStoppedListener = listener;
 
-        public abstract Task Disconnect();
+        public abstract Task ConnectAsync(CancellationToken cancellationToken = default);
+
+        public abstract Task DisconnectAsync(CancellationToken cancellationToken = default);
 
         public void AutoReconnect(bool enable)
         {
             EnableAutoReconnect = enable;
-
-            if (!enable)
+            if (!enable && OnAutoReconnectStoppedListener != null)
             {
-                if (OnAutoReconnectStopped != null)
-                {
-                    OnAutoReconnectStopped("Disabled by client");
-                }
-
+                _ = OnAutoReconnectStoppedListener.OnHaultAsync("Disabled by client");
             }
         }
 
-        public void AutoReconnect(bool enable, int interval, int retryCount)
+        public void AutoReconnect(bool enable, int intervalSeconds, int retryCount)
         {
             EnableAutoReconnect = enable;
-            Interval = interval;
+            IntervalSeconds = intervalSeconds;
             RetryCount = retryCount;
-
-            if (!enable)
+            if (!enable && OnAutoReconnectStoppedListener != null)
             {
-                if (OnAutoReconnectStopped != null)
-                {
-                    OnAutoReconnectStopped("Disabled by client");
-                }
+                _ = OnAutoReconnectStoppedListener.OnHaultAsync("Disabled by client");
             }
         }
 
-        protected async Task LaunchAutoReconnectAsync()
+        protected virtual async Task HandleErrorAsync(System.Exception error, CancellationToken cancellationToken = default)
+        {
+            if (OnErrorListener != null)
+            {
+                await OnErrorListener.OnErrorAsync(error).ConfigureAwait(false);
+            }
+
+            if (EnableAutoReconnect && ReconnectInProgress && ReconnectAttempts < RetryCount)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(IntervalSeconds), cancellationToken).ConfigureAwait(false);
+                ReconnectAttempts++;
+
+                if (OnReconnectingListener != null)
+                {
+                    await OnReconnectingListener.OnReconnectingAsync($"Auto reconnect attempt {ReconnectAttempts}/{RetryCount}")
+                        .ConfigureAwait(false);
+                }
+
+                await ConnectAsync(cancellationToken).ConfigureAwait(false);
+            }
+            else if (ReconnectAttempts == RetryCount && OnAutoReconnectStoppedListener != null)
+            {
+                await OnAutoReconnectStoppedListener.OnHaultAsync($"retryCount of {RetryCount} exhausted").ConfigureAwait(false);
+            }
+        }
+
+        protected virtual async Task HandleCloseAsync(int closeStatusCode, string closeMsg, CancellationToken cancellationToken = default)
+        {
+            if (!ReconnectInProgress && OnCloseListener != null)
+            {
+                await OnCloseListener.OnCloseAsync(closeStatusCode, closeMsg).ConfigureAwait(false);
+            }
+
+            if (!ReconnectInProgress && !DisconnectValid && closeStatusCode != 1000)
+            {
+                await LaunchAutoReconnectAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        protected virtual async Task HandleOpenAsync()
+        {
+            DisconnectValid = false;
+            ReconnectInProgress = false;
+            ReconnectAttempts = 0;
+
+            if (OnOpenListener != null)
+            {
+                await OnOpenListener.OnOpenAsync().ConfigureAwait(false);
+            }
+        }
+
+        private async Task LaunchAutoReconnectAsync(CancellationToken cancellationToken)
         {
             if (EnableAutoReconnect)
             {
                 ReconnectInProgress = true;
                 ReconnectAttempts++;
 
-                if (OnReconnecting != null)
+                if (OnReconnectingListener != null)
                 {
-                    OnReconnecting(String.Format("Auto reconnect attempt {0}/{1}", ReconnectAttempts, RetryCount));
+                    await OnReconnectingListener.OnReconnectingAsync($"Auto reconnect attempt {ReconnectAttempts}/{RetryCount}")
+                        .ConfigureAwait(false);
                 }
-                await Connect();
-            }
-        }
 
-        protected abstract void HandleOpen();
-
-        protected void HandleError(Exception error)
-        {
-            if (OnError != null)
-            {
-                OnError(error);
-            }
-
-            if (EnableAutoReconnect && ReconnectInProgress && ReconnectAttempts < RetryCount)
-            {
-                Task.Delay(Interval * 1000).Wait();
-                ReconnectAttempts++;
-                if (OnReconnecting != null)
-                {
-                    OnReconnecting(String.Format("Auto reconnect attempt {0}/{1}", ReconnectAttempts, RetryCount));
-                }
-                Connect().Wait();
-            }
-            else if (ReconnectAttempts >= RetryCount)
-            {
-                if (OnAutoReconnectStopped != null)
-                {
-                    OnAutoReconnectStopped(String.Format("Retry count of {0} exhausted", RetryCount));
-                }
-            }
-        }
-
-        protected void HandleClose(int closeStatusCode, string closeMessage)
-        {
-            if (!ReconnectInProgress)
-            {
-                if (OnClose != null)
-                {
-                    OnClose(closeStatusCode, closeMessage);
-                }
-            }
-
-            if (!ReconnectInProgress && !DisconnectValid && closeStatusCode != 1000) // 1000 is normal closure
-            {
-                LaunchAutoReconnectAsync().Wait();
+                await ConnectAsync(cancellationToken).ConfigureAwait(false);
             }
         }
     }

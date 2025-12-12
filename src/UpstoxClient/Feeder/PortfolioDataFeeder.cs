@@ -2,84 +2,225 @@ using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using UpstoxClient.Feeder.Exceptions;
-using UpstoxClient.Feeder.Constants;
+using UpstoxClient.Api;
+using UpstoxClient.Client;
+using StreamerException = UpstoxClient.Feeder.Exception.StreamerException;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Model;
+using UpstoxClient.Feeder.Model;
 
 namespace UpstoxClient.Feeder
 {
     public class PortfolioDataFeeder : Feeder
     {
-        private const string WebSocketUri = "wss://api.upstox.com/v2/feed/portfolio-stream-feed";
-        private const string SocketNotOpenError = "WebSocket is not open.";
+        private readonly bool _orderUpdate;
+        private readonly bool _holdingUpdate;
+        private readonly bool _positionUpdate;
+        private readonly bool _gttUpdate;
 
-        public PortfolioDataFeeder(Action onOpen, Action<string> onMessage, Action<Exception> onError, Action<int, string> onClose)
+        private readonly IOnOrderUpdateListener? _onOrderUpdateListener;
+        private readonly IOnHoldingUpdateListener? _onHoldingUpdateListener;
+        private readonly IOnPositionUpdateListener? _onPositionUpdateListener;
+        private readonly IOnGttUpdateListener? _onGttUpdateListener;
+        private readonly IOnPositionMessageListener _onPositionMessageListener;
+
+        public PortfolioDataFeeder(
+            IWebsocketApi websocketApi,
+            IOnOpenListener onOpenListener,
+            IOnPositionMessageListener onPositionMessageListener,
+            IOnErrorListener onErrorListener,
+            IOnCloseListener onCloseListener,
+            bool orderUpdate,
+            bool holdingUpdate,
+            bool positionUpdate,
+            bool gttUpdate,
+            IOnOrderUpdateListener? onOrderUpdateListener,
+            IOnHoldingUpdateListener? onHoldingUpdateListener,
+            IOnPositionUpdateListener? onPositionUpdateListener,
+            IOnGttUpdateListener? onGttUpdateListener) : base(websocketApi)
         {
-            this.Configuration = UpstoxClient.Client.Configuration.Default;
-            OnOpen += onOpen;
-            OnTextMessage += onMessage;
-            OnError += onError;
-            OnClose += onClose;
+            OnOpenListener = onOpenListener;
+            OnErrorListener = onErrorListener;
+            OnCloseListener = onCloseListener;
+            _orderUpdate = orderUpdate;
+            _holdingUpdate = holdingUpdate;
+            _positionUpdate = positionUpdate;
+            _gttUpdate = gttUpdate;
+            _onOrderUpdateListener = onOrderUpdateListener;
+            _onHoldingUpdateListener = onHoldingUpdateListener;
+            _onPositionUpdateListener = onPositionUpdateListener;
+            _onGttUpdateListener = onGttUpdateListener;
+            _onPositionMessageListener = onPositionMessageListener;
         }
 
-        public override async Task ConnectAsync()
+        public override async Task ConnectAsync(CancellationToken cancellationToken = default)
         {
-
-            if (WebSocket != null && WebSocket.State != WebSocketState.None)
+            if (WebSocket != null && WebSocket.State == WebSocketState.Open)
             {
                 return;
             }
 
-            using (WebSocket = new ClientWebSocket())
-            {
-                // Configure the WebSocket headers as needed for authorization
-                WebSocket.Options.SetRequestHeader("Authorization", String.Format("Bearer {0}", this.Configuration.AccessToken));
+            var serverUri = await GetAuthorizedWebSocketUriAsync(cancellationToken).ConfigureAwait(false);
 
-                try
+            WebSocket = new ClientWebSocket();
+            await WebSocket.ConnectAsync(serverUri, cancellationToken).ConfigureAwait(false);
+
+            if (OnOpenListener != null)
+            {
+                await OnOpenListener.OnOpenAsync().ConfigureAwait(false);
+            }
+
+            _ = Task.Run(() => ReceiveLoopAsync(cancellationToken), cancellationToken);
+        }
+
+        public override async Task DisconnectAsync()
+        {
+            if (WebSocket != null && WebSocket.State == WebSocketState.Open)
+            {
+                await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "client disconnect", CancellationToken.None)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        private async Task ReceiveLoopAsync(CancellationToken cancellationToken)
+        {
+            if (WebSocket == null)
+            {
+                return;
+            }
+
+            var buffer = new byte[8192];
+            var builder = new StringBuilder();
+
+            while (WebSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+            {
+                builder.Clear();
+                WebSocketReceiveResult result;
+
+                do
                 {
-                    // Connect to the WebSocket server
-                    Uri serverUri = new Uri(WebSocketUri);
-                    await WebSocket.ConnectAsync(serverUri, CancellationToken.None);
-                    RaiseOnOpenEvent();
-                    await ReceiveMessagesAsync();
-                }
-                catch (Exception ex)
+                    result = await WebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken).ConfigureAwait(false);
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        if (OnCloseListener != null)
+                        {
+                            await OnCloseListener.OnCloseAsync((int)result.CloseStatus.GetValueOrDefault(), result.CloseStatusDescription ?? string.Empty).ConfigureAwait(false);
+                        }
+                        return;
+                    }
+
+                    builder.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
+                } while (!result.EndOfMessage);
+
+                if (result.MessageType == WebSocketMessageType.Text)
                 {
-                    RaiseOnErrorEvent(ex);
+                    await HandleMessageAsync(builder.ToString()).ConfigureAwait(false);
                 }
             }
         }
 
-        private async Task ReceiveMessagesAsync()
+        private async Task<Uri> GetAuthorizedWebSocketUriAsync(CancellationToken cancellationToken)
         {
-            var buffer = new byte[4096];
+            var updateTypes = BuildUpdateTypes();
+            var response = await WebsocketApi.GetPortfolioStreamFeedAuthorizeAsync(new Option<string?>(updateTypes), cancellationToken)
+                .ConfigureAwait(false);
+            var redirectResponse = response.Ok();
 
+            if (redirectResponse?.DataOption.IsSet == true && redirectResponse.Data?.AuthorizedRedirectUri is string uri)
+            {
+                return new Uri(uri);
+            }
+
+            throw new StreamerException("Failed to obtain authorized websocket URI");
+        }
+
+        private string BuildUpdateTypes()
+        {
+            var updates = new List<string>();
+            if (_orderUpdate) updates.Add("order");
+            if (_holdingUpdate) updates.Add("holding");
+            if (_positionUpdate) updates.Add("position");
+            if (_gttUpdate) updates.Add("gtt_order");
+
+            if (updates.Count == 0)
+            {
+                throw new StreamerException("At least one update type must be enabled");
+            }
+
+            return string.Join(",", updates);
+        }
+
+        private async Task HandleMessageAsync(string message)
+        {
             try
             {
-                while (WebSocket.State == WebSocketState.Open)
+                using var document = JsonDocument.Parse(message);
+                if (!document.RootElement.TryGetProperty("update_type", out var typeElement))
                 {
-                    var result = await WebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                    return;
+                }
 
-                    if (result.MessageType == WebSocketMessageType.Text)
-                    {
-                        string message = System.Text.Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        RaiseOnTextMessageEvent(message);
-                    }
-                    else if (result.MessageType == WebSocketMessageType.Close)
-                    {
-                        int closeStatusCode = (int)WebSocket.CloseStatus.Value;
-                        string closeStatusDescription = WebSocket.CloseStatusDescription;
-                        RaiseOnCloseEvent(closeStatusCode, closeStatusDescription);
-                        await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                var updateType = typeElement.GetString();
+                switch (updateType)
+                {
+                    case "order":
+                        if (_orderUpdate && _onOrderUpdateListener != null)
+                        {
+                            var order = JsonSerializer.Deserialize<OrderUpdate>(message);
+                            if (order != null)
+                            {
+                                await _onOrderUpdateListener.OnUpdateAsync(order).ConfigureAwait(false);
+                            }
+                        }
                         break;
-                    }
+                    case "position":
+                        if (_positionUpdate)
+                        {
+                            var position = JsonSerializer.Deserialize<PositionUpdate>(message);
+                            if (position != null)
+                            {
+                                if (_onPositionUpdateListener != null)
+                                {
+                                    await _onPositionUpdateListener.OnUpdateAsync(position).ConfigureAwait(false);
+                                }
+
+                                await _onPositionMessageListener.OnMessageAsync(position).ConfigureAwait(false);
+                            }
+                        }
+                        break;
+                    case "holding":
+                        if (_holdingUpdate && _onHoldingUpdateListener != null)
+                        {
+                            var holding = JsonSerializer.Deserialize<HoldingUpdate>(message);
+                            if (holding != null)
+                            {
+                                await _onHoldingUpdateListener.OnUpdateAsync(holding).ConfigureAwait(false);
+                            }
+                        }
+                        break;
+                    case "gtt_order":
+                        if (_gttUpdate && _onGttUpdateListener != null)
+                        {
+                            var gtt = JsonSerializer.Deserialize<GttUpdate>(message);
+                            if (gtt != null)
+                            {
+                                await _onGttUpdateListener.OnUpdateAsync(gtt).ConfigureAwait(false);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                RaiseOnErrorEvent(ex);
+                if (OnErrorListener != null)
+                {
+                    await OnErrorListener.OnErrorAsync(ex).ConfigureAwait(false);
+                }
             }
         }
     }
