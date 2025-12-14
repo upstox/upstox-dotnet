@@ -153,6 +153,9 @@ namespace UpstoxClient.Test
                 // await OrderV3Service.SanityAlgoModifyOrderTest(host.Services);
                 // await OrderV3Service.SanityAlgoPlaceGTTOrderTest(host.Services);
                 // await OrderV3Service.SanityAlgoCancelOrderTest(host.Services);
+
+
+                await PortfolioDataWebSocketService.RunExample(host.Services);
             }
             catch (Exception ex)
             {
