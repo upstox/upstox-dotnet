@@ -4,7 +4,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo> <!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>UpstoxClient</AssemblyName>
-    <PackageId>UpstoxClient</PackageId>
+    <PackageId>upstox-dotnet-sdk</PackageId>
     <OutputType>Library</OutputType>
     <Authors>Upstox</Authors>
     <Company>Upstox</Company>
