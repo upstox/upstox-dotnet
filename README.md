@@ -79,6 +79,15 @@ public async Task Main(IServiceProvider services)
     streamer.SetOnMarketUpdateListener(new OnMarketUpdateListenerImpl());
 
     await streamer.ConnectAsync();
+
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 ```
 
@@ -116,57 +125,8 @@ The following documentation includes examples to illustrate the usage of these f
 
 <br/>
 
-1. Subscribing to Market Data on Connection Open with MarketDataStreamerV3
 
-```csharp
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using UpstoxClient.Api;
-using UpstoxClient.Feeder;
-using UpstoxClient.Feeder.Listener;
-using UpstoxClient.Feeder.Model;
-
-public async Task Main(IServiceProvider services)
-{
-    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
-
-    var streamer = new MarketDataStreamerV3(websocketApi);
-
-    var onOpenListener = new OnOpenListenerImpl();
-    var onMessageListener = new OnMarketUpdateListenerImpl();
-
-    streamer.SetOnOpenListener(onOpenListener);
-    streamer.SetOnMarketUpdateListener(onMessageListener);
-
-    await streamer.ConnectAsync();
-}
-
-public class OnOpenListenerImpl : IOnOpenListener
-{
-    public async Task OnOpenAsync()
-    {
-        // Access to streamer instance needed for subscription
-        // In a real implementation, you'd store a reference to the streamer
-        var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
-        // await streamer.SubscribeAsync(instrumentKeys, Feeder.Constants.Mode.FULL);
-    }
-}
-
-public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
-{
-    public Task OnUpdateAsync(MarketUpdateV3 marketUpdate)
-    {
-        Console.WriteLine(marketUpdate);
-        return Task.CompletedTask;
-    }
-}
-```
-
-<br/>
-
-2. Subscribing to Instruments with Delays
+1. Subscribing to Instruments with Delays
 
 ```csharp
 using System;
@@ -195,6 +155,14 @@ public async Task Main(IServiceProvider services)
     await Task.Delay(5000);
     var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018" };
     await streamer.SubscribeAsync(instrumentKeys, Feeder.Constants.Mode.FULL);
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 
 public class OnOpenListenerImpl : IOnOpenListener
@@ -218,7 +186,7 @@ public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
 
 <br/>
 
-3. Subscribing and Unsubscribing to Instruments
+2. Subscribing and Unsubscribing to Instruments
 
 ```csharp
 using System;
@@ -248,6 +216,14 @@ public async Task Main(IServiceProvider services)
     Console.WriteLine("Unsubscribing from instrument keys.");
     var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
     await streamer.UnsubscribeAsync(instrumentKeys);
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 
 public class OnOpenListenerImpl : IOnOpenListener
@@ -272,7 +248,7 @@ public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
 
 <br/>
 
-4. Subscribe, Change Mode and Unsubscribe
+3. Subscribe, Change Mode and Unsubscribe
 
 ```csharp
 using System;
@@ -306,6 +282,15 @@ public async Task Main(IServiceProvider services)
     await Task.Delay(5000);
     Console.WriteLine("Unsubscribing from instrument keys.");
     await streamer.UnsubscribeAsync(instrumentKeys);
+
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 
 public class OnOpenListenerImpl : IOnOpenListener
@@ -330,7 +315,7 @@ public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
 
 <br/>
 
-5. Disable Auto-Reconnect
+4. Disable Auto-Reconnect
 
 ```csharp
 using System;
@@ -353,6 +338,14 @@ public async Task Main(IServiceProvider services)
     streamer.AutoReconnect(false);
 
     await streamer.ConnectAsync();
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 
 public class OnAutoReconnectStoppedListenerImpl : IOnAutoReconnectStoppedListener
@@ -367,7 +360,7 @@ public class OnAutoReconnectStoppedListenerImpl : IOnAutoReconnectStoppedListene
 
 <br/>
 
-6. Modify Auto-Reconnect parameters
+5. Modify Auto-Reconnect parameters
 
 ```csharp
 using System;
@@ -383,6 +376,15 @@ public void SetupStreamer(IServiceProvider services)
 
     // Modify auto-reconnect parameters: enable it, set interval to 10 seconds, and retry count to 3
     streamer.AutoReconnect(true, 10, 3);
+
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 ```
 
@@ -419,6 +421,14 @@ public async Task Main(IServiceProvider services)
     streamer.SetOnOrderUpdateListener(new OnOrderUpdateListenerImpl());
 
     await streamer.ConnectAsync();
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 ```
 
@@ -460,6 +470,14 @@ public async Task Main(IServiceProvider services)
     streamer.SetOnOpenListener(new OnOpenListenerImpl());
 
     await streamer.ConnectAsync();
+
+    Console.WriteLine("Press any key to stop and disconnect...");
+    
+    // Wait for user input to keep the connection alive
+    await Task.Run(() => Console.ReadKey(true));
+    
+    Console.WriteLine("\nDisconnecting...");
+    await streamer.DisconnectAsync();
 }
 
 public class OnOrderUpdateListenerImpl : IOnOrderUpdateListener
