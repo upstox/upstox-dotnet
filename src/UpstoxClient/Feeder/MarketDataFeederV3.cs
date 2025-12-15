@@ -23,6 +23,8 @@ namespace UpstoxClient.Feeder
 
         private CancellationTokenSource? _pingCancellationSource;
         private Task? _pingTask;
+        private Task? _receiveLoopTask;
+        private CancellationTokenSource? _receiveLoopCts;
 
         public MarketDataFeederV3(IWebsocketApi websocketApi) : base(websocketApi)
         {
@@ -50,31 +52,35 @@ namespace UpstoxClient.Feeder
 
         public override async Task ConnectAsync(CancellationToken cancellationToken = default)
         {
-            if (WebSocket != null && WebSocket.State == WebSocketState.Open)
+            // Cancel and wait for old receive loop to complete
+            if (_receiveLoopCts != null)
             {
-                return;
+                _receiveLoopCts.Cancel();
+                if (_receiveLoopTask != null)
+                {
+                    try
+                    {
+                        await _receiveLoopTask.ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // Expected when cancelled
+                    }
+                    catch (System.Exception ex)
+                    {
+                        // Log but don't throw - we want cleanup to continue
+                        if (OnErrorListener != null)
+                        {
+                            _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                        }
+                    }
+                }
+                _receiveLoopCts?.Dispose();
+                _receiveLoopCts = null;
+                _receiveLoopTask = null;
             }
 
-            var serverUri = await GetAuthorizedWebSocketUriAsync(cancellationToken).ConfigureAwait(false);
-
-            WebSocket = new ClientWebSocket();
-            await WebSocket.ConnectAsync(serverUri, cancellationToken).ConfigureAwait(false);
-
-            if (OnOpenListener != null)
-            {
-                await OnOpenListener.OnOpenAsync().ConfigureAwait(false);
-            }
-
-            _ = Task.Run(() => ReceiveLoopAsync(cancellationToken), cancellationToken);
-
-            // Start ping task to keep connection alive
-            _pingCancellationSource = new CancellationTokenSource();
-            _pingTask = Task.Run(() => PingLoopAsync(_pingCancellationSource.Token), _pingCancellationSource.Token);
-        }
-
-        public override async Task DisconnectAsync()
-        {
-            // Stop ping task
+            // Stop old ping task
             if (_pingCancellationSource != null)
             {
                 _pingCancellationSource.Cancel();
@@ -88,13 +94,125 @@ namespace UpstoxClient.Feeder
                     {
                         // Expected when cancelled
                     }
+                    catch (System.Exception ex)
+                    {
+                        // Log but don't throw - we want cleanup to continue
+                        if (OnErrorListener != null)
+                        {
+                            _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                        }
+                    }
                 }
+                _pingCancellationSource?.Dispose();
+                _pingCancellationSource = null;
+                _pingTask = null;
+            }
+
+            // Dispose old WebSocket if it exists to prevent resource leaks during reconnection
+            if (WebSocket != null)
+            {
+                try
+                {
+                    if (WebSocket.State == WebSocketState.Open || WebSocket.State == WebSocketState.CloseReceived)
+                    {
+                        await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "reconnecting", CancellationToken.None)
+                            .ConfigureAwait(false);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    // Log but don't throw - we want cleanup to continue
+                    if (OnErrorListener != null)
+                    {
+                        _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                    }
+                }
+                finally
+                {
+                    WebSocket.Dispose();
+                    WebSocket = null;
+                }
+            }
+
+            var serverUri = await GetAuthorizedWebSocketUriAsync(cancellationToken).ConfigureAwait(false);
+
+            WebSocket = new ClientWebSocket();
+            await WebSocket.ConnectAsync(serverUri, cancellationToken).ConfigureAwait(false);
+
+            if (OnOpenListener != null)
+            {
+                await OnOpenListener.OnOpenAsync().ConfigureAwait(false);
+            }
+
+            // Create new cancellation token source for the receive loop
+            _receiveLoopCts = new CancellationTokenSource();
+            _receiveLoopTask = Task.Run(() => ReceiveLoopAsync(_receiveLoopCts.Token), _receiveLoopCts.Token);
+
+            // Start ping task to keep connection alive
+            _pingCancellationSource = new CancellationTokenSource();
+            _pingTask = Task.Run(() => PingLoopAsync(_pingCancellationSource.Token), _pingCancellationSource.Token);
+        }
+
+        public override async Task DisconnectAsync()
+        {
+            // Cancel the receive loop
+            if (_receiveLoopCts != null)
+            {
+                _receiveLoopCts.Cancel();
+            }
+
+            // Stop ping task
+            if (_pingCancellationSource != null)
+            {
+                _pingCancellationSource.Cancel();
             }
 
             if (WebSocket != null && WebSocket.State == WebSocketState.Open)
             {
                 await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "client disconnect", CancellationToken.None)
                     .ConfigureAwait(false);
+            }
+
+            // Wait for receive loop to complete
+            if (_receiveLoopTask != null)
+            {
+                try
+                {
+                    await _receiveLoopTask.ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected when cancelled
+                }
+                catch (System.Exception ex)
+                {
+                    // Log but don't throw - we want disconnect to complete
+                    if (OnErrorListener != null)
+                    {
+                        _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                    }
+                }
+            }
+
+            // Wait for ping task to complete
+            if (_pingTask != null)
+            {
+                try
+                {
+                    await _pingTask.ConfigureAwait(false);
+                }
+                catch (TaskCanceledException)
+                {
+                    // Expected when cancelled
+                }
+                catch (System.Exception ex)
+                {
+                    // Log but don't throw - we want disconnect to complete
+                    if (OnErrorListener != null)
+                    {
+                        _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                    }
+                }
             }
         }
 
@@ -169,8 +287,23 @@ namespace UpstoxClient.Feeder
                     {
                         result = await WebSocket.ReceiveAsync(segment, cancellationToken).ConfigureAwait(false);
                     }
+                    catch (OperationCanceledException)
+                    {
+                        // Cancellation requested - this is a normal disconnect
+                        break;
+                    }
+                    catch (WebSocketException ex)
+                    {
+                        // WebSocket error - this is an abnormal disconnect, trigger reconnection
+                        if (OnCloseListener != null)
+                        {
+                            await OnCloseListener.OnCloseAsync(0, $"WebSocket error: {ex.Message}").ConfigureAwait(false);
+                        }
+                        break;
+                    }
                     catch (System.Exception ex)
                     {
+                        // Other error
                         if (OnErrorListener != null)
                         {
                             await OnErrorListener.OnErrorAsync(ex).ConfigureAwait(false);
@@ -221,11 +354,11 @@ namespace UpstoxClient.Feeder
         private async Task<Uri> GetAuthorizedWebSocketUriAsync(CancellationToken cancellationToken)
         {
             var response = await WebsocketApi.AuthorizeMarketDataFeedAsync(cancellationToken).ConfigureAwait(false);
+
             var redirectResponse = response.Ok();
 
             if (redirectResponse == null)
             {
-                Console.WriteLine("redirectResponse is null - authorization failed");
                 throw new StreamerException("Failed to obtain authorized websocket URI - authorization response was null");
             }
 
@@ -251,16 +384,14 @@ namespace UpstoxClient.Feeder
                         if (WebSocket.State == WebSocketState.Open)
                         {
                             await WebSocket.SendAsync(new ArraySegment<byte>(Array.Empty<byte>()), WebSocketMessageType.Binary, true, cancellationToken).ConfigureAwait(false);
-                            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] [PING] Sent keep-alive ping");
                         }
                     }
                     catch (OperationCanceledException)
                     {
                         break;
                     }
-                    catch (System.Exception ex)
+                    catch (System.Exception)
                     {
-                        Console.WriteLine($"Ping failed: {ex.Message}");
                         // Don't break the loop, continue trying
                     }
                 }

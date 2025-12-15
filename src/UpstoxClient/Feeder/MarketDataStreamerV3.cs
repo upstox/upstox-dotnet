@@ -55,12 +55,12 @@ namespace UpstoxClient.Feeder
         {
             Feeder = new MarketDataFeederV3(_websocketApi);
 
-            // Set up listeners
+            // Set up listeners - Use CancellationToken.None in closures to avoid capturing the token that may be cancelled
             ((MarketDataFeederV3)Feeder).SetOnOpenListener(new OpenListener(async () => await HandleOpenAsync().ConfigureAwait(false)));
             ((MarketDataFeederV3)Feeder).SetOnMessageListener(new MessageListener(
                 async update => await HandleMessageAsync(update).ConfigureAwait(false)));
-            ((MarketDataFeederV3)Feeder).SetOnErrorListener(new ErrorListener(async ex => await HandleErrorAsync(ex, cancellationToken).ConfigureAwait(false)));
-            ((MarketDataFeederV3)Feeder).SetOnCloseListener(new CloseListener(async (code, reason) => await HandleCloseAsync(code, reason, cancellationToken).ConfigureAwait(false)));
+            ((MarketDataFeederV3)Feeder).SetOnErrorListener(new ErrorListener(async ex => await HandleErrorAsync(ex, CancellationToken.None).ConfigureAwait(false)));
+            ((MarketDataFeederV3)Feeder).SetOnCloseListener(new CloseListener(async (code, reason) => await HandleCloseAsync(code, reason, CancellationToken.None).ConfigureAwait(false)));
 
             await Feeder.ConnectAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -72,6 +72,7 @@ namespace UpstoxClient.Feeder
                 throw new StreamerException(SocketNotOpenError);
             }
 
+            // Set flag to prevent auto-reconnection on intentional disconnect
             DisconnectValid = true;
             await Feeder.DisconnectAsync().ConfigureAwait(false);
             ClearSubscriptions();
@@ -155,24 +156,11 @@ namespace UpstoxClient.Feeder
             {
                 if (marketUpdate != null && _onMarketUpdateListener != null)
                 {
-                    Console.WriteLine($"Processing market update with {marketUpdate.Feeds?.Count ?? 0} feeds");
                     await _onMarketUpdateListener.OnUpdateAsync(marketUpdate).ConfigureAwait(false);
-                }
-                else
-                {
-                    Console.WriteLine("Market update is null or no listener attached");
                 }
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine($"Error handling market update: {ex.Message}");
-                Console.WriteLine($"Exception type: {ex.GetType().Name}");
-                if (ex.InnerException != null)
-                {
-                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                }
-                Console.WriteLine($"Stack trace: {ex.StackTrace}");
-
                 await HandleErrorAsync(ex).ConfigureAwait(false);
             }
         }

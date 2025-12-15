@@ -177,7 +177,13 @@ namespace UpstoxClient.Test
                 // await PortfolioDataWebSocketRealErrorTest.RunRealErrorTest(host.Services);
                 
                 // Test error handling with actual reconnection triggers
-                await PortfolioDataWebSocketErrorReconnectionTest.RunErrorReconnectionTest(host.Services);
+                // await PortfolioDataWebSocketErrorReconnectionTest.RunErrorReconnectionTest(host.Services);
+                
+                // Test MarketData WebSocket functionality
+                // await MarketDataWebSocketBasicTest.RunExample(host.Services);
+                // await MarketDataWebSocketReconnectionTest.RunReconnectionTest(host.Services);
+                await MarketDataWebSocketDirectTest.RunDirectTest(host.Services);
+                // await MarketDataWebSocketService.RunExample(host.Services);
             }
             catch (Exception ex)
             {
