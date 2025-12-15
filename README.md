@@ -35,3 +35,500 @@ Install-Package upstox-dotnet-sdk
 ```sh
 dotnet add package upstox-dotnet-sdk
 ```
+
+## Documentation for Feeder Functions
+
+Connecting to the WebSocket for market and portfolio updates is streamlined through two primary Feeder functions:
+
+1. **MarketDataStreamerV3**: Offers real-time market updates, providing a seamless way to receive instantaneous information on various market instruments.
+2. **PortfolioDataStreamer**: Delivers updates related to the user's orders, enhancing the ability to track order status and portfolio changes effectively.
+
+Both functions are designed to simplify the process of subscribing to essential data streams, ensuring users have quick and easy access to the information they need.
+
+## Detailed Explanation of Feeder Interface
+
+### MarketDataStreamerV3
+
+The `MarketDataStreamerV3` interface is designed for effortless connection to the market WebSocket, enabling users to receive instantaneous updates on various instruments. The following example demonstrates how to quickly set up and start receiving market updates for selected instrument keys:
+
+```csharp
+using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
+{
+    public Task OnUpdateAsync(MarketUpdateV3 marketUpdate)
+    {
+        Console.WriteLine(marketUpdate);
+        return Task.CompletedTask;
+    }
+}
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var instrumentKeys = new HashSet<string> { "NSE_INDEX|Nifty 50", "NSE_INDEX|Nifty Bank" };
+    var streamer = new MarketDataStreamerV3(websocketApi, instrumentKeys, Feeder.Constants.Mode.FULL);
+
+    streamer.SetOnMarketUpdateListener(new OnMarketUpdateListenerImpl());
+
+    await streamer.ConnectAsync();
+}
+```
+
+In this example, you first obtain the WebSocket API service from dependency injection, then instantiate `MarketDataStreamerV3` with specific instrument keys and a subscription mode. Upon connecting, the streamer listens for market updates, which are logged to the console as they arrive.
+
+#### Modes
+
+- **LTPC**: Provides information solely about the most recent trade, encompassing details such as the last trade price, time of the last trade, quantity traded, and the closing price from the previous day.
+- **FULL**: The full option offers comprehensive information, including the latest trade prices, D5 depth, 1-minute, 30-minute, and daily candlestick data, along with some additional details.
+- **OPTION_GREEKS**: Contains only option greeks.
+- **FULL_D30**: Includes Full mode data plus 30 market level quotes.
+
+#### Functions
+
+1. **constructor MarketDataStreamerV3(IWebsocketApi websocketApi)**: Initializes the streamer without initial subscriptions.
+2. **constructor MarketDataStreamerV3(IWebsocketApi websocketApi, ISet&lt;string&gt; instrumentKeys, Mode mode)**: Initializes the streamer with optional instrument keys and mode (`FULL`, `LTPC`, `OPTION_GREEKS` or `FULL_D30`).
+3. **ConnectAsync()**: Establishes the WebSocket connection.
+4. **SubscribeAsync(ISet&lt;string&gt; instrumentKeys, Mode mode)**: Subscribes to updates for given instrument keys in the specified mode. Both parameters are mandatory.
+5. **UnsubscribeAsync(ISet&lt;string&gt; instrumentKeys)**: Stops updates for the specified instrument keys.
+6. **ChangeModeAsync(ISet&lt;string&gt; instrumentKeys, Mode newMode)**: Switches the mode for already subscribed instrument keys.
+7. **DisconnectAsync()**: Ends the active WebSocket connection.
+8. **AutoReconnect(bool enable)**: Enables or disables auto-reconnect functionality with default parameters.
+9. **AutoReconnect(bool enable, int intervalSeconds, int retryCount)**: Customizes auto-reconnect functionality. Parameters include a flag to enable/disable it, the interval (in seconds) between attempts, and the maximum number of retries.
+
+#### Events/Listeners
+
+- **SetOnOpenListener(IOnOpenListener listener)**: Emitted upon successful connection establishment.
+- **SetOnCloseListener(IOnCloseListener listener)**: Indicates the WebSocket connection has been closed.
+- **SetOnMarketUpdateListener(IOnMarketUpdateV3Listener listener)**: Delivers market updates.
+- **SetOnErrorListener(IOnErrorListener listener)**: Signals an error has occurred.
+- **SetOnReconnectingListener(IOnReconnectingListener listener)**: Announced when a reconnect attempt is initiated.
+- **SetOnAutoReconnectStoppedListener(IOnAutoReconnectStoppedListener listener)**: Informs when auto-reconnect efforts have ceased after exhausting the retry count.
+
+The following documentation includes examples to illustrate the usage of these functions and listeners, providing a practical understanding of how to interact with the MarketDataStreamerV3 effectively.
+
+<br/>
+
+1. Subscribing to Market Data on Connection Open with MarketDataStreamerV3
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new MarketDataStreamerV3(websocketApi);
+
+    var onOpenListener = new OnOpenListenerImpl();
+    var onMessageListener = new OnMarketUpdateListenerImpl();
+
+    streamer.SetOnOpenListener(onOpenListener);
+    streamer.SetOnMarketUpdateListener(onMessageListener);
+
+    await streamer.ConnectAsync();
+}
+
+public class OnOpenListenerImpl : IOnOpenListener
+{
+    public async Task OnOpenAsync()
+    {
+        // Access to streamer instance needed for subscription
+        // In a real implementation, you'd store a reference to the streamer
+        var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
+        // await streamer.SubscribeAsync(instrumentKeys, Feeder.Constants.Mode.FULL);
+    }
+}
+
+public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
+{
+    public Task OnUpdateAsync(MarketUpdateV3 marketUpdate)
+    {
+        Console.WriteLine(marketUpdate);
+        return Task.CompletedTask;
+    }
+}
+```
+
+<br/>
+
+2. Subscribing to Instruments with Delays
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new MarketDataStreamerV3(websocketApi);
+
+    var onOpenListener = new OnOpenListenerImpl();
+    var onMessageListener = new OnMarketUpdateListenerImpl();
+
+    streamer.SetOnOpenListener(onOpenListener);
+    streamer.SetOnMarketUpdateListener(onMessageListener);
+
+    await streamer.ConnectAsync();
+
+    await Task.Delay(5000);
+    var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018" };
+    await streamer.SubscribeAsync(instrumentKeys, Feeder.Constants.Mode.FULL);
+}
+
+public class OnOpenListenerImpl : IOnOpenListener
+{
+    public Task OnOpenAsync()
+    {
+        Console.WriteLine("Connected.");
+        return Task.CompletedTask;
+    }
+}
+
+public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
+{
+    public Task OnUpdateAsync(MarketUpdateV3 marketUpdate)
+    {
+        Console.WriteLine(marketUpdate);
+        return Task.CompletedTask;
+    }
+}
+```
+
+<br/>
+
+3. Subscribing and Unsubscribing to Instruments
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new MarketDataStreamerV3(websocketApi);
+
+    var onOpenListener = new OnOpenListenerImpl();
+    var onMessageListener = new OnMarketUpdateListenerImpl();
+
+    streamer.SetOnOpenListener(onOpenListener);
+    streamer.SetOnMarketUpdateListener(onMessageListener);
+
+    await streamer.ConnectAsync();
+
+    await Task.Delay(5000);
+    Console.WriteLine("Unsubscribing from instrument keys.");
+    var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
+    await streamer.UnsubscribeAsync(instrumentKeys);
+}
+
+public class OnOpenListenerImpl : IOnOpenListener
+{
+    public async Task OnOpenAsync()
+    {
+        Console.WriteLine("Connected. Subscribing to instrument keys.");
+        var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
+        await streamer.SubscribeAsync(instrumentKeys, Feeder.Constants.Mode.FULL);
+    }
+}
+
+public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
+{
+    public Task OnUpdateAsync(MarketUpdateV3 marketUpdate)
+    {
+        Console.WriteLine(marketUpdate);
+        return Task.CompletedTask;
+    }
+}
+```
+
+<br/>
+
+4. Subscribe, Change Mode and Unsubscribe
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new MarketDataStreamerV3(websocketApi);
+
+    var onOpenListener = new OnOpenListenerImpl();
+    var onMessageListener = new OnMarketUpdateListenerImpl();
+
+    streamer.SetOnOpenListener(onOpenListener);
+    streamer.SetOnMarketUpdateListener(onMessageListener);
+
+    await streamer.ConnectAsync();
+
+    await Task.Delay(5000);
+    Console.WriteLine("Changing subscription mode to LTPC...");
+    var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
+    await streamer.ChangeModeAsync(instrumentKeys, Feeder.Constants.Mode.LTPC);
+
+    await Task.Delay(5000);
+    Console.WriteLine("Unsubscribing from instrument keys.");
+    await streamer.UnsubscribeAsync(instrumentKeys);
+}
+
+public class OnOpenListenerImpl : IOnOpenListener
+{
+    public async Task OnOpenAsync()
+    {
+        Console.WriteLine("Connected. Subscribing to instrument keys.");
+        var instrumentKeys = new HashSet<string> { "NSE_EQ|INE020B01018", "NSE_EQ|INE467B01029" };
+        await streamer.SubscribeAsync(instrumentKeys, Feeder.Constants.Mode.FULL);
+    }
+}
+
+public class OnMarketUpdateListenerImpl : IOnMarketUpdateV3Listener
+{
+    public Task OnUpdateAsync(MarketUpdateV3 marketUpdate)
+    {
+        Console.WriteLine(marketUpdate);
+        return Task.CompletedTask;
+    }
+}
+```
+
+<br/>
+
+5. Disable Auto-Reconnect
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new MarketDataStreamerV3(websocketApi);
+
+    var onReconnectStoppedListener = new OnAutoReconnectStoppedListenerImpl();
+    streamer.SetOnAutoReconnectStoppedListener(onReconnectStoppedListener);
+
+    // Disable auto-reconnect feature
+    streamer.AutoReconnect(false);
+
+    await streamer.ConnectAsync();
+}
+
+public class OnAutoReconnectStoppedListenerImpl : IOnAutoReconnectStoppedListener
+{
+    public Task OnHaultAsync(string message)
+    {
+        Console.WriteLine(message);
+        return Task.CompletedTask;
+    }
+}
+```
+
+<br/>
+
+6. Modify Auto-Reconnect parameters
+
+```csharp
+using System;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+
+public void SetupStreamer(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new MarketDataStreamerV3(websocketApi);
+
+    // Modify auto-reconnect parameters: enable it, set interval to 10 seconds, and retry count to 3
+    streamer.AutoReconnect(true, 10, 3);
+}
+```
+
+<br/>
+
+### PortfolioDataStreamer
+
+Connecting to the Portfolio WebSocket for real-time order updates is straightforward with the PortfolioDataStreamer function. Below is a concise guide to get you started on receiving updates:
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public class OnOrderUpdateListenerImpl : IOnOrderUpdateListener
+{
+    public Task OnUpdateAsync(OrderUpdate orderUpdate)
+    {
+        Console.WriteLine(orderUpdate);
+        return Task.CompletedTask;
+    }
+}
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new PortfolioDataStreamer(websocketApi);
+
+    streamer.SetOnOrderUpdateListener(new OnOrderUpdateListenerImpl());
+
+    await streamer.ConnectAsync();
+}
+```
+
+Position, holding, and GTT order updates can be enabled by setting the corresponding flag to `true` in the constructor of the `PortfolioDataStreamer` class.
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using UpstoxClient.Api;
+using UpstoxClient.Feeder;
+using UpstoxClient.Feeder.Listener;
+using UpstoxClient.Feeder.Model;
+
+public class OnOpenListenerImpl : IOnOpenListener
+{
+    public Task OnOpenAsync()
+    {
+        Console.WriteLine("Connection opened");
+        return Task.CompletedTask;
+    }
+}
+
+public async Task Main(IServiceProvider services)
+{
+    IWebsocketApi websocketApi = services.GetRequiredService<IWebsocketApi>();
+
+    var streamer = new PortfolioDataStreamer(
+        websocketApi,
+        orderUpdate: true,
+        positionUpdate: true,
+        holdingUpdate: true,
+        gttUpdate: true);
+
+    streamer.SetOnOrderUpdateListener(new OnOrderUpdateListenerImpl());
+    streamer.SetOnPositionUpdateListener(new OnPositionUpdateListenerImpl());
+    streamer.SetOnHoldingUpdateListener(new OnHoldingUpdateListenerImpl());
+    streamer.SetOnGttUpdateListener(new OnGttUpdateListenerImpl());
+    streamer.SetOnOpenListener(new OnOpenListenerImpl());
+
+    await streamer.ConnectAsync();
+}
+
+public class OnOrderUpdateListenerImpl : IOnOrderUpdateListener
+{
+    public Task OnUpdateAsync(OrderUpdate orderUpdate)
+    {
+        Console.WriteLine(orderUpdate);
+        return Task.CompletedTask;
+    }
+}
+
+public class OnPositionUpdateListenerImpl : IOnPositionUpdateListener
+{
+    public Task OnUpdateAsync(PositionUpdate positionUpdate)
+    {
+        Console.WriteLine(positionUpdate);
+        return Task.CompletedTask;
+    }
+}
+
+public class OnHoldingUpdateListenerImpl : IOnHoldingUpdateListener
+{
+    public Task OnUpdateAsync(HoldingUpdate holdingUpdate)
+    {
+        Console.WriteLine(holdingUpdate);
+        return Task.CompletedTask;
+    }
+}
+
+public class OnGttUpdateListenerImpl : IOnGttUpdateListener
+{
+    public Task OnUpdateAsync(GttUpdate gttUpdate)
+    {
+        Console.WriteLine(gttUpdate);
+        return Task.CompletedTask;
+    }
+}
+```
+
+<br/>
+
+### Exploring the PortfolioDataStreamer Functionality
+
+#### Constructor Parameters
+
+1. **websocketApi**: Your API client instance (required)
+2. **orderUpdate**: Set to `true` to receive real-time order updates (default: `true`)
+3. **positionUpdate**: Set to `true` to receive position updates (default: `false`)
+4. **holdingUpdate**: Set to `true` to receive holding updates (default: `false`)
+5. **gttUpdate**: Set to `true` to receive GTT order updates (default: `false`)
+
+#### Functions
+
+1. **constructor PortfolioDataStreamer(IWebsocketApi websocketApi)**: Initializes the streamer with only order updates enabled.
+2. **constructor PortfolioDataStreamer(IWebsocketApi websocketApi, bool orderUpdate, bool positionUpdate, bool holdingUpdate)**: Initializes the streamer with specified update types (gttUpdate defaults to false).
+3. **constructor PortfolioDataStreamer(IWebsocketApi websocketApi, bool orderUpdate, bool positionUpdate, bool holdingUpdate, bool gttUpdate)**: Initializes the streamer with all update types configurable.
+4. **ConnectAsync()**: Establishes the WebSocket connection.
+5. **DisconnectAsync()**: Ends the active WebSocket connection.
+6. **AutoReconnect(bool enable)**: Enables or disables auto-reconnect functionality with default parameters.
+7. **AutoReconnect(bool enable, int intervalSeconds, int retryCount)**: Customizes auto-reconnect functionality. Parameters include a flag to enable/disable it, the interval (in seconds) between attempts, and the maximum number of retries.
+
+#### Events/Listeners
+
+- **SetOnOpenListener(IOnOpenListener listener)**: Emitted upon successful connection establishment.
+- **SetOnCloseListener(IOnCloseListener listener)**: Indicates the WebSocket connection has been closed.
+- **SetOnOrderUpdateListener(IOnOrderUpdateListener listener)**: Delivers order updates (when enabled).
+- **SetOnPositionUpdateListener(IOnPositionUpdateListener listener)**: Delivers position updates (when enabled).
+- **SetOnHoldingUpdateListener(IOnHoldingUpdateListener listener)**: Delivers holding updates (when enabled).
+- **SetOnGttUpdateListener(IOnGttUpdateListener listener)**: Delivers GTT order updates (when enabled).
+- **SetOnErrorListener(IOnErrorListener listener)**: Signals an error has occurred.
+- **SetOnReconnectingListener(IOnReconnectingListener listener)**: Announced when a reconnect attempt is initiated.
+- **SetOnAutoReconnectStoppedListener(IOnAutoReconnectStoppedListener listener)**: Informs when auto-reconnect efforts have ceased after exhausting the retry count.
