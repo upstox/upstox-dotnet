@@ -61,7 +61,7 @@ namespace UpstoxClient.Feeder
 
             if (EnableAutoReconnect && ReconnectInProgress && ReconnectAttempts < RetryCount)
             {
-                await Task.Delay(TimeSpan.FromSeconds(IntervalSeconds), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(IntervalSeconds), CancellationToken.None).ConfigureAwait(false);
                 ReconnectAttempts++;
 
                 if (OnReconnectingListener != null)
@@ -70,7 +70,8 @@ namespace UpstoxClient.Feeder
                         .ConfigureAwait(false);
                 }
 
-                await ConnectAsync(cancellationToken).ConfigureAwait(false);
+                // Use CancellationToken.None for reconnection to avoid reusing cancelled/invalid tokens
+                await ConnectAsync(CancellationToken.None).ConfigureAwait(false);
             }
             else if (ReconnectAttempts == RetryCount && OnAutoReconnectStoppedListener != null)
             {
@@ -85,7 +86,13 @@ namespace UpstoxClient.Feeder
                 await OnCloseListener.OnCloseAsync(closeStatusCode, closeMsg).ConfigureAwait(false);
             }
 
-            if (!ReconnectInProgress && !DisconnectValid && closeStatusCode != 1000)
+            // Only reconnect if:
+            // 1. Not already reconnecting
+            // 2. Not a valid disconnect (user called DisconnectAsync)
+            // 3. Not a normal closure (status code 1000)
+            bool shouldReconnect = !ReconnectInProgress && !DisconnectValid && closeStatusCode != 1000;
+            
+            if (shouldReconnect)
             {
                 await LaunchAutoReconnectAsync(cancellationToken).ConfigureAwait(false);
             }
@@ -116,7 +123,8 @@ namespace UpstoxClient.Feeder
                         .ConfigureAwait(false);
                 }
 
-                await ConnectAsync(cancellationToken).ConfigureAwait(false);
+                // Use CancellationToken.None for reconnection to avoid reusing cancelled/invalid tokens
+                await ConnectAsync(CancellationToken.None).ConfigureAwait(false);
             }
         }
     }

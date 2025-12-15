@@ -73,8 +73,9 @@ namespace UpstoxClient.Feeder
                     // No-op hook for additional position message handling
                     await Task.CompletedTask;
                 }),
-                new ErrorListener(async ex => await HandleErrorAsync(ex, cancellationToken).ConfigureAwait(false)),
-                new CloseListener(async (code, reason) => await HandleCloseAsync(code, reason, cancellationToken).ConfigureAwait(false)),
+                // Use CancellationToken.None in closures to avoid capturing the token that may be cancelled
+                new ErrorListener(async ex => await HandleErrorAsync(ex, CancellationToken.None).ConfigureAwait(false)),
+                new CloseListener(async (code, reason) => await HandleCloseAsync(code, reason, CancellationToken.None).ConfigureAwait(false)),
                 _orderUpdate,
                 _holdingUpdate,
                 _positionUpdate,
@@ -94,6 +95,7 @@ namespace UpstoxClient.Feeder
                 throw new StreamerException(SocketNotOpenError);
             }
 
+            // Set flag to prevent auto-reconnection on intentional disconnect
             DisconnectValid = true;
             await Feeder.DisconnectAsync().ConfigureAwait(false);
         }

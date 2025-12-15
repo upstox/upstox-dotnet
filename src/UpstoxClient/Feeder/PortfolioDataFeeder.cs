@@ -26,6 +26,9 @@ namespace UpstoxClient.Feeder
         private readonly IOnPositionUpdateListener? _onPositionUpdateListener;
         private readonly IOnGttUpdateListener? _onGttUpdateListener;
         private readonly IOnPositionMessageListener _onPositionMessageListener;
+        
+        private Task? _receiveLoopTask;
+        private CancellationTokenSource? _receiveLoopCts;
 
         public PortfolioDataFeeder(
             IWebsocketApi websocketApi,
@@ -58,9 +61,50 @@ namespace UpstoxClient.Feeder
 
         public override async Task ConnectAsync(CancellationToken cancellationToken = default)
         {
-            if (WebSocket != null && WebSocket.State == WebSocketState.Open)
+            // Cancel and wait for old receive loop to complete
+            if (_receiveLoopCts != null)
             {
-                return;
+                _receiveLoopCts.Cancel();
+                if (_receiveLoopTask != null)
+                {
+                    try
+                    {
+                        await _receiveLoopTask.ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // Expected when cancelled
+                    }
+                    catch
+                    {
+                        // Ignore other errors during cleanup
+                    }
+                }
+                _receiveLoopCts?.Dispose();
+                _receiveLoopCts = null;
+                _receiveLoopTask = null;
+            }
+
+            // Dispose old WebSocket if it exists to prevent resource leaks during reconnection
+            if (WebSocket != null)
+            {
+                try
+                {
+                    if (WebSocket.State == WebSocketState.Open || WebSocket.State == WebSocketState.CloseReceived)
+                    {
+                        await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "reconnecting", CancellationToken.None)
+                            .ConfigureAwait(false);
+                    }
+                }
+                catch
+                {
+                    // Ignore errors during cleanup
+                }
+                finally
+                {
+                    WebSocket.Dispose();
+                    WebSocket = null;
+                }
             }
 
             var serverUri = await GetAuthorizedWebSocketUriAsync(cancellationToken).ConfigureAwait(false);
@@ -73,15 +117,40 @@ namespace UpstoxClient.Feeder
                 await OnOpenListener.OnOpenAsync().ConfigureAwait(false);
             }
 
-            _ = Task.Run(() => ReceiveLoopAsync(cancellationToken), cancellationToken);
+            // Create new cancellation token source for the receive loop
+            _receiveLoopCts = new CancellationTokenSource();
+            _receiveLoopTask = Task.Run(() => ReceiveLoopAsync(_receiveLoopCts.Token), _receiveLoopCts.Token);
         }
 
         public override async Task DisconnectAsync()
         {
+            // Cancel the receive loop
+            if (_receiveLoopCts != null)
+            {
+                _receiveLoopCts.Cancel();
+            }
+
             if (WebSocket != null && WebSocket.State == WebSocketState.Open)
             {
                 await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "client disconnect", CancellationToken.None)
                     .ConfigureAwait(false);
+            }
+
+            // Wait for receive loop to complete
+            if (_receiveLoopTask != null)
+            {
+                try
+                {
+                    await _receiveLoopTask.ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected when cancelled
+                }
+                catch
+                {
+                    // Ignore other errors
+                }
             }
         }
 
@@ -95,29 +164,56 @@ namespace UpstoxClient.Feeder
             var buffer = new byte[8192];
             var builder = new StringBuilder();
 
-            while (WebSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+            try
             {
-                builder.Clear();
-                WebSocketReceiveResult result;
-
-                do
+                while (WebSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
                 {
-                    result = await WebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken).ConfigureAwait(false);
-                    if (result.MessageType == WebSocketMessageType.Close)
+                    builder.Clear();
+                    WebSocketReceiveResult result;
+
+                    do
                     {
-                        if (OnCloseListener != null)
+                        result = await WebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken).ConfigureAwait(false);
+                        if (result.MessageType == WebSocketMessageType.Close)
                         {
-                            await OnCloseListener.OnCloseAsync((int)result.CloseStatus.GetValueOrDefault(), result.CloseStatusDescription ?? string.Empty).ConfigureAwait(false);
+                            if (OnCloseListener != null)
+                            {
+                                await OnCloseListener.OnCloseAsync((int)result.CloseStatus.GetValueOrDefault(), result.CloseStatusDescription ?? string.Empty).ConfigureAwait(false);
+                            }
+                            return;
                         }
-                        return;
+
+                        builder.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
+                    } while (!result.EndOfMessage);
+
+                    if (result.MessageType == WebSocketMessageType.Text)
+                    {
+                        await HandleMessageAsync(builder.ToString()).ConfigureAwait(false);
                     }
-
-                    builder.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
-                } while (!result.EndOfMessage);
-
-                if (result.MessageType == WebSocketMessageType.Text)
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancellation requested - this is a normal disconnect
+                // Don't call OnCloseListener as this is handled by DisconnectAsync
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ReceiveLoop cancelled (normal disconnect)");
+            }
+            catch (WebSocketException ex)
+            {
+                // WebSocket error - this is an abnormal disconnect, trigger reconnection
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ReceiveLoop WebSocket error: {ex.Message}");
+                if (OnCloseListener != null)
                 {
-                    await HandleMessageAsync(builder.ToString()).ConfigureAwait(false);
+                    await OnCloseListener.OnCloseAsync(0, $"WebSocket error: {ex.Message}").ConfigureAwait(false);
+                }
+            }
+            catch (SystemException ex)
+            {
+                // Other error
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ReceiveLoop unexpected error: {ex.Message}");
+                if (OnErrorListener != null)
+                {
+                    await OnErrorListener.OnErrorAsync(ex).ConfigureAwait(false);
                 }
             }
         }

@@ -155,7 +155,20 @@ namespace UpstoxClient.Test
                 // await OrderV3Service.SanityAlgoCancelOrderTest(host.Services);
 
 
-                await PortfolioDataWebSocketService.RunExample(host.Services);
+                // Test basic connection
+                // await PortfolioDataWebSocketService.RunExample(host.Services);
+                
+                // Test reconnection functionality (clean disconnect - won't trigger reconnection)
+                // await PortfolioDataWebSocketReconnectionTest.RunReconnectionTest(host.Services);
+                
+                // Test server-side disconnect simulation (abort method - may not work as expected)
+                // await PortfolioDataWebSocketServerDisconnectTest.RunServerDisconnectTest(host.Services);
+                
+                // Test manual disconnect simulation (triggers external close listener)
+                // await PortfolioDataWebSocketManualDisconnectTest.RunManualDisconnectTest(host.Services);
+                
+                // Test direct HandleCloseAsync call (should definitely trigger reconnection)
+                await PortfolioDataWebSocketDirectTest.RunDirectTest(host.Services);
             }
             catch (Exception ex)
             {
