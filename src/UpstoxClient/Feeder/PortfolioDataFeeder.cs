@@ -73,11 +73,13 @@ namespace UpstoxClient.Feeder
                     }
                     catch (OperationCanceledException)
                     {
-                        // Expected when cancelled
                     }
-                    catch
+                    catch (System.Exception ex)
                     {
-                        // Ignore other errors during cleanup
+                        if (OnErrorListener != null)
+                        {
+                            _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                        }
                     }
                 }
                 _receiveLoopCts?.Dispose();
@@ -96,9 +98,12 @@ namespace UpstoxClient.Feeder
                             .ConfigureAwait(false);
                     }
                 }
-                catch
+                catch (System.Exception ex)
                 {
-                    // Ignore errors during cleanup
+                    if (OnErrorListener != null)
+                    {
+                        _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                    }
                 }
                 finally
                 {
@@ -146,10 +151,14 @@ namespace UpstoxClient.Feeder
                 catch (OperationCanceledException)
                 {
                     // Expected when cancelled
+                    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Receive loop cancelled during DisconnectAsync (expected)");
                 }
-                catch
+                catch (System.Exception ex)
                 {
-                    // Ignore other errors
+                    if (OnErrorListener != null)
+                    {
+                        _ = Task.Run(() => OnErrorListener.OnErrorAsync(ex));
+                    }
                 }
             }
         }

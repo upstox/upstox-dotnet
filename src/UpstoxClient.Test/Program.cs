@@ -168,7 +168,16 @@ namespace UpstoxClient.Test
                 // await PortfolioDataWebSocketManualDisconnectTest.RunManualDisconnectTest(host.Services);
                 
                 // Test direct HandleCloseAsync call (should definitely trigger reconnection)
-                await PortfolioDataWebSocketDirectTest.RunDirectTest(host.Services);
+                // await PortfolioDataWebSocketDirectTest.RunDirectTest(host.Services);
+                
+                // Test error handling functionality
+                // await PortfolioDataWebSocketErrorTest.RunErrorTest(host.Services);
+                
+                // Test real error scenarios during WebSocket operations
+                // await PortfolioDataWebSocketRealErrorTest.RunRealErrorTest(host.Services);
+                
+                // Test error handling with actual reconnection triggers
+                await PortfolioDataWebSocketErrorReconnectionTest.RunErrorReconnectionTest(host.Services);
             }
             catch (Exception ex)
             {
