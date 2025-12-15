@@ -12,7 +12,7 @@
     <Description>Official .NET SDK for the Upstox API.</Description>
     <Copyright>Upstox</Copyright>
     <RootNamespace>UpstoxClient</RootNamespace>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\UpstoxClient.xml</DocumentationFile>
     <RepositoryUrl>https://github.com/upstox/upstox-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
