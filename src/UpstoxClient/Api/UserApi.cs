@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -275,6 +276,8 @@ namespace UpstoxClient.Api
             _sandboxConfiguration = sandboxConfiguration;
         }
 
+
+
         /// <summary>
         /// Processes the server response
         /// </summary>
@@ -342,6 +345,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetProfileApiResponse"/>&gt;</returns>
         public async Task<IGetProfileApiResponse> GetProfileAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetProfileAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -808,6 +812,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetUserFundMarginApiResponse"/>&gt;</returns>
         public async Task<IGetUserFundMarginApiResponse> GetUserFundMarginAsync(Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetUserFundMarginAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

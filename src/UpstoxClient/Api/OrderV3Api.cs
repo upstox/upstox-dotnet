@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -746,6 +747,7 @@ namespace UpstoxClient.Api
                 : new Uri("https://api-hft.upstox.com");
         }
 
+
         partial void FormatCancelGTTOrder(GttCancelOrderRequest gttCancelOrderRequest, ref Option<string?> origin);
 
         /// <summary>
@@ -838,6 +840,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelGTTOrderApiResponse"/>&gt;</returns>
         public async Task<ICancelGTTOrderApiResponse> CancelGTTOrderAsync(GttCancelOrderRequest gttCancelOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "CancelGTTOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1327,7 +1330,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelOrderApiResponse"/>&gt;</returns>
         public async Task<ICancelOrderApiResponse> CancelOrderAsync(string? orderId = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            // Sandbox validation - allowed API
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "CancelOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1804,9 +1807,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetGttOrderDetailsApiResponse"/>&gt;</returns>
         public async Task<IGetGttOrderDetailsApiResponse> GetGttOrderDetailsAsync(Option<string?> gttOrderId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            if(_sandboxConfiguration.IsSandboxMode){
-                throw new Exception("Sandbox mode is not supported for this API");
-            }
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetGttOrderDetailsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -2299,6 +2300,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyGTTOrderApiResponse"/>&gt;</returns>
         public async Task<IModifyGTTOrderApiResponse> ModifyGTTOrderAsync(GttModifyOrderRequest gttModifyOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "ModifyGTTOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -2799,7 +2801,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyOrderApiResponse"/>&gt;</returns>
         public async Task<IModifyOrderApiResponse> ModifyOrderAsync(ModifyOrderRequest modifyOrderRequest, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            // Sandbox validation - allowed API
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "ModifyOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -3302,6 +3304,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceGTTOrderApiResponse"/>&gt;</returns>
         public async Task<IPlaceGTTOrderApiResponse> PlaceGTTOrderAsync(GttPlaceOrderRequest gttPlaceOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "PlaceGTTOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -3806,6 +3809,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceOrderApiResponse"/>&gt;</returns>
         public async Task<IPlaceOrderApiResponse> PlaceOrderAsync(PlaceOrderV3Request placeOrderV3Request, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "PlaceOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -457,11 +458,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PortfolioApi"/> class.
         /// </summary>
         /// <returns></returns>
         public PortfolioApi(ILogger<PortfolioApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, PortfolioApiEvents portfolioApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -469,7 +475,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = portfolioApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatConvertPositions(ConvertPositionRequest convertPositionRequest);
 
@@ -557,6 +565,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IConvertPositionsApiResponse"/>&gt;</returns>
         public async Task<IConvertPositionsApiResponse> ConvertPositionsAsync(ConvertPositionRequest convertPositionRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "ConvertPositionsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1070,6 +1079,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetHoldingsApiResponse"/>&gt;</returns>
         public async Task<IGetHoldingsApiResponse> GetHoldingsAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHoldingsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1566,6 +1576,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetMtfPositionsApiResponse"/>&gt;</returns>
         public async Task<IGetMtfPositionsApiResponse> GetMtfPositionsAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetMtfPositionsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -2062,6 +2073,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPositionsApiResponse"/>&gt;</returns>
         public async Task<IGetPositionsApiResponse> GetPositionsAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetPositionsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

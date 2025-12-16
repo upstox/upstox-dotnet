@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -171,11 +172,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MarketQuoteApi"/> class.
         /// </summary>
         /// <returns></returns>
         public MarketQuoteApi(ILogger<MarketQuoteApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, MarketQuoteApiEvents marketQuoteApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -183,7 +189,10 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = marketQuoteApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
+
 
         partial void FormatGetFullMarketQuote(ref Option<string?> symbol, ref Option<string?> instrumentKey);
 
@@ -266,6 +275,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetFullMarketQuoteApiResponse"/>&gt;</returns>
         public async Task<IGetFullMarketQuoteApiResponse> GetFullMarketQuoteAsync(Option<string?> symbol = default, Option<string?> instrumentKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetFullMarketQuoteAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

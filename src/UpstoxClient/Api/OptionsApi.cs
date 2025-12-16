@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -261,11 +262,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OptionsApi"/> class.
         /// </summary>
         /// <returns></returns>
         public OptionsApi(ILogger<OptionsApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, OptionsApiEvents optionsApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -273,7 +279,10 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = optionsApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
+
 
         partial void FormatGetOptionContracts(ref string? instrumentKey, ref Option<string?> expiryDate);
 
@@ -356,6 +365,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetOptionContractsApiResponse"/>&gt;</returns>
         public async Task<IGetOptionContractsApiResponse> GetOptionContractsAsync(string? instrumentKey = default, Option<string?> expiryDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetOptionContractsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -839,6 +849,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPutCallOptionChainApiResponse"/>&gt;</returns>
         public async Task<IGetPutCallOptionChainApiResponse> GetPutCallOptionChainAsync(string? instrumentKey = default, string? expiryDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetPutCallOptionChainAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

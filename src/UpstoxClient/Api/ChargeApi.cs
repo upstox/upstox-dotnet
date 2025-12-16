@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -285,6 +286,7 @@ namespace UpstoxClient.Api
             _sandboxConfiguration = sandboxConfiguration;
         }
 
+
         partial void FormatGetBrokerage(ref string? instrumentToken, ref int? quantity, ref string? product, ref string? transactionType, ref float? price);
 
         /// <summary>
@@ -384,6 +386,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetBrokerageApiResponse"/>&gt;</returns>
         public async Task<IGetBrokerageApiResponse> GetBrokerageAsync(string? instrumentToken = default, int? quantity = default, string? product = default, string? transactionType = default, float? price = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetBrokerageAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -873,6 +876,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IPostMarginApiResponse"/>&gt;</returns>
         public async Task<IPostMarginApiResponse> PostMarginAsync(MarginRequest marginRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "PostMarginAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
