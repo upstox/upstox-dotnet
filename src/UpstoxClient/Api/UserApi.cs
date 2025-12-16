@@ -255,11 +255,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserApi"/> class.
         /// </summary>
         /// <returns></returns>
         public UserApi(ILogger<UserApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, UserApiEvents userApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -267,6 +272,7 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = userApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
 
         /// <summary>

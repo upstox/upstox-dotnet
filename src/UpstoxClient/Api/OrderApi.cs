@@ -823,11 +823,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderApi"/> class.
         /// </summary>
         /// <returns></returns>
         public OrderApi(ILogger<OrderApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, OrderApiEvents orderApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -835,6 +840,7 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = orderApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
 
         partial void FormatCancelMultiOrder(ref Option<string?> tag, ref Option<string?> segment);

@@ -692,7 +692,7 @@ namespace UpstoxClient.Api
     /// </summary>
     public sealed partial class OrderV3Api : IOrderV3Api
     {
-        private static readonly Uri HftBaseUri = new Uri("https://api-hft.upstox.com");
+        private readonly Uri HftBaseUri;
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
@@ -721,11 +721,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderV3Api"/> class.
         /// </summary>
         /// <returns></returns>
         public OrderV3Api(ILogger<OrderV3Api> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, OrderV3ApiEvents orderV3ApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -733,6 +738,12 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = orderV3ApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
+
+            // Set base URI based on sandbox mode
+            HftBaseUri = _sandboxConfiguration.IsSandboxMode
+                ? new Uri("https://api-sandbox.upstox.com")
+                : new Uri("https://api-hft.upstox.com");
         }
 
         partial void FormatCancelGTTOrder(GttCancelOrderRequest gttCancelOrderRequest, ref Option<string?> origin);
@@ -1308,7 +1319,7 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        ///  
+        ///
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId"></param>
@@ -1316,6 +1327,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelOrderApiResponse"/>&gt;</returns>
         public async Task<ICancelOrderApiResponse> CancelOrderAsync(string? orderId = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            // Sandbox validation - allowed API
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1792,6 +1804,9 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetGttOrderDetailsApiResponse"/>&gt;</returns>
         public async Task<IGetGttOrderDetailsApiResponse> GetGttOrderDetailsAsync(Option<string?> gttOrderId = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            if(_sandboxConfiguration.IsSandboxMode){
+                throw new Exception("Sandbox mode is not supported for this API");
+            }
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -2776,7 +2791,7 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        ///  
+        ///
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="modifyOrderRequest"></param>
@@ -2784,6 +2799,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IModifyOrderApiResponse"/>&gt;</returns>
         public async Task<IModifyOrderApiResponse> ModifyOrderAsync(ModifyOrderRequest modifyOrderRequest, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            // Sandbox validation - allowed API
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

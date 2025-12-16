@@ -449,11 +449,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ExpiredInstrumentApi"/> class.
         /// </summary>
         /// <returns></returns>
         public ExpiredInstrumentApi(ILogger<ExpiredInstrumentApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, ExpiredInstrumentApiEvents expiredInstrumentApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -461,6 +466,7 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = expiredInstrumentApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
 
         partial void FormatGetExpiredFutureContracts(ref string? instrumentKey, ref string? expiryDate);

@@ -265,11 +265,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ChargeApi"/> class.
         /// </summary>
         /// <returns></returns>
         public ChargeApi(ILogger<ChargeApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, ChargeApiEvents chargeApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -277,6 +282,7 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = chargeApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
 
         partial void FormatGetBrokerage(ref string? instrumentToken, ref int? quantity, ref string? product, ref string? transactionType, ref float? price);
