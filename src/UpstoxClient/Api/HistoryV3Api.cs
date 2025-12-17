@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -366,11 +367,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HistoryV3Api"/> class.
         /// </summary>
         /// <returns></returns>
         public HistoryV3Api(ILogger<HistoryV3Api> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, HistoryV3ApiEvents historyV3ApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -378,7 +384,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = historyV3ApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatGetHistoricalCandleData(ref string? instrumentKey, ref string? unit, ref int? interval, ref string? toDate);
 
@@ -473,6 +481,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetHistoricalCandleDataApiResponse"/>&gt;</returns>
         public async Task<IGetHistoricalCandleDataApiResponse> GetHistoricalCandleDataAsync(string? instrumentKey = default, string? unit = default, int? interval = default, string? toDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHistoricalCandleDataAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -958,6 +967,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetHistoricalCandleDataWithFromDateApiResponse"/>&gt;</returns>
         public async Task<IGetHistoricalCandleDataWithFromDateApiResponse> GetHistoricalCandleDataWithFromDateAsync(string? instrumentKey = default, string? unit = default, int? interval = default, string? toDate = default, string? fromDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHistoricalCandleDataWithFromDateAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1432,6 +1442,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetIntraDayCandleDataApiResponse"/>&gt;</returns>
         public async Task<IGetIntraDayCandleDataApiResponse> GetIntraDayCandleDataAsync(string? instrumentKey = default, string? unit = default, int? interval = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetIntraDayCandleDataAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

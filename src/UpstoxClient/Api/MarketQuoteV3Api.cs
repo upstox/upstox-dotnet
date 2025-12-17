@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -350,11 +351,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MarketQuoteV3Api"/> class.
         /// </summary>
         /// <returns></returns>
         public MarketQuoteV3Api(ILogger<MarketQuoteV3Api> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, MarketQuoteV3ApiEvents marketQuoteV3ApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -362,7 +368,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = marketQuoteV3ApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatGetLtp(ref Option<string?> instrumentKey);
 
@@ -439,6 +447,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetLtpApiResponse"/>&gt;</returns>
         public async Task<IGetLtpApiResponse> GetLtpAsync(Option<string?> instrumentKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetLtpAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -920,6 +929,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketQuoteOHLCV3ApiResponse"/>&gt;</returns>
         public async Task<IGetMarketQuoteOHLCV3ApiResponse> GetMarketQuoteOHLCV3Async(string? interval = default, Option<string?> instrumentKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetMarketQuoteOHLCV3Async");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1396,6 +1406,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketQuoteOptionGreekApiResponse"/>&gt;</returns>
         public async Task<IGetMarketQuoteOptionGreekApiResponse> GetMarketQuoteOptionGreekAsync(Option<string?> instrumentKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetMarketQuoteOptionGreekAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

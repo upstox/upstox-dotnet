@@ -28,6 +28,7 @@ namespace UpstoxClient.Client
     {
         private readonly IServiceCollection _services;
         private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions();
+        private bool? _sandbox;
 
         internal bool HttpClientsAdded { get; private set; }
 
@@ -197,11 +198,22 @@ namespace UpstoxClient.Client
         (
             Action<HttpClient>? client = null, Action<IHttpClientBuilder>? builder = null)
         {
+            // Register sandbox configuration
+            _services.AddSingleton<ISandboxConfiguration>(new SandboxConfiguration(Sandbox));
+
             if (client == null)
                 client = c => c.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS);
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
+            // Configure OrderV3Api and OrderApi with sandbox URL if sandbox mode is enabled
+            var sandboxBaseUrl = Sandbox ? "https://api-sandbox.upstox.com" : ClientUtils.BASE_ADDRESS;
+            var sandboxClient = Sandbox ? (c => c.BaseAddress = new Uri(sandboxBaseUrl)) : client;
+
+            builders.Add(_services.AddHttpClient<IOrderApi, OrderApi>(sandboxClient));
+            builders.Add(_services.AddHttpClient<IOrderV3Api, OrderV3Api>(sandboxClient));
+
+            // Configure other APIs with default URL
             builders.Add(_services.AddHttpClient<IChargeApi, ChargeApi>(client));
             builders.Add(_services.AddHttpClient<IExpiredInstrumentApi, ExpiredInstrumentApi>(client));
             builders.Add(_services.AddHttpClient<IHistoryV3Api, HistoryV3Api>(client));
@@ -210,8 +222,6 @@ namespace UpstoxClient.Client
             builders.Add(_services.AddHttpClient<IMarketQuoteApi, MarketQuoteApi>(client));
             builders.Add(_services.AddHttpClient<IMarketQuoteV3Api, MarketQuoteV3Api>(client));
             builders.Add(_services.AddHttpClient<IOptionsApi, OptionsApi>(client));
-            builders.Add(_services.AddHttpClient<IOrderApi, OrderApi>(client));
-            builders.Add(_services.AddHttpClient<IOrderV3Api, OrderV3Api>(client));
             builders.Add(_services.AddHttpClient<IPortfolioApi, PortfolioApi>(client));
             builders.Add(_services.AddHttpClient<IPostTradeApi, PostTradeApi>(client));
             builders.Add(_services.AddHttpClient<ITradeProfitAndLossApi, TradeProfitAndLossApi>(client));
@@ -265,12 +275,28 @@ namespace UpstoxClient.Client
         }
 
         /// <summary>
+        /// Gets or sets whether sandbox mode is enabled
+        /// </summary>
+        public bool Sandbox
+        {
+            get => _sandbox ?? false;
+            set
+            {
+                if (_sandbox.HasValue)
+                {
+                    throw new InvalidOperationException("Sandbox mode cannot be changed after it has been set.");
+                }
+                _sandbox = value;
+            }
+        }
+
+        /// <summary>
         /// Adds a token provider to your IServiceCollection
         /// </summary>
         /// <typeparam name="TTokenProvider"></typeparam>
         /// <typeparam name="TTokenBase"></typeparam>
         /// <returns></returns>
-        public HostConfiguration UseProvider<TTokenProvider, TTokenBase>() 
+        public HostConfiguration UseProvider<TTokenProvider, TTokenBase>()
             where TTokenProvider : TokenProvider<TTokenBase>
             where TTokenBase : TokenBase
         {

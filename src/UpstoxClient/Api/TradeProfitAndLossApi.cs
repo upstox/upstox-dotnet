@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -370,11 +371,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TradeProfitAndLossApi"/> class.
         /// </summary>
         /// <returns></returns>
         public TradeProfitAndLossApi(ILogger<TradeProfitAndLossApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, TradeProfitAndLossApiEvents tradeProfitAndLossApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -382,7 +388,10 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = tradeProfitAndLossApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
+
 
         partial void FormatGetProfitAndLossCharges(ref string? segment, ref string? financialYear, ref Option<string?> fromDate, ref Option<string?> toDate);
 
@@ -477,6 +486,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetProfitAndLossChargesApiResponse"/>&gt;</returns>
         public async Task<IGetProfitAndLossChargesApiResponse> GetProfitAndLossChargesAsync(string? segment = default, string? financialYear = default, Option<string?> fromDate = default, Option<string?> toDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetProfitAndLossChargesAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -987,6 +997,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTradeWiseProfitAndLossDataApiResponse"/>&gt;</returns>
         public async Task<IGetTradeWiseProfitAndLossDataApiResponse> GetTradeWiseProfitAndLossDataAsync(string? segment = default, string? financialYear = default, int? pageNumber = default, int? pageSize = default, Option<string?> fromDate = default, Option<string?> toDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetTradeWiseProfitAndLossDataAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1487,6 +1498,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTradeWiseProfitAndLossMetaDataApiResponse"/>&gt;</returns>
         public async Task<IGetTradeWiseProfitAndLossMetaDataApiResponse> GetTradeWiseProfitAndLossMetaDataAsync(string? segment = default, string? financialYear = default, Option<string?> fromDate = default, Option<string?> toDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetTradeWiseProfitAndLossMetaDataAsync   ");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

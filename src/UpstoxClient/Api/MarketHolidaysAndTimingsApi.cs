@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -437,11 +438,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MarketHolidaysAndTimingsApi"/> class.
         /// </summary>
         /// <returns></returns>
         public MarketHolidaysAndTimingsApi(ILogger<MarketHolidaysAndTimingsApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, MarketHolidaysAndTimingsApiEvents marketHolidaysAndTimingsApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -449,7 +455,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = marketHolidaysAndTimingsApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatGetExchangeTimings(ref string? date);
 
@@ -526,6 +534,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetExchangeTimingsApiResponse"/>&gt;</returns>
         public async Task<IGetExchangeTimingsApiResponse> GetExchangeTimingsAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetExchangeTimingsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -984,6 +993,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidayApiResponse"/>&gt;</returns>
         public async Task<IGetHolidayApiResponse> GetHolidayAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHolidayAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1434,6 +1444,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidaysApiResponse"/>&gt;</returns>
         public async Task<IGetHolidaysApiResponse> GetHolidaysAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHolidaysAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1889,6 +1900,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketStatusApiResponse"/>&gt;</returns>
         public async Task<IGetMarketStatusApiResponse> GetMarketStatusAsync(string? exchange = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetMarketStatusAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

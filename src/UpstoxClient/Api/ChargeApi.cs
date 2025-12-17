@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -265,11 +266,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ChargeApi"/> class.
         /// </summary>
         /// <returns></returns>
         public ChargeApi(ILogger<ChargeApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, ChargeApiEvents chargeApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -277,7 +283,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = chargeApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatGetBrokerage(ref string? instrumentToken, ref int? quantity, ref string? product, ref string? transactionType, ref float? price);
 
@@ -378,6 +386,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetBrokerageApiResponse"/>&gt;</returns>
         public async Task<IGetBrokerageApiResponse> GetBrokerageAsync(string? instrumentToken = default, int? quantity = default, string? product = default, string? transactionType = default, float? price = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetBrokerageAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -867,6 +876,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IPostMarginApiResponse"/>&gt;</returns>
         public async Task<IPostMarginApiResponse> PostMarginAsync(MarginRequest marginRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "PostMarginAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

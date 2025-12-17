@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -449,11 +450,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ExpiredInstrumentApi"/> class.
         /// </summary>
         /// <returns></returns>
         public ExpiredInstrumentApi(ILogger<ExpiredInstrumentApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, ExpiredInstrumentApiEvents expiredInstrumentApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -461,7 +467,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = expiredInstrumentApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatGetExpiredFutureContracts(ref string? instrumentKey, ref string? expiryDate);
 
@@ -544,6 +552,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetExpiredFutureContractsApiResponse"/>&gt;</returns>
         public async Task<IGetExpiredFutureContractsApiResponse> GetExpiredFutureContractsAsync(string? instrumentKey = default, string? expiryDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetExpiredFutureContractsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1037,6 +1046,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetExpiredHistoricalCandleDataApiResponse"/>&gt;</returns>
         public async Task<IGetExpiredHistoricalCandleDataApiResponse> GetExpiredHistoricalCandleDataAsync(string? expiredInstrumentKey = default, string? interval = default, string? toDate = default, string? fromDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetExpiredHistoricalCandleDataAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1515,6 +1525,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetExpiredOptionContractsApiResponse"/>&gt;</returns>
         public async Task<IGetExpiredOptionContractsApiResponse> GetExpiredOptionContractsAsync(string? instrumentKey = default, string? expiryDate = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetExpiredOptionContractsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1990,6 +2001,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetExpiriesResponseApiResponse"/>&gt;</returns>
         public async Task<IGetExpiriesResponseApiResponse> GetExpiriesResponseAsync(string? instrumentKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetExpiriesResponseAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -255,11 +256,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WebsocketApi"/> class.
         /// </summary>
         /// <returns></returns>
         public WebsocketApi(ILogger<WebsocketApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, WebsocketApiEvents websocketApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -267,7 +273,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = websocketApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         /// <summary>
         /// Processes the server response
@@ -336,6 +344,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IAuthorizeMarketDataFeedApiResponse"/>&gt;</returns>
         public async Task<IAuthorizeMarketDataFeedApiResponse> AuthorizeMarketDataFeedAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "AuthorizeMarketDataFeedAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -793,6 +802,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPortfolioStreamFeedAuthorizeApiResponse"/>&gt;</returns>
         public async Task<IGetPortfolioStreamFeedAuthorizeApiResponse> GetPortfolioStreamFeedAuthorizeAsync(Option<string?> updateTypes = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetPortfolioStreamFeedAuthorizeAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

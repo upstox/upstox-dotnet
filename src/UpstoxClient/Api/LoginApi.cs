@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -377,11 +378,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LoginApi"/> class.
         /// </summary>
         /// <returns></returns>
         public LoginApi(ILogger<LoginApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, LoginApiEvents loginApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -389,7 +395,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = loginApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
 
 
@@ -485,6 +493,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IInitTokenRequestForIndieUserApiResponse"/>&gt;</returns>
         public async Task<IInitTokenRequestForIndieUserApiResponse> InitTokenRequestForIndieUserAsync(IndieUserTokenRequest indieUserTokenRequest, string? clientId = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "InitTokenRequestForIndieUserAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -988,6 +997,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="ILogoutApiResponse"/>&gt;</returns>
         public async Task<ILogoutApiResponse> LogoutAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "LogoutAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1516,6 +1526,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="ITokenApiResponse"/>&gt;</returns>
         public async Task<ITokenApiResponse> TokenAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "TokenAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

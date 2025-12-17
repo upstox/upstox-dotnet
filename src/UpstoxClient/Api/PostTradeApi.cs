@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -174,11 +175,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PostTradeApi"/> class.
         /// </summary>
         /// <returns></returns>
         public PostTradeApi(ILogger<PostTradeApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, PostTradeApiEvents postTradeApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -186,7 +192,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = postTradeApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatGetTradesByDateRange(ref string? startDate, ref string? endDate, ref int? pageNumber, ref int? pageSize, ref Option<string?> segment);
 
@@ -287,6 +295,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTradesByDateRangeApiResponse"/>&gt;</returns>
         public async Task<IGetTradesByDateRangeApiResponse> GetTradesByDateRangeAsync(string? startDate = default, string? endDate = default, int? pageNumber = default, int? pageSize = default, Option<string?> segment = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetTradesByDateRangeAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try

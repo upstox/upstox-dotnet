@@ -21,6 +21,7 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -823,11 +824,16 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
+        /// The sandbox configuration
+        /// </summary>
+        private readonly ISandboxConfiguration _sandboxConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderApi"/> class.
         /// </summary>
         /// <returns></returns>
         public OrderApi(ILogger<OrderApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, OrderApiEvents orderApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider)
+            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
@@ -835,7 +841,9 @@ namespace UpstoxClient.Api
             HttpClient = httpClient;
             Events = orderApiEvents;
             OauthTokenProvider = oauthTokenProvider;
+            _sandboxConfiguration = sandboxConfiguration;
         }
+
 
         partial void FormatCancelMultiOrder(ref Option<string?> tag, ref Option<string?> segment);
 
@@ -970,6 +978,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="ICancelMultiOrderApiResponse"/>&gt;</returns>
         public async Task<ICancelMultiOrderApiResponse> CancelMultiOrderAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "CancelMultiOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1085,6 +1094,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IPlaceMultiOrderApiResponse"/>&gt;</returns>
         public async Task<IPlaceMultiOrderApiResponse> PlaceMultiOrderAsync(List<MultiOrderRequest> multiOrderRequest, Option<string?> origin = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "PlaceMultiOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1889,6 +1899,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IExitPositionsApiResponse"/>&gt;</returns>
         public async Task<IExitPositionsApiResponse> ExitPositionsAsync(Option<string?> tag = default, Option<string?> segment = default, string? algoName = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "ExitPositionsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -2362,6 +2373,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetOrderBookApiResponse"/>&gt;</returns>
         public async Task<IGetOrderBookApiResponse> GetOrderBookAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetOrderBookAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -2834,6 +2846,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetOrderDetailsApiResponse"/>&gt;</returns>
         public async Task<IGetOrderDetailsApiResponse> GetOrderDetailsAsync(Option<string?> orderId = default, Option<string?> tag = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetOrderDetailsAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -3312,6 +3325,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetOrderStatusApiResponse"/>&gt;</returns>
         public async Task<IGetOrderStatusApiResponse> GetOrderStatusAsync(Option<string?> orderId = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetOrderStatusAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -3779,6 +3793,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTradeHistoryApiResponse"/>&gt;</returns>
         public async Task<IGetTradeHistoryApiResponse> GetTradeHistoryAsync(System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetTradeHistoryAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -4245,6 +4260,7 @@ namespace UpstoxClient.Api
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTradesByOrderApiResponse"/>&gt;</returns>
         public async Task<IGetTradesByOrderApiResponse> GetTradesByOrderAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default)
         {
+            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetTradesByOrderAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -4643,13 +4659,6 @@ namespace UpstoxClient.Api
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
-
-
-
-
-
-
-        // ModifyOrder1Async method has been removed
 
 }
 }

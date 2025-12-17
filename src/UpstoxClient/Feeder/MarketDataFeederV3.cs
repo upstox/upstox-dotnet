@@ -359,7 +359,7 @@ namespace UpstoxClient.Feeder
 
             if (redirectResponse == null)
             {
-                throw new StreamerException("Failed to obtain authorized websocket URI - authorization response was null");
+                throw new StreamerException("Failed to obtain authorized websocket URI status code: " + response.StatusCode + ", message: " + response.RawContent);
             }
 
             if (redirectResponse?.DataOption.IsSet == true && redirectResponse.Data?.AuthorizedRedirectUri is string uri)
@@ -367,7 +367,7 @@ namespace UpstoxClient.Feeder
                 return new Uri(uri);
             }
 
-            throw new StreamerException("Failed to obtain authorized websocket URI");
+            throw new StreamerException("Failed to obtain authorized websocket URI status code: " + response.StatusCode + ", message: " + response.RawContent);
         }
 
         private async Task PingLoopAsync(CancellationToken cancellationToken)
