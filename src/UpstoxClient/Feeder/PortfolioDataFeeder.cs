@@ -239,7 +239,7 @@ namespace UpstoxClient.Feeder
                 return new Uri(uri);
             }
 
-            throw new StreamerException("Failed to obtain authorized websocket URI");
+            throw new StreamerException("Failed to obtain authorized websocket URI status code: " + response.StatusCode + ", message: " + response.RawContent);
         }
 
         private string BuildUpdateTypes()
