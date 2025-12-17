@@ -39,7 +39,7 @@ namespace UpstoxClient.Client
         {
             if (sandboxConfiguration.IsSandboxMode && !allowedSandboxMethods.Contains(methodName))
             {
-                throw new Exception("Sandbox mode is not supported for this API");
+                throw new Exception("This API is not available in sandbox mode");
             }
         }
     }
