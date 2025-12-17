@@ -59,6 +59,10 @@ namespace UpstoxClient.Test.Service
             }
             else
             {
+                Console.WriteLine($"GetBrokerage response: {response.RawContent}");
+                if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized){
+                    throw new Exception("Invalid access token");
+                }
                 Console.WriteLine("GetBrokerage response is null");
             }
             Console.WriteLine("==================");
@@ -78,6 +82,9 @@ namespace UpstoxClient.Test.Service
 
             if (result == null)
             {
+                if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized){
+                    throw new Exception("Invalid access token");
+                }
                 Console.WriteLine("GetBrokerage response is null");
                 return;
             }
