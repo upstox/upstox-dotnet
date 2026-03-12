@@ -44,6 +44,7 @@ namespace UpstoxClient.Test.Service
                 isAmo: true,
                 tag: "sanity_place_order_v3"
             );
+            orderRequest.MarketProtection = 0f;
 
             var response = await orderApi.PlaceOrderAsync(orderRequest);
             var result = response.Ok();
@@ -158,6 +159,7 @@ namespace UpstoxClient.Test.Service
                 isAmo: isAmo,
                 tag: tag
             );
+            orderRequest.MarketProtection = 0f;
 
             // Validate parameters based on order type
             if (orderType == PlaceOrderV3Request.OrderTypeEnum.LIMIT && price <= 0)
@@ -691,7 +693,8 @@ namespace UpstoxClient.Test.Service
                 new GttRule(
                     strategy: GttRule.StrategyEnum.ENTRY,
                     triggerType: GttRule.TriggerTypeEnum.ABOVE,
-                    triggerPrice: 2
+                    triggerPrice: 2,
+                    marketProtection: 0
                 )
             };
             var modifyRequest = new GttModifyOrderRequest(
@@ -755,7 +758,8 @@ namespace UpstoxClient.Test.Service
                 new GttRule(
                     strategy: GttRule.StrategyEnum.ENTRY,
                     triggerType: GttRule.TriggerTypeEnum.ABOVE,
-                    triggerPrice: 950.0
+                    triggerPrice: 950.0,
+                    marketProtection: 0
                 )
             };
             var modifyRequest = new GttModifyOrderRequest(
@@ -807,7 +811,8 @@ namespace UpstoxClient.Test.Service
                 new GttRule(
                     strategy: GttRule.StrategyEnum.ENTRY,
                     triggerType: GttRule.TriggerTypeEnum.ABOVE,
-                    triggerPrice: 950.0
+                    triggerPrice: 950.0,
+                    marketProtection: 0
                 )
             };
             var modifyRequest = new GttModifyOrderRequest(
@@ -870,6 +875,7 @@ namespace UpstoxClient.Test.Service
                 disclosedQuantity: 0,
                 validity: ModifyOrderRequest.ValidityEnum.DAY
             );
+            modifyRequest.MarketProtection = 0f;
 
             var response = await orderApi.ModifyOrderAsync(modifyRequest);
             var result = response.Ok();
@@ -926,6 +932,7 @@ namespace UpstoxClient.Test.Service
                 disclosedQuantity: 0,
                 validity: ModifyOrderRequest.ValidityEnum.DAY
             );
+            modifyRequest.MarketProtection = 0f;
 
             var response = await orderApi.ModifyOrderAsync(modifyRequest);
             if (!string.IsNullOrEmpty(response.RawContent) &&
@@ -971,6 +978,7 @@ namespace UpstoxClient.Test.Service
                 disclosedQuantity: 0,
                 validity: ModifyOrderRequest.ValidityEnum.DAY
             );
+            modifyRequest.MarketProtection = 0f;
 
             var response = await orderApi.ModifyOrderAsync(modifyRequest, algoName: "name");
             if (!string.IsNullOrEmpty(response.RawContent) &&
@@ -1017,7 +1025,8 @@ namespace UpstoxClient.Test.Service
                 new GttRule(
                     strategy: GttRule.StrategyEnum.ENTRY,
                     triggerType: GttRule.TriggerTypeEnum.ABOVE,
-                    triggerPrice: 950.0
+                    triggerPrice: 950.0,
+                    marketProtection: 0
                 )
             };
             var placeRequest = new GttPlaceOrderRequest(
@@ -1083,7 +1092,8 @@ namespace UpstoxClient.Test.Service
                 new GttRule(
                     strategy: GttRule.StrategyEnum.ENTRY,
                     triggerType: GttRule.TriggerTypeEnum.ABOVE,
-                    triggerPrice: 950.0
+                    triggerPrice: 950.0,
+                    marketProtection: 0
                 )
             };
             var placeRequest = new GttPlaceOrderRequest(
@@ -1133,7 +1143,8 @@ namespace UpstoxClient.Test.Service
                 new GttRule(
                     strategy: GttRule.StrategyEnum.ENTRY,
                     triggerType: GttRule.TriggerTypeEnum.ABOVE,
-                    triggerPrice: 950.0
+                    triggerPrice: 950.0,
+                    marketProtection: 0
                 )
             };
             var placeRequest = new GttPlaceOrderRequest(

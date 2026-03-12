@@ -36,13 +36,15 @@ namespace UpstoxClient.Model
         /// <param name="triggerType">Trigger type for each leg of the order</param>
         /// <param name="triggerPrice">Trigger price for the GTT order leg</param>
         /// <param name="trailingGap">Optional parameter defining the trailing gap for the GTT order</param>
+        /// <param name="marketProtection">Optional market price protection value</param>
         [JsonConstructor]
-        public GttRule(StrategyEnum? strategy = default, TriggerTypeEnum? triggerType = default, double? triggerPrice = default, Option<double?> trailingGap = default)
+        public GttRule(StrategyEnum? strategy = default, TriggerTypeEnum? triggerType = default, double? triggerPrice = default, Option<double?> trailingGap = default, Option<double?> marketProtection = default)
         {
             Strategy = strategy;
             TriggerType = triggerType;
             TriggerPrice = triggerPrice;
             TrailingGapOption = trailingGap;
+            MarketProtectionOption = marketProtection;
             OnCreated();
         }
 
@@ -256,6 +258,20 @@ namespace UpstoxClient.Model
         public double? TrailingGap { get { return this.TrailingGapOption; } set { this.TrailingGapOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of MarketProtection
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<double?> MarketProtectionOption { get; private set; }
+
+        /// <summary>
+        /// Optional market price protection value
+        /// </summary>
+        /// <value>Market price protection (optional)</value>
+        [JsonPropertyName("market_protection")]
+        public double? MarketProtection { get { return this.MarketProtectionOption.Value; } set { this.MarketProtectionOption = new(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -273,6 +289,7 @@ namespace UpstoxClient.Model
             sb.Append("  TriggerType: ").Append(TriggerType).Append("\n");
             sb.Append("  TriggerPrice: ").Append(TriggerPrice).Append("\n");
             sb.Append("  TrailingGap: ").Append(TrailingGap).Append("\n");
+            sb.Append("  MarketProtection: ").Append(MarketProtection).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -305,6 +322,7 @@ namespace UpstoxClient.Model
             Option<GttRule.TriggerTypeEnum?> triggerType = default;
             Option<double?> triggerPrice = default;
             Option<double?> trailingGap = default;
+            Option<double?> marketProtection = default;
 
             while (utf8JsonReader.Read())
             {
@@ -337,6 +355,9 @@ namespace UpstoxClient.Model
                         case "trailing_gap":
                             trailingGap = new Option<double?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (double?)null : utf8JsonReader.GetDouble());
                             break;
+                        case "market_protection":
+                            marketProtection = new Option<double?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (double?)null : utf8JsonReader.GetDouble());
+                            break;
                         default:
                             break;
                     }
@@ -352,7 +373,7 @@ namespace UpstoxClient.Model
             if (!triggerPrice.IsSet)
                 throw new ArgumentException("Property is required for class GttRule.", nameof(triggerPrice));
 
-            return new GttRule(strategy.Value!, triggerType.Value!, triggerPrice.Value!, trailingGap);
+            return new GttRule(strategy.Value!, triggerType.Value!, triggerPrice.Value!, trailingGap, marketProtection);
         }
 
         /// <summary>
@@ -401,6 +422,12 @@ namespace UpstoxClient.Model
                     writer.WriteNumber("trailing_gap", gttRule.TrailingGapOption.Value!.Value);
                 else
                     writer.WriteNull("trailing_gap");
+
+            if (gttRule.MarketProtectionOption.IsSet)
+                if (gttRule.MarketProtectionOption.Value != null)
+                    writer.WriteNumber("market_protection", gttRule.MarketProtectionOption.Value!.Value);
+                else
+                    writer.WriteNull("market_protection");
         }
     }
 }
