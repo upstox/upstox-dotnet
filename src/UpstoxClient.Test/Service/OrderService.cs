@@ -769,7 +769,8 @@ namespace UpstoxClient.Test.Service
                     slice: true,
                     disclosedQuantity: 0,
                     triggerPrice: 0.0f,
-                    isAmo: true
+                    isAmo: true,
+                    marketProtection: 0f
                 ),
                 new MultiOrderRequest(
                     instrumentToken: "NSE_EQ|INE669E01016",
@@ -784,7 +785,8 @@ namespace UpstoxClient.Test.Service
                     slice: true,
                     disclosedQuantity: 0,
                     triggerPrice: 0.0f,
-                    isAmo: true
+                    isAmo: true,
+                    marketProtection: 2f
                 )
             };
 
@@ -862,7 +864,8 @@ namespace UpstoxClient.Test.Service
                     slice: true,
                     disclosedQuantity: 0,
                     triggerPrice: 0.0f,
-                    isAmo: true
+                    isAmo: true,
+                    marketProtection: 0f
                 ),
                 new MultiOrderRequest(
                     instrumentToken: "NSE_EQ|INE669E01016",
@@ -877,7 +880,8 @@ namespace UpstoxClient.Test.Service
                     slice: true,
                     disclosedQuantity: 0,
                     triggerPrice: 0.0f,
-                    isAmo: true
+                    isAmo: true,
+                    marketProtection: 2f
                 )
             };
 
@@ -927,7 +931,8 @@ namespace UpstoxClient.Test.Service
                     slice: true,
                     disclosedQuantity: 0,
                     triggerPrice: 0.0f,
-                    isAmo: true
+                    isAmo: true,
+                    marketProtection: 0f
                 ),
                 new MultiOrderRequest(
                     instrumentToken: "NSE_EQ|INE669E01016",
@@ -942,7 +947,8 @@ namespace UpstoxClient.Test.Service
                     slice: true,
                     disclosedQuantity: 0,
                     triggerPrice: 0.0f,
-                    isAmo: true
+                    isAmo: true,
+                    marketProtection: 2f
                 )
             };
 

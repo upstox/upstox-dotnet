@@ -45,8 +45,9 @@ namespace UpstoxClient.Model
         /// <param name="triggerPrice">If the order is a stop loss order then the trigger price to be set is mentioned here</param>
         /// <param name="isAmo">Signifies if the order is an After Market Order</param>
         /// <param name="correlationId">A unique identifier for tracking individual orders within the batch</param>
+        /// <param name="marketProtection">Optional market price protection value</param>
         [JsonConstructor]
-        public MultiOrderRequest(int? quantity = default, ProductEnum? product = default, ValidityEnum? validity = default, float? price = default, Option<string?> tag = default, bool? slice = default, string? instrumentToken = default, OrderTypeEnum? orderType = default, TransactionTypeEnum? transactionType = default, int? disclosedQuantity = default, float? triggerPrice = default, bool? isAmo = default, string? correlationId = default)
+        public MultiOrderRequest(int? quantity = default, ProductEnum? product = default, ValidityEnum? validity = default, float? price = default, Option<string?> tag = default, bool? slice = default, string? instrumentToken = default, OrderTypeEnum? orderType = default, TransactionTypeEnum? transactionType = default, int? disclosedQuantity = default, float? triggerPrice = default, bool? isAmo = default, string? correlationId = default, float? marketProtection = default)
         {
             Quantity = quantity;
             Product = product;
@@ -61,6 +62,7 @@ namespace UpstoxClient.Model
             TriggerPrice = triggerPrice;
             IsAmo = isAmo;
             CorrelationId = correlationId;
+            MarketProtection = marketProtection;
             OnCreated();
         }
 
@@ -484,6 +486,13 @@ namespace UpstoxClient.Model
         public string? CorrelationId { get; set; }
 
         /// <summary>
+        /// Optional market price protection value
+        /// </summary>
+        /// <value>Market price protection (optional)</value>
+        [JsonPropertyName("market_protection")]
+        public float? MarketProtection { get; set; }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -510,6 +519,7 @@ namespace UpstoxClient.Model
             sb.Append("  TriggerPrice: ").Append(TriggerPrice).Append("\n");
             sb.Append("  IsAmo: ").Append(IsAmo).Append("\n");
             sb.Append("  CorrelationId: ").Append(CorrelationId).Append("\n");
+            sb.Append("  MarketProtection: ").Append(MarketProtection).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -551,6 +561,7 @@ namespace UpstoxClient.Model
             Option<float?> triggerPrice = default;
             Option<bool?> isAmo = default;
             Option<string?> correlationId = default;
+            Option<float?> marketProtection = default;
 
             while (utf8JsonReader.Read())
             {
@@ -614,6 +625,9 @@ namespace UpstoxClient.Model
                         case "correlation_id":
                             correlationId = new Option<string?>(utf8JsonReader.GetString());
                             break;
+                        case "market_protection":
+                            marketProtection = new Option<float?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (float?)null : (float)utf8JsonReader.GetDouble());
+                            break;
                         default:
                             break;
                     }
@@ -656,7 +670,7 @@ namespace UpstoxClient.Model
             if (!correlationId.IsSet)
                 throw new ArgumentException("Property is required for class MultiOrderRequest.", nameof(correlationId));
 
-            return new MultiOrderRequest(quantity.Value!, product.Value!, validity.Value!, price.Value!, tag, slice.Value!, instrumentToken.Value!, orderType.Value!, transactionType.Value!, disclosedQuantity.Value!, triggerPrice.Value!, isAmo.Value!, correlationId.Value!);
+            return new MultiOrderRequest(quantity.Value!, product.Value!, validity.Value!, price.Value!, tag, slice.Value!, instrumentToken.Value!, orderType.Value!, transactionType.Value!, disclosedQuantity.Value!, triggerPrice.Value!, isAmo.Value!, correlationId.Value!, marketProtection.IsSet ? marketProtection.Value : (float?)null);
         }
 
         /// <summary>
@@ -752,6 +766,9 @@ namespace UpstoxClient.Model
                 writer.WriteString("correlation_id", multiOrderRequest.CorrelationId);
             else
                 writer.WriteNull("correlation_id");
+
+            if (multiOrderRequest.MarketProtection.HasValue)
+                writer.WriteNumber("market_protection", multiOrderRequest.MarketProtection.Value);
         }
     }
 }
