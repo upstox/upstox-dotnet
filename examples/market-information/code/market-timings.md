@@ -15,7 +15,7 @@ var host = Host.CreateDefaultBuilder()
 await host.StartAsync();
 
 var services = host.Services;
-var apiInstance = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+var apiInstance = services.GetRequiredService<IMarketApi>();
 try
 {
     var response = await apiInstance.GetExchangeTimingsAsync(date: "2024-01-15");

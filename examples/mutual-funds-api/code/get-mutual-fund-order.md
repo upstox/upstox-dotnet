@@ -1,4 +1,4 @@
-## Get market status for a particular exchange
+## Get mutual fund order details
 
 ```csharp
 using UpstoxClient.Api;
@@ -15,10 +15,10 @@ var host = Host.CreateDefaultBuilder()
 await host.StartAsync();
 
 var services = host.Services;
-var apiInstance = services.GetRequiredService<IMarketApi>();
+var apiInstance = services.GetRequiredService<IMutualFundApi>();
 try
 {
-    var response = await apiInstance.GetMarketStatusAsync();
+    var response = await apiInstance.GetMutualFundOrderAsync(orderId: "{order_id}");
     Console.WriteLine(response.Ok());
 }
 catch (Exception e)
