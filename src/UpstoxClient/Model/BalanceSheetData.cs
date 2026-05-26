@@ -215,8 +215,7 @@ namespace UpstoxClient.Model
             if (history.IsSet && history.Value == null)
                 throw new ArgumentNullException(nameof(history), "Property is not nullable for class BalanceSheetData.");
 
-            if (fullStatement.IsSet && fullStatement.Value == null)
-                throw new ArgumentNullException(nameof(fullStatement), "Property is not nullable for class BalanceSheetData.");
+            // full_statement may be absent from API responses; treat null as unset
 
             return new BalanceSheetData(type, timePeriod, unitsIn, history, fullStatement);
         }

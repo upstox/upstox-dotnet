@@ -36,11 +36,13 @@ namespace UpstoxClient.Test
             {
                 // await VerboseTest(host.Services);
 
-                 // await SanityTest(host.Services);
+                // await SanityTest(host.Services);
+
+                await SanityTest(host.Services);
 
                 // await MarketDataWebSocketTest(host.Services);
 
-                await PortfolioDataWebSocketTest(host.Services);
+                // await PortfolioDataWebSocketTest(host.Services);
             
         
             }
@@ -59,11 +61,31 @@ namespace UpstoxClient.Test
                 await ExpiredInstrumentService.PrintGetExpiredFutureContractsTest(services);
                 await ExpiredInstrumentService.PrintGetExpiredHistoricalCandleDataTest(services);
                 await ExpiredInstrumentService.PrintGetExpiredOptionContractsTest(services);
+                await FundamentalsService.PrintGetBalanceSheetTest(services);
+                await FundamentalsService.PrintGetCashFlowTest(services);
+                await FundamentalsService.PrintGetCompanyProfileTest(services);
+                await FundamentalsService.PrintGetCompetitorsTest(services);
+                await FundamentalsService.PrintGetCorporateActionsTest(services);
+                await FundamentalsService.PrintGetIncomeStatementTest(services);
+                await FundamentalsService.PrintGetKeyRatiosTest(services);
+                await FundamentalsService.PrintGetShareHoldingsTest(services);
+                await HistoryService.PrintGetHistoricalCandleData2Test(services);
+                await HistoryService.PrintGetHistoricalCandleData3Test(services);
+                await HistoryService.PrintGetIntraDayCandleData1Test(services);
                 await HistoryV3Service.PrintGetHistoricalCandleDataTest(services);
                 await HistoryV3Service.PrintGetHistoricalCandleDataWithFromDateTest(services);
                 await HistoryV3Service.PrintGetIntraDayCandleDataTest(services);
+                await IPOService.PrintGetIpoListingTest(services);
+                await IPOService.PrintGetIpoDetailsTest(services);
+                await InstrumentsService.PrintSearchInstrumentTest(services);
                 await LoginService.PrintTokenTest(services);
                 await LoginService.PrintInitTokenRequestForIndieUserTest(services);
+                await MarketExtensionsService.PrintGetOiDataTest(services);
+                await MarketExtensionsService.PrintGetChangeOiDataTest(services);
+                await MarketExtensionsService.PrintGetPcrDataTest(services);
+                await MarketExtensionsService.PrintGetMaxPainDataTest(services);
+                await MarketExtensionsService.PrintGetFiiDataTest(services);
+                await MarketExtensionsService.PrintGetDiiDataTest(services);
                 await MarketHolidaysAndTimingsService.PrintGetExchangeTimingsTest(services);
                 await MarketHolidaysAndTimingsService.PrintGetHolidayTest(services);
                 await MarketHolidaysAndTimingsService.PrintGetHolidaysTest(services);
@@ -72,6 +94,11 @@ namespace UpstoxClient.Test
                 await MarketQuoteV3Service.PrintGetLtpTest(services);
                 await MarketQuoteV3Service.PrintGetMarketQuoteOHLCV3Test(services);
                 await MarketQuoteV3Service.PrintGetMarketQuoteOptionGreekTest(services);
+                await MutualFundService.PrintGetMutualFundHoldingsTest(services);
+                await MutualFundService.PrintGetMutualFundOrdersTest(services);
+                await MutualFundService.PrintGetMutualFundSipsTest(services);
+                await MutualFundService.PrintGetMutualFundOrderTest(services);
+                await NewsService.PrintGetNewsTest(services);
                 await OptionsService.PrintGetOptionContractsTest(services);
                 await OptionsService.PrintGetPutCallOptionChainTest(services);
                 await OrderService.TestOrderBookAsync(services);
@@ -97,11 +124,61 @@ namespace UpstoxClient.Test
                 await TradeProfitAndLossService.PrintGetProfitAndLossChargesTest(services);
                 await TradeProfitAndLossService.PrintGetTradeWiseProfitAndLossDataTest(services);
                 await TradeProfitAndLossService.PrintGetTradeWiseProfitAndLossMetaDataTest(services);
+                await UserApiExtensionsService.PrintGetKillSwitchTest(services);
+                await UserApiExtensionsService.PrintGetUserIpsTest(services);
+                await UserApiExtensionsService.PrintGetUserFundMarginV3Test(services);
+                await UserApiExtensionsService.PrintGetPayinHistoryTest(services);
+                await UserApiExtensionsService.PrintGetPayoutHistoryTest(services);
+                await UserApiExtensionsService.PrintUpdateKillSwitchTest(services);
+                await UserApiExtensionsService.PrintUpdateUserIpTest(services);
                 await UserService.PrintProfileTest(services);
                 await UserService.PrintGetUserFundMarginTest(services);
                 await WebsocketService.PrintAuthorizeMarketDataFeedTest(services);
                 await WebsocketService.PrintGetPortfolioStreamFeedAuthorizeTest(services);
         }
+        public static async Task UserAndMarketSanityTest(IServiceProvider services)
+        {
+            var results = new List<(string Name, bool Passed, string? Error)>();
+
+            async Task Run(string name, Func<Task> test)
+            {
+                try { await test(); results.Add((name, true, null)); }
+                catch (Exception ex) { results.Add((name, false, ex.Message)); }
+            }
+
+            Console.WriteLine("=== User API Sanity Tests ===");
+            await Run("GetProfile",           () => UserService.SanityProfileTest(services));
+            await Run("GetUserFundMargin",    () => UserService.SanityGetUserFundMarginTest(services));
+            await Run("GetKillSwitch",        () => UserApiExtensionsService.SanityGetKillSwitchTest(services));
+            await Run("GetUserIps",           () => UserApiExtensionsService.SanityGetUserIpsTest(services));
+            await Run("GetUserFundMarginV3",  () => UserApiExtensionsService.SanityGetUserFundMarginV3Test(services));
+            await Run("GetPayinHistory",      () => UserApiExtensionsService.SanityGetPayinHistoryTest(services));
+            await Run("GetPayoutHistory",     () => UserApiExtensionsService.SanityGetPayoutHistoryTest(services));
+
+            Console.WriteLine("=== Market Holidays & Timings Sanity Tests ===");
+            await Run("GetExchangeTimings",   () => MarketHolidaysAndTimingsService.SanityGetExchangeTimingsTest(services));
+            await Run("GetHoliday",           () => MarketHolidaysAndTimingsService.SanityGetHolidayTest(services));
+            await Run("GetHolidays",          () => MarketHolidaysAndTimingsService.SanityGetHolidaysTest(services));
+            await Run("GetMarketStatus",      () => MarketHolidaysAndTimingsService.SanityGetMarketStatusTest(services));
+
+            Console.WriteLine("=== Market Extensions Sanity Tests ===");
+            await Run("GetOiData",            () => MarketExtensionsService.SanityGetOiDataTest(services));
+            await Run("GetChangeOiData",      () => MarketExtensionsService.SanityGetChangeOiDataTest(services));
+            await Run("GetPcrData",           () => MarketExtensionsService.SanityGetPcrDataTest(services));
+            await Run("GetMaxPainData",       () => MarketExtensionsService.SanityGetMaxPainDataTest(services));
+            await Run("GetFiiData",           () => MarketExtensionsService.SanityGetFiiDataTest(services));
+            await Run("GetDiiData",           () => MarketExtensionsService.SanityGetDiiDataTest(services));
+
+            Console.WriteLine();
+            Console.WriteLine("=== Results ===");
+            foreach (var (name, passed, error) in results)
+                Console.WriteLine(passed ? $"  PASS  {name}" : $"  FAIL  {name}: {error}");
+
+            int failed = results.Count(r => !r.Passed);
+            Console.WriteLine();
+            Console.WriteLine($"{results.Count - failed}/{results.Count} passed, {failed} failed");
+        }
+
         public static async Task SanityTest(IServiceProvider services){
                 await ChargeService.SanityGetBrokerageTest(services);
                 await ChargeService.SanityPostMarginTest(services);
@@ -109,11 +186,31 @@ namespace UpstoxClient.Test
                 await ExpiredInstrumentService.SanityGetExpiredFutureContractsTest(services);
                 await ExpiredInstrumentService.SanityGetExpiredHistoricalCandleDataTest(services);
                 await ExpiredInstrumentService.SanityGetExpiredOptionContractsTest(services);
+                await FundamentalsService.SanityGetBalanceSheetTest(services);
+                await FundamentalsService.SanityGetCashFlowTest(services);
+                await FundamentalsService.SanityGetCompanyProfileTest(services);
+                await FundamentalsService.SanityGetCompetitorsTest(services);
+                await FundamentalsService.SanityGetCorporateActionsTest(services);
+                await FundamentalsService.SanityGetIncomeStatementTest(services);
+                await FundamentalsService.SanityGetKeyRatiosTest(services);
+                await FundamentalsService.SanityGetShareHoldingsTest(services);
+                await HistoryService.SanityGetHistoricalCandleData2Test(services);
+                await HistoryService.SanityGetHistoricalCandleData3Test(services);
+                await HistoryService.SanityGetIntraDayCandleData1Test(services);
                 await HistoryV3Service.SanityGetHistoricalCandleDataTest(services);
                 await HistoryV3Service.SanityGetHistoricalCandleDataWithFromDateTest(services);
                 await HistoryV3Service.SanityGetIntraDayCandleDataTest(services);
+                await IPOService.SanityGetIpoListingTest(services);
+                await IPOService.SanityGetIpoDetailsTest(services);
+                await InstrumentsService.SanitySearchInstrumentTest(services);
                 await LoginService.SanityTokenTest(services);
                 await LoginService.SanityInitTokenRequestForIndieUserTest(services);
+                await MarketExtensionsService.SanityGetOiDataTest(services);
+                await MarketExtensionsService.SanityGetChangeOiDataTest(services);
+                await MarketExtensionsService.SanityGetPcrDataTest(services);
+                await MarketExtensionsService.SanityGetMaxPainDataTest(services);
+                await MarketExtensionsService.SanityGetFiiDataTest(services);
+                await MarketExtensionsService.SanityGetDiiDataTest(services);
                 await MarketHolidaysAndTimingsService.SanityGetExchangeTimingsTest(services);
                 await MarketHolidaysAndTimingsService.SanityGetHolidayTest(services);
                 await MarketHolidaysAndTimingsService.SanityGetHolidaysTest(services);
@@ -122,6 +219,11 @@ namespace UpstoxClient.Test
                 await MarketQuoteV3Service.SanityGetLtpTest(services);
                 await MarketQuoteV3Service.SanityGetMarketQuoteOHLCV3Test(services);
                 await MarketQuoteV3Service.SanityGetMarketQuoteOptionGreekTest(services);
+                await MutualFundService.SanityGetMutualFundHoldingsTest(services);
+                await MutualFundService.SanityGetMutualFundOrdersTest(services);
+                await MutualFundService.SanityGetMutualFundSipsTest(services);
+                await MutualFundService.SanityGetMutualFundOrderTest(services);
+                await NewsService.SanityGetNewsTest(services);
                 await OptionsService.SanityGetOptionContractsTest(services);
                 await OptionsService.SanityGetPutCallOptionChainTest(services);
                 await OrderV3Service.SanityPlaceOrderV3Test(services);
@@ -130,7 +232,7 @@ namespace UpstoxClient.Test
                 await OrderService.SanityCancelMultiOrderTest(services);
                 await OrderService.SanityExitPositionsTest(services);
                 await OrderService.SanityGetOrderDetailsTest(services);
-                await OrderService.SanityGetOrderStatusTest(services); 
+                await OrderService.SanityGetOrderStatusTest(services);
                 await OrderService.SanityGetTradeHistoryTest(services);
                 await OrderService.SanityGetTradesByOrderTest(services);
                 await OrderV3Service.SanityCancelGTTOrderTest(services);
@@ -146,6 +248,13 @@ namespace UpstoxClient.Test
                 await PostTradeService.SanityGetTradesByDateRangeTest(services);
                 await TradeProfitAndLossService.SanityGetProfitAndLossChargesTest(services);
                 await TradeProfitAndLossService.SanityGetTradeWiseProfitAndLossDataTest(services);
+                await UserApiExtensionsService.SanityGetKillSwitchTest(services);
+                await UserApiExtensionsService.SanityGetUserIpsTest(services);
+                await UserApiExtensionsService.SanityGetUserFundMarginV3Test(services);
+                await UserApiExtensionsService.SanityGetPayinHistoryTest(services);
+                await UserApiExtensionsService.SanityGetPayoutHistoryTest(services);
+                await UserApiExtensionsService.SanityUpdateKillSwitchTest(services);
+                await UserApiExtensionsService.SanityUpdateUserIpTest(services);
                 await UserService.SanityProfileTest(services);
                 await UserService.SanityGetUserFundMarginTest(services);
                 await WebsocketService.SanityAuthorizeMarketDataFeedTest(services);

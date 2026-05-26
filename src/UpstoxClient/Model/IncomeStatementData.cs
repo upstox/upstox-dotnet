@@ -215,8 +215,7 @@ namespace UpstoxClient.Model
             if (incomeStatement.IsSet && incomeStatement.Value == null)
                 throw new ArgumentNullException(nameof(incomeStatement), "Property is not nullable for class IncomeStatementData.");
 
-            if (fullStatement.IsSet && fullStatement.Value == null)
-                throw new ArgumentNullException(nameof(fullStatement), "Property is not nullable for class IncomeStatementData.");
+            // full_statement may be absent from API responses; treat null as unset
 
             return new IncomeStatementData(type, timePeriod, unitsIn, incomeStatement, fullStatement);
         }
