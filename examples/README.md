@@ -1,6 +1,6 @@
 # Upstox Developer API – Example Code
 
-This folder contains **ready-to-use Python samples** for the [Upstox API](https://upstox.com/developer/api-documentation/open-api). Each example shows how to call the API using the official [Upstox Python SDK](https://pypi.org/project/upstox-python-sdk/) (`upstox_client`).
+This folder contains **ready-to-use .NET samples** for the [Upstox API](https://upstox.com/developer/api-documentation/open-api). Each example shows how to call the API using the official [Upstox .NET SDK](https://www.nuget.org/packages/UpstoxClient) (`UpstoxClient`).
 
 ## Why use these samples?
 
@@ -12,16 +12,16 @@ Use these samples to build trading apps, dashboards, or integrations without gue
 
 ## Prerequisites
 
-- **Python** 2.7 or 3.4+
-- **SDK**: `pip install upstox-python-sdk`
+- **.NET** 6.0 or later
+- **SDK**: Install via NuGet (`dotnet add package UpstoxClient`)
 - **Upstox developer account** and API credentials (client ID, client secret, redirect URI).
 - **Access token** for authenticated APIs (obtain via [Login API](login/) samples).
 
-For full setup, sandbox mode, and auth flow, see the main [Upstox Python SDK README](../README.md) in the repo root.
+For full setup, sandbox mode, and auth flow, see the main [Upstox .NET SDK README](../README.md) in the repo root.
 
 ## Folder structure
 
-Samples are grouped by API area. Each `.md` file contains one or more Python snippets you can run after replacing placeholders like `{your_access_token}` and `{your_client_id}`.
+Samples are grouped by API area. Each `.md` file contains one or more C# snippets you can run after replacing placeholders like `{your_access_token}` and `{your_client_id}`.
 
 | Folder | Description |
 |--------|-------------|
@@ -38,8 +38,12 @@ Samples are grouped by API area. Each `.md` file contains one or more Python sni
 | [**margins/**](margins/) | Margin details. |
 | [**charges/**](charges/) | Brokerage details. |
 | [**trade-profit-and-loss/**](trade-profit-and-loss/) | P&amp;L report, report metadata, trade charges. |
+| [**news/**](news/) | News: get news by instrument keys, positions, or holdings. |
+| [**fundamentals/**](fundamentals/) | Company profile, key ratios, balance sheet, income statement, cash flow, share holdings, competitors, corporate actions. |
+| [**mutual-funds-api/**](mutual-funds-api/) | Mutual fund holdings, orders, order details, SIPs. |
+| [**payments-api/**](payments-api/) | Payin history, payout history. |
 
 ## Documentation
 
 - [Upstox API Documentation](https://upstox.com/developer/api-documentation)
-- [Upstox Python SDK (PyPI)](https://pypi.org/project/upstox-python-sdk/)
+- [Upstox .NET SDK (NuGet)](https://www.nuget.org/packages/UpstoxClient)

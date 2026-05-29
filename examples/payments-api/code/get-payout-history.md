@@ -1,4 +1,4 @@
-## Get market status for a particular exchange
+## Get payout history
 
 ```csharp
 using UpstoxClient.Api;
@@ -15,10 +15,10 @@ var host = Host.CreateDefaultBuilder()
 await host.StartAsync();
 
 var services = host.Services;
-var apiInstance = services.GetRequiredService<IMarketApi>();
+var apiInstance = services.GetRequiredService<IUserApi>();
 try
 {
-    var response = await apiInstance.GetMarketStatusAsync();
+    var response = await apiInstance.GetPayoutHistoryAsync();
     Console.WriteLine(response.Ok());
 }
 catch (Exception e)

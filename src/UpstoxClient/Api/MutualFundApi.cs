@@ -12,7 +12,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
@@ -21,7 +23,6 @@ using System.Text.Json;
 using UpstoxClient.Client;
 using UpstoxClient.Model;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
 namespace UpstoxClient.Api
 {
@@ -29,108 +30,116 @@ namespace UpstoxClient.Api
     /// Represents a collection of functions to interact with the API endpoints
     /// This class is registered as transient.
     /// </summary>
-    public interface IMarketHolidaysAndTimingsApi : IApi
+    public interface IMutualFundApi : IApi
     {
         /// <summary>
         /// The class containing the events
         /// </summary>
-        MarketHolidaysAndTimingsApiEvents Events { get; }
+        MutualFundApiEvents Events { get; }
 
         /// <summary>
-        /// Get Exchange Timings on particular date
+        /// Get mutual fund holdings
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the exchange timings on particular date
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetExchangeTimingsApiResponse"/>&gt;</returns>
-        Task<IGetExchangeTimingsApiResponse> GetExchangeTimingsAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get Exchange Timings on particular date
-        /// </summary>
-        /// <remarks>
-        /// This API provides the functionality to retrieve the exchange timings on particular date
-        /// </remarks>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetExchangeTimingsApiResponse"/>?&gt;</returns>
-        Task<IGetExchangeTimingsApiResponse?> GetExchangeTimingsOrDefaultAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get Holiday on particular date
-        /// </summary>
-        /// <remarks>
-        /// This API provides the functionality to retrieve the holiday on particular date
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidayApiResponse"/>&gt;</returns>
-        Task<IGetHolidayApiResponse> GetHolidayAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get Holiday on particular date
-        /// </summary>
-        /// <remarks>
-        /// This API provides the functionality to retrieve the holiday on particular date
-        /// </remarks>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidayApiResponse"/>?&gt;</returns>
-        Task<IGetHolidayApiResponse?> GetHolidayOrDefaultAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get Holiday list of current year
-        /// </summary>
-        /// <remarks>
-        /// This API provides the functionality to retrieve the holiday list of current year
+        /// Returns mutual fund holdings for the authenticated user.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidaysApiResponse"/>&gt;</returns>
-        Task<IGetHolidaysApiResponse> GetHolidaysAsync(System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundHoldingsApiResponse"/>&gt;</returns>
+        Task<IGetMutualFundHoldingsApiResponse> GetMutualFundHoldingsAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get Holiday list of current year
+        /// Get mutual fund holdings
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the holiday list of current year
+        /// Returns mutual fund holdings for the authenticated user.
         /// </remarks>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidaysApiResponse"/>?&gt;</returns>
-        Task<IGetHolidaysApiResponse?> GetHolidaysOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundHoldingsApiResponse"/>?&gt;</returns>
+        Task<IGetMutualFundHoldingsApiResponse?> GetMutualFundHoldingsOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get Market status for particular exchange
+        /// Get mutual fund order by id
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the market status for particular exchange
+        /// Returns a single mutual fund order by order id.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="exchange"></param>
+        /// <param name="orderId">Mutual fund order id</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketStatusApiResponse"/>&gt;</returns>
-        Task<IGetMarketStatusApiResponse> GetMarketStatusAsync(string? exchange = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrderApiResponse"/>&gt;</returns>
+        Task<IGetMutualFundOrderApiResponse> GetMutualFundOrderAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get Market status for particular exchange
+        /// Get mutual fund order by id
         /// </summary>
         /// <remarks>
-        /// This API provides the functionality to retrieve the market status for particular exchange
+        /// Returns a single mutual fund order by order id.
         /// </remarks>
-        /// <param name="exchange"></param>
+        /// <param name="orderId">Mutual fund order id</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketStatusApiResponse"/>?&gt;</returns>
-        Task<IGetMarketStatusApiResponse?> GetMarketStatusOrDefaultAsync(string? exchange = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrderApiResponse"/>?&gt;</returns>
+        Task<IGetMutualFundOrderApiResponse?> GetMutualFundOrderOrDefaultAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get mutual fund orders
+        /// </summary>
+        /// <remarks>
+        /// Returns mutual fund orders from the last 7 days for the authenticated user.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">Mutual fund order status (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="transactionType">Mutual fund order transaction type (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrdersApiResponse"/>&gt;</returns>
+        Task<IGetMutualFundOrdersApiResponse> GetMutualFundOrdersAsync(Option<string?> status = default, Option<string?> transactionType = default, Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get mutual fund orders
+        /// </summary>
+        /// <remarks>
+        /// Returns mutual fund orders from the last 7 days for the authenticated user.
+        /// </remarks>
+        /// <param name="status">Mutual fund order status (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="transactionType">Mutual fund order transaction type (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrdersApiResponse"/>?&gt;</returns>
+        Task<IGetMutualFundOrdersApiResponse?> GetMutualFundOrdersOrDefaultAsync(Option<string?> status = default, Option<string?> transactionType = default, Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get mutual fund SIPs
+        /// </summary>
+        /// <remarks>
+        /// Returns active and paused SIP orders for the authenticated user.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundSipsApiResponse"/>&gt;</returns>
+        Task<IGetMutualFundSipsApiResponse> GetMutualFundSipsAsync(Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get mutual fund SIPs
+        /// </summary>
+        /// <remarks>
+        /// Returns active and paused SIP orders for the authenticated user.
+        /// </remarks>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundSipsApiResponse"/>?&gt;</returns>
+        Task<IGetMutualFundSipsApiResponse?> GetMutualFundSipsOrDefaultAsync(Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
-    /// The <see cref="IGetExchangeTimingsApiResponse"/>
+    /// The <see cref="IGetMutualFundHoldingsApiResponse"/>
     /// </summary>
-    public interface IGetExchangeTimingsApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetExchangeTimingResponse?>
+    public interface IGetMutualFundHoldingsApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetMutualFundHoldingsResponse?>
     {
         /// <summary>
         /// Returns true if the response is 405 MethodNotAllowed
@@ -151,12 +160,6 @@ namespace UpstoxClient.Api
         bool IsInternalServerError { get; }
 
         /// <summary>
-        /// Returns true if the response is 429 TooManyRequests
-        /// </summary>
-        /// <returns></returns>
-        bool IsTooManyRequests { get; }
-
-        /// <summary>
         /// Returns true if the response is 423 Locked
         /// </summary>
         /// <returns></returns>
@@ -167,6 +170,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
 
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -176,9 +185,9 @@ namespace UpstoxClient.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetHolidayApiResponse"/>
+    /// The <see cref="IGetMutualFundOrderApiResponse"/>
     /// </summary>
-    public interface IGetHolidayApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetHolidayResponse?>
+    public interface IGetMutualFundOrderApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetMutualFundOrderDetailsResponse?>
     {
         /// <summary>
         /// Returns true if the response is 405 MethodNotAllowed
@@ -199,12 +208,6 @@ namespace UpstoxClient.Api
         bool IsInternalServerError { get; }
 
         /// <summary>
-        /// Returns true if the response is 429 TooManyRequests
-        /// </summary>
-        /// <returns></returns>
-        bool IsTooManyRequests { get; }
-
-        /// <summary>
         /// Returns true if the response is 423 Locked
         /// </summary>
         /// <returns></returns>
@@ -215,6 +218,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
 
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -224,9 +233,9 @@ namespace UpstoxClient.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetHolidaysApiResponse"/>
+    /// The <see cref="IGetMutualFundOrdersApiResponse"/>
     /// </summary>
-    public interface IGetHolidaysApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetHolidayResponse?>
+    public interface IGetMutualFundOrdersApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetMutualFundOrdersResponse?>
     {
         /// <summary>
         /// Returns true if the response is 405 MethodNotAllowed
@@ -247,12 +256,6 @@ namespace UpstoxClient.Api
         bool IsInternalServerError { get; }
 
         /// <summary>
-        /// Returns true if the response is 429 TooManyRequests
-        /// </summary>
-        /// <returns></returns>
-        bool IsTooManyRequests { get; }
-
-        /// <summary>
         /// Returns true if the response is 423 Locked
         /// </summary>
         /// <returns></returns>
@@ -263,6 +266,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
 
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -272,9 +281,9 @@ namespace UpstoxClient.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetMarketStatusApiResponse"/>
+    /// The <see cref="IGetMutualFundSipsApiResponse"/>
     /// </summary>
-    public interface IGetMarketStatusApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetMarketStatusResponse?>
+    public interface IGetMutualFundSipsApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.GetMutualFundSipsResponse?>
     {
         /// <summary>
         /// Returns true if the response is 405 MethodNotAllowed
@@ -295,12 +304,6 @@ namespace UpstoxClient.Api
         bool IsInternalServerError { get; }
 
         /// <summary>
-        /// Returns true if the response is 429 TooManyRequests
-        /// </summary>
-        /// <returns></returns>
-        bool IsTooManyRequests { get; }
-
-        /// <summary>
         /// Returns true if the response is 423 Locked
         /// </summary>
         /// <returns></returns>
@@ -311,6 +314,12 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
 
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -322,93 +331,93 @@ namespace UpstoxClient.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class MarketHolidaysAndTimingsApiEvents
+    public class MutualFundApiEvents
     {
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetExchangeTimings;
+        public event EventHandler<ApiResponseEventArgs>? OnGetMutualFundHoldings;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetExchangeTimings;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetMutualFundHoldings;
 
-        internal void ExecuteOnGetExchangeTimings(MarketHolidaysAndTimingsApi.GetExchangeTimingsApiResponse apiResponse)
+        internal void ExecuteOnGetMutualFundHoldings(MutualFundApi.GetMutualFundHoldingsApiResponse apiResponse)
         {
-            OnGetExchangeTimings?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetMutualFundHoldings?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetExchangeTimings(Exception exception)
+        internal void ExecuteOnErrorGetMutualFundHoldings(Exception exception)
         {
-            OnErrorGetExchangeTimings?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetMutualFundHoldings?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetHoliday;
+        public event EventHandler<ApiResponseEventArgs>? OnGetMutualFundOrder;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetHoliday;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetMutualFundOrder;
 
-        internal void ExecuteOnGetHoliday(MarketHolidaysAndTimingsApi.GetHolidayApiResponse apiResponse)
+        internal void ExecuteOnGetMutualFundOrder(MutualFundApi.GetMutualFundOrderApiResponse apiResponse)
         {
-            OnGetHoliday?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetMutualFundOrder?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetHoliday(Exception exception)
+        internal void ExecuteOnErrorGetMutualFundOrder(Exception exception)
         {
-            OnErrorGetHoliday?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetMutualFundOrder?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetHolidays;
+        public event EventHandler<ApiResponseEventArgs>? OnGetMutualFundOrders;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetHolidays;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetMutualFundOrders;
 
-        internal void ExecuteOnGetHolidays(MarketHolidaysAndTimingsApi.GetHolidaysApiResponse apiResponse)
+        internal void ExecuteOnGetMutualFundOrders(MutualFundApi.GetMutualFundOrdersApiResponse apiResponse)
         {
-            OnGetHolidays?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetMutualFundOrders?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetHolidays(Exception exception)
+        internal void ExecuteOnErrorGetMutualFundOrders(Exception exception)
         {
-            OnErrorGetHolidays?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetMutualFundOrders?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetMarketStatus;
+        public event EventHandler<ApiResponseEventArgs>? OnGetMutualFundSips;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetMarketStatus;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetMutualFundSips;
 
-        internal void ExecuteOnGetMarketStatus(MarketHolidaysAndTimingsApi.GetMarketStatusApiResponse apiResponse)
+        internal void ExecuteOnGetMutualFundSips(MutualFundApi.GetMutualFundSipsApiResponse apiResponse)
         {
-            OnGetMarketStatus?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetMutualFundSips?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetMarketStatus(Exception exception)
+        internal void ExecuteOnErrorGetMutualFundSips(Exception exception)
         {
-            OnErrorGetMarketStatus?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetMutualFundSips?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public sealed partial class MarketHolidaysAndTimingsApi : IMarketHolidaysAndTimingsApi
+    public sealed partial class MutualFundApi : IMutualFundApi
     {
         private JsonSerializerOptions _jsonSerializerOptions;
 
@@ -420,7 +429,7 @@ namespace UpstoxClient.Api
         /// <summary>
         /// The logger
         /// </summary>
-        public ILogger<MarketHolidaysAndTimingsApi> Logger { get; }
+        public ILogger<MutualFundApi> Logger { get; }
 
         /// <summary>
         /// The HttpClient
@@ -430,7 +439,7 @@ namespace UpstoxClient.Api
         /// <summary>
         /// The class containing the events
         /// </summary>
-        public MarketHolidaysAndTimingsApiEvents Events { get; }
+        public MutualFundApiEvents Events { get; }
 
         /// <summary>
         /// A token provider of type <see cref="OauthTokenProvider"/>
@@ -438,40 +447,30 @@ namespace UpstoxClient.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
-        /// The sandbox configuration
-        /// </summary>
-        private readonly ISandboxConfiguration _sandboxConfiguration;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MarketHolidaysAndTimingsApi"/> class.
+        /// Initializes a new instance of the <see cref="MutualFundApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public MarketHolidaysAndTimingsApi(ILogger<MarketHolidaysAndTimingsApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, MarketHolidaysAndTimingsApiEvents marketHolidaysAndTimingsApiEvents,
-            TokenProvider<OAuthToken> oauthTokenProvider, ISandboxConfiguration sandboxConfiguration)
+        public MutualFundApi(ILogger<MutualFundApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, MutualFundApiEvents mutualFundApiEvents,
+            TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger<MarketHolidaysAndTimingsApi>();
+            Logger = LoggerFactory.CreateLogger<MutualFundApi>();
             HttpClient = httpClient;
-            Events = marketHolidaysAndTimingsApiEvents;
+            Events = mutualFundApiEvents;
             OauthTokenProvider = oauthTokenProvider;
-            _sandboxConfiguration = sandboxConfiguration;
         }
-
-
-        partial void FormatGetExchangeTimings(ref string? date);
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="date"></param>
-        private void AfterGetExchangeTimingsDefaultImplementation(IGetExchangeTimingsApiResponse apiResponseLocalVar, string? date)
+        private void AfterGetMutualFundHoldingsDefaultImplementation(IGetMutualFundHoldingsApiResponse apiResponseLocalVar)
         {
             bool suppressDefaultLog = false;
-            AfterGetExchangeTimings(ref suppressDefaultLog, apiResponseLocalVar, date);
+            AfterGetMutualFundHoldings(ref suppressDefaultLog, apiResponseLocalVar);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -479,8 +478,7 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="date"></param>
-        partial void AfterGetExchangeTimings(ref bool suppressDefaultLog, IGetExchangeTimingsApiResponse apiResponseLocalVar, string? date);
+        partial void AfterGetMutualFundHoldings(ref bool suppressDefaultLog, IGetMutualFundHoldingsApiResponse apiResponseLocalVar);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -488,11 +486,10 @@ namespace UpstoxClient.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="date"></param>
-        private void OnErrorGetExchangeTimingsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? date)
+        private void OnErrorGetMutualFundHoldingsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetExchangeTimings(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, date);
+            OnErrorGetMutualFundHoldings(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -504,20 +501,18 @@ namespace UpstoxClient.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="date"></param>
-        partial void OnErrorGetExchangeTimings(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? date);
+        partial void OnErrorGetMutualFundHoldings(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar);
 
         /// <summary>
-        /// Get Exchange Timings on particular date This API provides the functionality to retrieve the exchange timings on particular date
+        /// Get mutual fund holdings Returns mutual fund holdings for the authenticated user.
         /// </summary>
-        /// <param name="date"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetExchangeTimingsApiResponse"/>&gt;</returns>
-        public async Task<IGetExchangeTimingsApiResponse?> GetExchangeTimingsOrDefaultAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundHoldingsApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundHoldingsApiResponse?> GetMutualFundHoldingsOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetExchangeTimingsAsync(date, cancellationToken).ConfigureAwait(false);
+                return await GetMutualFundHoldingsAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -526,925 +521,13 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Get Exchange Timings on particular date This API provides the functionality to retrieve the exchange timings on particular date
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetExchangeTimingsApiResponse"/>&gt;</returns>
-        public async Task<IGetExchangeTimingsApiResponse> GetExchangeTimingsAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetExchangeTimingsAsync");
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                FormatGetExchangeTimings(ref date);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/v2/market/timings/{date}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/v2/market/timings/{date}");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bdate%7D", Uri.EscapeDataString(date.ToString()));
-
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    string[] acceptLocalVars = new string[] {
-                        "*/*",
-                        "application/json"
-                    };
-
-                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
-
-                    if (acceptLocalVar != null)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        ILogger<GetExchangeTimingsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetExchangeTimingsApiResponse>();
-                        GetExchangeTimingsApiResponse apiResponseLocalVar;
-
-                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
-                            default: {
-                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/timings/{date}", requestedAtLocalVar, _jsonSerializerOptions);
-
-                                break;
-                            }
-                        }
-
-                        AfterGetExchangeTimingsDefaultImplementation(apiResponseLocalVar, date);
-
-                        Events.ExecuteOnGetExchangeTimings(apiResponseLocalVar);
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorGetExchangeTimingsDefaultImplementation(e, "/v2/market/timings/{date}", uriBuilderLocalVar.Path, date);
-                Events.ExecuteOnErrorGetExchangeTimings(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="GetExchangeTimingsApiResponse"/>
-        /// </summary>
-        public partial class GetExchangeTimingsApiResponse : UpstoxClient.Client.ApiResponse, IGetExchangeTimingsApiResponse
-        {
-            /// <summary>
-            /// The logger
-            /// </summary>
-            public ILogger<GetExchangeTimingsApiResponse> Logger { get; }
-
-            /// <summary>
-            /// The <see cref="GetExchangeTimingsApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="rawContent"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetExchangeTimingsApiResponse(ILogger<GetExchangeTimingsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            /// <summary>
-            /// The <see cref="GetExchangeTimingsApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="contentStream"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetExchangeTimingsApiResponse(ILogger<GetExchangeTimingsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
-
-            /// <summary>
-            /// Returns true if the response is 405 MethodNotAllowed
-            /// </summary>
-            /// <returns></returns>
-            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 405 MethodNotAllowed
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsMethodNotAllowed
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = MethodNotAllowed();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public bool IsBadRequest => 400 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsBadRequest
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = BadRequest();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public bool IsInternalServerError => 500 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsInternalServerError
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = InternalServerError();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 429 TooManyRequests
-            /// </summary>
-            /// <returns></returns>
-            public bool IsTooManyRequests => 429 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 429 TooManyRequests
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsTooManyRequests
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = TooManyRequests();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 423 Locked
-            /// </summary>
-            /// <returns></returns>
-            public bool IsLocked => 423 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 423 Locked
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsLocked
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 423 Locked and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Locked();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public bool IsUnprocessableContent => 422 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsUnprocessableContent
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = UnprocessableContent();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public bool IsOk => 200 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.GetExchangeTimingResponse? Ok()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetExchangeTimingResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetExchangeTimingResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Ok();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
-            {
-                bool suppressDefaultLog = false;
-                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
-                if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
-            }
-
-            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
-        }
-
-        partial void FormatGetHoliday(ref string? date);
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="date"></param>
-        private void AfterGetHolidayDefaultImplementation(IGetHolidayApiResponse apiResponseLocalVar, string? date)
-        {
-            bool suppressDefaultLog = false;
-            AfterGetHoliday(ref suppressDefaultLog, apiResponseLocalVar, date);
-            if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="date"></param>
-        partial void AfterGetHoliday(ref bool suppressDefaultLog, IGetHolidayApiResponse apiResponseLocalVar, string? date);
-
-        /// <summary>
-        /// Logs exceptions that occur while retrieving the server response
-        /// </summary>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="date"></param>
-        private void OnErrorGetHolidayDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? date)
-        {
-            bool suppressDefaultLogLocalVar = false;
-            OnErrorGetHoliday(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, date);
-            if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
-        }
-
-        /// <summary>
-        /// A partial method that gives developers a way to provide customized exception handling
-        /// </summary>
-        /// <param name="suppressDefaultLogLocalVar"></param>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="date"></param>
-        partial void OnErrorGetHoliday(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? date);
-
-        /// <summary>
-        /// Get Holiday on particular date This API provides the functionality to retrieve the holiday on particular date
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidayApiResponse"/>&gt;</returns>
-        public async Task<IGetHolidayApiResponse?> GetHolidayOrDefaultAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await GetHolidayAsync(date, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Get Holiday on particular date This API provides the functionality to retrieve the holiday on particular date
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="date"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidayApiResponse"/>&gt;</returns>
-        public async Task<IGetHolidayApiResponse> GetHolidayAsync(string? date = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHolidayAsync");
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                FormatGetHoliday(ref date);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/v2/market/holidays/{date}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/v2/market/holidays/{date}");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bdate%7D", Uri.EscapeDataString(date.ToString()));
-
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    string[] acceptLocalVars = new string[] {
-                        "*/*",
-                        "application/json"
-                    };
-
-                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
-
-                    if (acceptLocalVar != null)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        ILogger<GetHolidayApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetHolidayApiResponse>();
-                        GetHolidayApiResponse apiResponseLocalVar;
-
-                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
-                            default: {
-                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/holidays/{date}", requestedAtLocalVar, _jsonSerializerOptions);
-
-                                break;
-                            }
-                        }
-
-                        AfterGetHolidayDefaultImplementation(apiResponseLocalVar, date);
-
-                        Events.ExecuteOnGetHoliday(apiResponseLocalVar);
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorGetHolidayDefaultImplementation(e, "/v2/market/holidays/{date}", uriBuilderLocalVar.Path, date);
-                Events.ExecuteOnErrorGetHoliday(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="GetHolidayApiResponse"/>
-        /// </summary>
-        public partial class GetHolidayApiResponse : UpstoxClient.Client.ApiResponse, IGetHolidayApiResponse
-        {
-            /// <summary>
-            /// The logger
-            /// </summary>
-            public ILogger<GetHolidayApiResponse> Logger { get; }
-
-            /// <summary>
-            /// The <see cref="GetHolidayApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="rawContent"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetHolidayApiResponse(ILogger<GetHolidayApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            /// <summary>
-            /// The <see cref="GetHolidayApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="contentStream"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetHolidayApiResponse(ILogger<GetHolidayApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
-
-            /// <summary>
-            /// Returns true if the response is 405 MethodNotAllowed
-            /// </summary>
-            /// <returns></returns>
-            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 405 MethodNotAllowed
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsMethodNotAllowed
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = MethodNotAllowed();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public bool IsBadRequest => 400 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsBadRequest
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = BadRequest();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public bool IsInternalServerError => 500 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsInternalServerError
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = InternalServerError();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 429 TooManyRequests
-            /// </summary>
-            /// <returns></returns>
-            public bool IsTooManyRequests => 429 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 429 TooManyRequests
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsTooManyRequests
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = TooManyRequests();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 423 Locked
-            /// </summary>
-            /// <returns></returns>
-            public bool IsLocked => 423 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 423 Locked
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsLocked
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 423 Locked and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Locked();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public bool IsUnprocessableContent => 422 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsUnprocessableContent
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = UnprocessableContent();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public bool IsOk => 200 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.GetHolidayResponse? Ok()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetHolidayResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetHolidayResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Ok();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
-            {
-                bool suppressDefaultLog = false;
-                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
-                if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
-            }
-
-            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        private void AfterGetHolidaysDefaultImplementation(IGetHolidaysApiResponse apiResponseLocalVar)
-        {
-            bool suppressDefaultLog = false;
-            AfterGetHolidays(ref suppressDefaultLog, apiResponseLocalVar);
-            if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        partial void AfterGetHolidays(ref bool suppressDefaultLog, IGetHolidaysApiResponse apiResponseLocalVar);
-
-        /// <summary>
-        /// Logs exceptions that occur while retrieving the server response
-        /// </summary>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        private void OnErrorGetHolidaysDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar)
-        {
-            bool suppressDefaultLogLocalVar = false;
-            OnErrorGetHolidays(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar);
-            if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
-        }
-
-        /// <summary>
-        /// A partial method that gives developers a way to provide customized exception handling
-        /// </summary>
-        /// <param name="suppressDefaultLogLocalVar"></param>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        partial void OnErrorGetHolidays(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar);
-
-        /// <summary>
-        /// Get Holiday list of current year This API provides the functionality to retrieve the holiday list of current year
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidaysApiResponse"/>&gt;</returns>
-        public async Task<IGetHolidaysApiResponse?> GetHolidaysOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await GetHolidaysAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Get Holiday list of current year This API provides the functionality to retrieve the holiday list of current year
+        /// Get mutual fund holdings Returns mutual fund holdings for the authenticated user.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetHolidaysApiResponse"/>&gt;</returns>
-        public async Task<IGetHolidaysApiResponse> GetHolidaysAsync(System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundHoldingsApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundHoldingsApiResponse> GetMutualFundHoldingsAsync(System.Threading.CancellationToken cancellationToken = default)
         {
-            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetHolidaysAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
@@ -1455,467 +538,8 @@ namespace UpstoxClient.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/v2/market/holidays"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/v2/market/holidays");
-
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    string[] acceptLocalVars = new string[] {
-                        "*/*",
-                        "application/json"
-                    };
-
-                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
-
-                    if (acceptLocalVar != null)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        ILogger<GetHolidaysApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetHolidaysApiResponse>();
-                        GetHolidaysApiResponse apiResponseLocalVar;
-
-                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
-                            default: {
-                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/holidays", requestedAtLocalVar, _jsonSerializerOptions);
-
-                                break;
-                            }
-                        }
-
-                        AfterGetHolidaysDefaultImplementation(apiResponseLocalVar);
-
-                        Events.ExecuteOnGetHolidays(apiResponseLocalVar);
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorGetHolidaysDefaultImplementation(e, "/v2/market/holidays", uriBuilderLocalVar.Path);
-                Events.ExecuteOnErrorGetHolidays(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="GetHolidaysApiResponse"/>
-        /// </summary>
-        public partial class GetHolidaysApiResponse : UpstoxClient.Client.ApiResponse, IGetHolidaysApiResponse
-        {
-            /// <summary>
-            /// The logger
-            /// </summary>
-            public ILogger<GetHolidaysApiResponse> Logger { get; }
-
-            /// <summary>
-            /// The <see cref="GetHolidaysApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="rawContent"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetHolidaysApiResponse(ILogger<GetHolidaysApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            /// <summary>
-            /// The <see cref="GetHolidaysApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="contentStream"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetHolidaysApiResponse(ILogger<GetHolidaysApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
-
-            /// <summary>
-            /// Returns true if the response is 405 MethodNotAllowed
-            /// </summary>
-            /// <returns></returns>
-            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 405 MethodNotAllowed
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsMethodNotAllowed
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = MethodNotAllowed();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public bool IsBadRequest => 400 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsBadRequest
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = BadRequest();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public bool IsInternalServerError => 500 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsInternalServerError
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = InternalServerError();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 429 TooManyRequests
-            /// </summary>
-            /// <returns></returns>
-            public bool IsTooManyRequests => 429 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 429 TooManyRequests
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsTooManyRequests
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = TooManyRequests();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 423 Locked
-            /// </summary>
-            /// <returns></returns>
-            public bool IsLocked => 423 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 423 Locked
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsLocked
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 423 Locked and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Locked();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public bool IsUnprocessableContent => 422 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsUnprocessableContent
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = UnprocessableContent();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public bool IsOk => 200 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public UpstoxClient.Model.GetHolidayResponse? Ok()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetHolidayResponse>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetHolidayResponse? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Ok();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
-            {
-                bool suppressDefaultLog = false;
-                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
-                if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
-            }
-
-            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
-        }
-
-        partial void FormatGetMarketStatus(ref string? exchange);
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="exchange"></param>
-        private void AfterGetMarketStatusDefaultImplementation(IGetMarketStatusApiResponse apiResponseLocalVar, string? exchange)
-        {
-            bool suppressDefaultLog = false;
-            AfterGetMarketStatus(ref suppressDefaultLog, apiResponseLocalVar, exchange);
-            if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="exchange"></param>
-        partial void AfterGetMarketStatus(ref bool suppressDefaultLog, IGetMarketStatusApiResponse apiResponseLocalVar, string? exchange);
-
-        /// <summary>
-        /// Logs exceptions that occur while retrieving the server response
-        /// </summary>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="exchange"></param>
-        private void OnErrorGetMarketStatusDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? exchange)
-        {
-            bool suppressDefaultLogLocalVar = false;
-            OnErrorGetMarketStatus(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, exchange);
-            if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
-        }
-
-        /// <summary>
-        /// A partial method that gives developers a way to provide customized exception handling
-        /// </summary>
-        /// <param name="suppressDefaultLogLocalVar"></param>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="exchange"></param>
-        partial void OnErrorGetMarketStatus(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? exchange);
-
-        /// <summary>
-        /// Get Market status for particular exchange This API provides the functionality to retrieve the market status for particular exchange
-        /// </summary>
-        /// <param name="exchange"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketStatusApiResponse"/>&gt;</returns>
-        public async Task<IGetMarketStatusApiResponse?> GetMarketStatusOrDefaultAsync(string? exchange = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await GetMarketStatusAsync(exchange, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Get Market status for particular exchange This API provides the functionality to retrieve the market status for particular exchange
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="exchange"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetMarketStatusApiResponse"/>&gt;</returns>
-        public async Task<IGetMarketStatusApiResponse> GetMarketStatusAsync(string? exchange = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "GetMarketStatusAsync");
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                FormatGetMarketStatus(ref exchange);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/v2/market/status/{exchange}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/v2/market/status/{exchange}");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bexchange%7D", Uri.EscapeDataString(exchange.ToString()));
+                        ? "/v2/mf/holdings"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/mf/holdings");
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -1931,10 +555,10 @@ namespace UpstoxClient.Api
                         "application/json"
                     };
 
-                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
 
-                    if (acceptLocalVar != null)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
 
                     httpRequestMessageLocalVar.Method = HttpMethod.Get;
 
@@ -1942,21 +566,21 @@ namespace UpstoxClient.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<GetMarketStatusApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetMarketStatusApiResponse>();
-                        GetMarketStatusApiResponse apiResponseLocalVar;
+                        ILogger<GetMutualFundHoldingsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetMutualFundHoldingsApiResponse>();
+                        GetMutualFundHoldingsApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/status/{exchange}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/mf/holdings", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterGetMarketStatusDefaultImplementation(apiResponseLocalVar, exchange);
+                        AfterGetMutualFundHoldingsDefaultImplementation(apiResponseLocalVar);
 
-                        Events.ExecuteOnGetMarketStatus(apiResponseLocalVar);
+                        Events.ExecuteOnGetMutualFundHoldings(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1968,24 +592,24 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorGetMarketStatusDefaultImplementation(e, "/v2/market/status/{exchange}", uriBuilderLocalVar.Path, exchange);
-                Events.ExecuteOnErrorGetMarketStatus(e);
+                OnErrorGetMutualFundHoldingsDefaultImplementation(e, "/v2/mf/holdings", uriBuilderLocalVar.Path);
+                Events.ExecuteOnErrorGetMutualFundHoldings(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="GetMarketStatusApiResponse"/>
+        /// The <see cref="GetMutualFundHoldingsApiResponse"/>
         /// </summary>
-        public partial class GetMarketStatusApiResponse : UpstoxClient.Client.ApiResponse, IGetMarketStatusApiResponse
+        public partial class GetMutualFundHoldingsApiResponse : UpstoxClient.Client.ApiResponse, IGetMutualFundHoldingsApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<GetMarketStatusApiResponse> Logger { get; }
+            public ILogger<GetMutualFundHoldingsApiResponse> Logger { get; }
 
             /// <summary>
-            /// The <see cref="GetMarketStatusApiResponse"/>
+            /// The <see cref="GetMutualFundHoldingsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1994,14 +618,14 @@ namespace UpstoxClient.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetMarketStatusApiResponse(ILogger<GetMarketStatusApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetMutualFundHoldingsApiResponse(ILogger<GetMutualFundHoldingsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="GetMarketStatusApiResponse"/>
+            /// The <see cref="GetMutualFundHoldingsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2010,7 +634,7 @@ namespace UpstoxClient.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetMarketStatusApiResponse(ILogger<GetMarketStatusApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetMutualFundHoldingsApiResponse(ILogger<GetMutualFundHoldingsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2133,6 +757,82 @@ namespace UpstoxClient.Api
             }
 
             /// <summary>
+            /// Returns true if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLocked => 423 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsLocked
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Locked();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
             /// Returns true if the response is 429 TooManyRequests
             /// </summary>
             /// <returns></returns>
@@ -2165,6 +865,361 @@ namespace UpstoxClient.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.GetMutualFundHoldingsResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetMutualFundHoldingsResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetMutualFundHoldingsResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetMutualFundOrder(ref string? orderId);
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="orderId"></param>
+        private void AfterGetMutualFundOrderDefaultImplementation(IGetMutualFundOrderApiResponse apiResponseLocalVar, string? orderId)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetMutualFundOrder(ref suppressDefaultLog, apiResponseLocalVar, orderId);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="orderId"></param>
+        partial void AfterGetMutualFundOrder(ref bool suppressDefaultLog, IGetMutualFundOrderApiResponse apiResponseLocalVar, string? orderId);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="orderId"></param>
+        private void OnErrorGetMutualFundOrderDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? orderId)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetMutualFundOrder(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, orderId);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="orderId"></param>
+        partial void OnErrorGetMutualFundOrder(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? orderId);
+
+        /// <summary>
+        /// Get mutual fund order by id Returns a single mutual fund order by order id.
+        /// </summary>
+        /// <param name="orderId">Mutual fund order id</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrderApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundOrderApiResponse?> GetMutualFundOrderOrDefaultAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetMutualFundOrderAsync(orderId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get mutual fund order by id Returns a single mutual fund order by order id.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">Mutual fund order id</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrderApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundOrderApiResponse> GetMutualFundOrderAsync(string? orderId = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                FormatGetMutualFundOrder(ref orderId);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/v2/mf/orders/{order_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/mf/orders/{order_id}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Border_id%7D", Uri.EscapeDataString(orderId.ToString()));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "*/*",
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetMutualFundOrderApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetMutualFundOrderApiResponse>();
+                        GetMutualFundOrderApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/mf/orders/{order_id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetMutualFundOrderDefaultImplementation(apiResponseLocalVar, orderId);
+
+                        Events.ExecuteOnGetMutualFundOrder(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetMutualFundOrderDefaultImplementation(e, "/v2/mf/orders/{order_id}", uriBuilderLocalVar.Path, orderId);
+                Events.ExecuteOnErrorGetMutualFundOrder(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetMutualFundOrderApiResponse"/>
+        /// </summary>
+        public partial class GetMutualFundOrderApiResponse : UpstoxClient.Client.ApiResponse, IGetMutualFundOrderApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetMutualFundOrderApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetMutualFundOrderApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetMutualFundOrderApiResponse(ILogger<GetMutualFundOrderApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetMutualFundOrderApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetMutualFundOrderApiResponse(ILogger<GetMutualFundOrderApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsMethodNotAllowed
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = MethodNotAllowed();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
                 }
 
                 return result != null;
@@ -2247,6 +1302,44 @@ namespace UpstoxClient.Api
             }
 
             /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
             /// Returns true if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
@@ -2256,11 +1349,11 @@ namespace UpstoxClient.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public UpstoxClient.Model.GetMarketStatusResponse? Ok()
+            public UpstoxClient.Model.GetMutualFundOrderDetailsResponse? Ok()
             {
                 // This logic may be modified with the AsModel.mustache template
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetMarketStatusResponse>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetMutualFundOrderDetailsResponse>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
@@ -2269,7 +1362,993 @@ namespace UpstoxClient.Api
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetMarketStatusResponse? result)
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetMutualFundOrderDetailsResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetMutualFundOrders(ref Option<string?> status, ref Option<string?> transactionType, ref Option<int?> pageNumber, ref Option<int?> records);
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="status"></param>
+        /// <param name="transactionType"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        private void AfterGetMutualFundOrdersDefaultImplementation(IGetMutualFundOrdersApiResponse apiResponseLocalVar, Option<string?> status, Option<string?> transactionType, Option<int?> pageNumber, Option<int?> records)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetMutualFundOrders(ref suppressDefaultLog, apiResponseLocalVar, status, transactionType, pageNumber, records);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="status"></param>
+        /// <param name="transactionType"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        partial void AfterGetMutualFundOrders(ref bool suppressDefaultLog, IGetMutualFundOrdersApiResponse apiResponseLocalVar, Option<string?> status, Option<string?> transactionType, Option<int?> pageNumber, Option<int?> records);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="status"></param>
+        /// <param name="transactionType"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        private void OnErrorGetMutualFundOrdersDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> status, Option<string?> transactionType, Option<int?> pageNumber, Option<int?> records)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetMutualFundOrders(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, status, transactionType, pageNumber, records);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="status"></param>
+        /// <param name="transactionType"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        partial void OnErrorGetMutualFundOrders(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> status, Option<string?> transactionType, Option<int?> pageNumber, Option<int?> records);
+
+        /// <summary>
+        /// Get mutual fund orders Returns mutual fund orders from the last 7 days for the authenticated user.
+        /// </summary>
+        /// <param name="status">Mutual fund order status (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="transactionType">Mutual fund order transaction type (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrdersApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundOrdersApiResponse?> GetMutualFundOrdersOrDefaultAsync(Option<string?> status = default, Option<string?> transactionType = default, Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetMutualFundOrdersAsync(status, transactionType, pageNumber, records, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get mutual fund orders Returns mutual fund orders from the last 7 days for the authenticated user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">Mutual fund order status (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="transactionType">Mutual fund order transaction type (optional, default to &quot;ALL&quot;)</param>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundOrdersApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundOrdersApiResponse> GetMutualFundOrdersAsync(Option<string?> status = default, Option<string?> transactionType = default, Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                FormatGetMutualFundOrders(ref status, ref transactionType, ref pageNumber, ref records);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/v2/mf/orders"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/mf/orders");
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (status.IsSet)
+                        parseQueryStringLocalVar["status"] = ClientUtils.ParameterToString(status.Value);
+
+                    if (transactionType.IsSet)
+                        parseQueryStringLocalVar["transaction_type"] = ClientUtils.ParameterToString(transactionType.Value);
+
+                    if (pageNumber.IsSet)
+                        parseQueryStringLocalVar["page_number"] = ClientUtils.ParameterToString(pageNumber.Value);
+
+                    if (records.IsSet)
+                        parseQueryStringLocalVar["records"] = ClientUtils.ParameterToString(records.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "*/*",
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetMutualFundOrdersApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetMutualFundOrdersApiResponse>();
+                        GetMutualFundOrdersApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/mf/orders", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetMutualFundOrdersDefaultImplementation(apiResponseLocalVar, status, transactionType, pageNumber, records);
+
+                        Events.ExecuteOnGetMutualFundOrders(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetMutualFundOrdersDefaultImplementation(e, "/v2/mf/orders", uriBuilderLocalVar.Path, status, transactionType, pageNumber, records);
+                Events.ExecuteOnErrorGetMutualFundOrders(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetMutualFundOrdersApiResponse"/>
+        /// </summary>
+        public partial class GetMutualFundOrdersApiResponse : UpstoxClient.Client.ApiResponse, IGetMutualFundOrdersApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetMutualFundOrdersApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetMutualFundOrdersApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetMutualFundOrdersApiResponse(ILogger<GetMutualFundOrdersApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetMutualFundOrdersApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetMutualFundOrdersApiResponse(ILogger<GetMutualFundOrdersApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsMethodNotAllowed
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = MethodNotAllowed();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLocked => 423 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsLocked
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Locked();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.GetMutualFundOrdersResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetMutualFundOrdersResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetMutualFundOrdersResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetMutualFundSips(ref Option<int?> pageNumber, ref Option<int?> records);
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        private void AfterGetMutualFundSipsDefaultImplementation(IGetMutualFundSipsApiResponse apiResponseLocalVar, Option<int?> pageNumber, Option<int?> records)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetMutualFundSips(ref suppressDefaultLog, apiResponseLocalVar, pageNumber, records);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        partial void AfterGetMutualFundSips(ref bool suppressDefaultLog, IGetMutualFundSipsApiResponse apiResponseLocalVar, Option<int?> pageNumber, Option<int?> records);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        private void OnErrorGetMutualFundSipsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<int?> pageNumber, Option<int?> records)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetMutualFundSips(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, pageNumber, records);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="records"></param>
+        partial void OnErrorGetMutualFundSips(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<int?> pageNumber, Option<int?> records);
+
+        /// <summary>
+        /// Get mutual fund SIPs Returns active and paused SIP orders for the authenticated user.
+        /// </summary>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundSipsApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundSipsApiResponse?> GetMutualFundSipsOrDefaultAsync(Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetMutualFundSipsAsync(pageNumber, records, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get mutual fund SIPs Returns active and paused SIP orders for the authenticated user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="pageNumber">Page number for pagination. (optional, default to 1)</param>
+        /// <param name="records">no of records in a single page (optional, default to 10)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetMutualFundSipsApiResponse"/>&gt;</returns>
+        public async Task<IGetMutualFundSipsApiResponse> GetMutualFundSipsAsync(Option<int?> pageNumber = default, Option<int?> records = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                FormatGetMutualFundSips(ref pageNumber, ref records);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/v2/mf/sips"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/mf/sips");
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (pageNumber.IsSet)
+                        parseQueryStringLocalVar["page_number"] = ClientUtils.ParameterToString(pageNumber.Value);
+
+                    if (records.IsSet)
+                        parseQueryStringLocalVar["records"] = ClientUtils.ParameterToString(records.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "*/*",
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetMutualFundSipsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetMutualFundSipsApiResponse>();
+                        GetMutualFundSipsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/mf/sips", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetMutualFundSipsDefaultImplementation(apiResponseLocalVar, pageNumber, records);
+
+                        Events.ExecuteOnGetMutualFundSips(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetMutualFundSipsDefaultImplementation(e, "/v2/mf/sips", uriBuilderLocalVar.Path, pageNumber, records);
+                Events.ExecuteOnErrorGetMutualFundSips(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetMutualFundSipsApiResponse"/>
+        /// </summary>
+        public partial class GetMutualFundSipsApiResponse : UpstoxClient.Client.ApiResponse, IGetMutualFundSipsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetMutualFundSipsApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetMutualFundSipsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetMutualFundSipsApiResponse(ILogger<GetMutualFundSipsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetMutualFundSipsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetMutualFundSipsApiResponse(ILogger<GetMutualFundSipsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsMethodNotAllowed
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = MethodNotAllowed();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLocked => 423 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsLocked
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Locked();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.GetMutualFundSipsResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.GetMutualFundSipsResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.GetMutualFundSipsResponse? result)
             {
                 result = null;
 

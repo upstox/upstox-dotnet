@@ -13,7 +13,7 @@ namespace UpstoxClient.Test.Service
         {
             Console.WriteLine("=== Testing MarketHolidaysAndTimings API (GetExchangeTimings) ===");
 
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetExchangeTimingsAsync(
                 date: "2024-12-04"
             );
@@ -62,7 +62,7 @@ namespace UpstoxClient.Test.Service
 
         public static async Task SanityGetExchangeTimingsTest(IServiceProvider services)
         {
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetExchangeTimingsAsync(
                 date: "2024-12-04"
             );
@@ -97,7 +97,7 @@ namespace UpstoxClient.Test.Service
         {
             Console.WriteLine("=== Testing MarketHolidaysAndTimings API (GetHoliday) ===");
 
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetHolidayAsync(
                 date: "2024-12-25"
             );
@@ -146,7 +146,7 @@ namespace UpstoxClient.Test.Service
 
         public static async Task SanityGetHolidayTest(IServiceProvider services)
         {
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetHolidayAsync(
                 date: "2024-12-25"
             );
@@ -181,7 +181,7 @@ namespace UpstoxClient.Test.Service
         {
             Console.WriteLine("=== Testing MarketHolidaysAndTimings API (GetHolidays) ===");
 
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetHolidaysAsync();
             var result = response.Ok();
 
@@ -228,7 +228,7 @@ namespace UpstoxClient.Test.Service
 
         public static async Task SanityGetHolidaysTest(IServiceProvider services)
         {
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetHolidaysAsync();
             var result = response.Ok();
 
@@ -261,7 +261,7 @@ namespace UpstoxClient.Test.Service
         {
             Console.WriteLine("=== Testing MarketHolidaysAndTimings API (GetMarketStatus) ===");
 
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetMarketStatusAsync(
                 exchange: "NSE"
             );
@@ -302,7 +302,7 @@ namespace UpstoxClient.Test.Service
 
         public static async Task SanityGetMarketStatusTest(IServiceProvider services)
         {
-            var marketApi = services.GetRequiredService<IMarketHolidaysAndTimingsApi>();
+            var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetMarketStatusAsync(
                 exchange: "NSE"
             );
