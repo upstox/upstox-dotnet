@@ -97,7 +97,7 @@ namespace UpstoxClient.Api
         /// <param name="grantType">Type of grant used to get an access token</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ITokenApiResponse"/>&gt;</returns>
-        Task<ITokenApiResponse> TokenAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ITokenApiResponse> TokenAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, bool? refreshExtendedToken = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get token API
@@ -112,7 +112,7 @@ namespace UpstoxClient.Api
         /// <param name="grantType">Type of grant used to get an access token</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ITokenApiResponse"/>?&gt;</returns>
-        Task<ITokenApiResponse?> TokenOrDefaultAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ITokenApiResponse?> TokenOrDefaultAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, bool? refreshExtendedToken = default, System.Threading.CancellationToken cancellationToken = default);
     }
 
 
@@ -1427,7 +1427,7 @@ namespace UpstoxClient.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatToken(ref string? code, ref string? clientId, ref string? clientSecret, ref string? redirectUri, ref string? grantType);
+        partial void FormatToken(ref string? code, ref string? clientId, ref string? clientSecret, ref string? redirectUri, ref string? grantType, ref bool? refreshExtendedToken);
 
         /// <summary>
         /// Processes the server response
@@ -1438,10 +1438,10 @@ namespace UpstoxClient.Api
         /// <param name="clientSecret"></param>
         /// <param name="redirectUri"></param>
         /// <param name="grantType"></param>
-        private void AfterTokenDefaultImplementation(ITokenApiResponse apiResponseLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType)
+        private void AfterTokenDefaultImplementation(ITokenApiResponse apiResponseLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType, bool? refreshExtendedToken)
         {
             bool suppressDefaultLog = false;
-            AfterToken(ref suppressDefaultLog, apiResponseLocalVar, code, clientId, clientSecret, redirectUri, grantType);
+            AfterToken(ref suppressDefaultLog, apiResponseLocalVar, code, clientId, clientSecret, redirectUri, grantType, refreshExtendedToken);
             if (!suppressDefaultLog)
                 Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1456,7 +1456,7 @@ namespace UpstoxClient.Api
         /// <param name="clientSecret"></param>
         /// <param name="redirectUri"></param>
         /// <param name="grantType"></param>
-        partial void AfterToken(ref bool suppressDefaultLog, ITokenApiResponse apiResponseLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType);
+        partial void AfterToken(ref bool suppressDefaultLog, ITokenApiResponse apiResponseLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType, bool? refreshExtendedToken);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1469,10 +1469,10 @@ namespace UpstoxClient.Api
         /// <param name="clientSecret"></param>
         /// <param name="redirectUri"></param>
         /// <param name="grantType"></param>
-        private void OnErrorTokenDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType)
+        private void OnErrorTokenDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType, bool? refreshExtendedToken)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorToken(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, code, clientId, clientSecret, redirectUri, grantType);
+            OnErrorToken(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, code, clientId, clientSecret, redirectUri, grantType, refreshExtendedToken);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1489,7 +1489,7 @@ namespace UpstoxClient.Api
         /// <param name="clientSecret"></param>
         /// <param name="redirectUri"></param>
         /// <param name="grantType"></param>
-        partial void OnErrorToken(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType);
+        partial void OnErrorToken(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string? code, string? clientId, string? clientSecret, string? redirectUri, string? grantType, bool? refreshExtendedToken);
 
         /// <summary>
         /// Get token API This API provides the functionality to obtain opaque token from authorization_code exchange and also provides the user’s profile in the same response.
@@ -1501,11 +1501,11 @@ namespace UpstoxClient.Api
         /// <param name="grantType">Type of grant used to get an access token</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ITokenApiResponse"/>&gt;</returns>
-        public async Task<ITokenApiResponse?> TokenOrDefaultAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ITokenApiResponse?> TokenOrDefaultAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, bool? refreshExtendedToken = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await TokenAsync(code, clientId, clientSecret, redirectUri, grantType, cancellationToken).ConfigureAwait(false);
+                return await TokenAsync(code, clientId, clientSecret, redirectUri, grantType, refreshExtendedToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1524,14 +1524,14 @@ namespace UpstoxClient.Api
         /// <param name="grantType">Type of grant used to get an access token</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ITokenApiResponse"/>&gt;</returns>
-        public async Task<ITokenApiResponse> TokenAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ITokenApiResponse> TokenAsync(string? code = default, string? clientId = default, string? clientSecret = default, string? redirectUri = default, string? grantType = default, bool? refreshExtendedToken = default, System.Threading.CancellationToken cancellationToken = default)
         {
             SandboxValidationUtils.ValidateSandboxMode(_sandboxConfiguration, "TokenAsync");
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                FormatToken(ref code, ref clientId, ref clientSecret, ref redirectUri, ref grantType);
+                FormatToken(ref code, ref clientId, ref clientSecret, ref redirectUri, ref grantType, ref refreshExtendedToken);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1553,6 +1553,9 @@ namespace UpstoxClient.Api
                     formParameterLocalVars.Add(new KeyValuePair<string?, string?>("redirect_uri", ClientUtils.ParameterToString(redirectUri)));
 
                     formParameterLocalVars.Add(new KeyValuePair<string?, string?>("grant_type", ClientUtils.ParameterToString(grantType)));
+
+                    if (refreshExtendedToken.HasValue)
+                        formParameterLocalVars.Add(new KeyValuePair<string?, string?>("refresh_extended_token", ClientUtils.ParameterToString(refreshExtendedToken.Value)));
 
                     httpRequestMessageLocalVar.Content = new FormUrlEncodedContent(formParameterLocalVars);
 
@@ -1595,7 +1598,7 @@ namespace UpstoxClient.Api
                             }
                         }
 
-                        AfterTokenDefaultImplementation(apiResponseLocalVar, code, clientId, clientSecret, redirectUri, grantType);
+                        AfterTokenDefaultImplementation(apiResponseLocalVar, code, clientId, clientSecret, redirectUri, grantType, refreshExtendedToken);
 
                         Events.ExecuteOnToken(apiResponseLocalVar);
 
@@ -1605,7 +1608,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorTokenDefaultImplementation(e, "/v2/login/authorization/token", uriBuilderLocalVar.Path, code, clientId, clientSecret, redirectUri, grantType);
+                OnErrorTokenDefaultImplementation(e, "/v2/login/authorization/token", uriBuilderLocalVar.Path, code, clientId, clientSecret, redirectUri, grantType, refreshExtendedToken);
                 Events.ExecuteOnErrorToken(e);
                 throw;
             }

@@ -44,8 +44,9 @@ namespace UpstoxClient.Model
         /// <param name="disclosedQuantity">The quantity that should be disclosed in the market depth</param>
         /// <param name="triggerPrice">If the order is a stop loss order then the trigger price to be set is mentioned here</param>
         /// <param name="isAmo">Signifies if the order is an After Market Order</param>
+        /// <param name="marketProtection">Optional market price protection value</param>
         [JsonConstructor]
-        public PlaceOrderV3Request(int? quantity = default, ProductEnum? product = default, ValidityEnum? validity = default, float? price = default, Option<string?> tag = default, Option<bool?> slice = default, string? instrumentToken = default, OrderTypeEnum? orderType = default, TransactionTypeEnum? transactionType = default, int? disclosedQuantity = default, float? triggerPrice = default, bool? isAmo = default)
+        public PlaceOrderV3Request(int? quantity = default, ProductEnum? product = default, ValidityEnum? validity = default, float? price = default, Option<string?> tag = default, Option<bool?> slice = default, string? instrumentToken = default, OrderTypeEnum? orderType = default, TransactionTypeEnum? transactionType = default, int? disclosedQuantity = default, float? triggerPrice = default, bool? isAmo = default, Option<float?> marketProtection = default)
         {
             Quantity = quantity;
             Product = product;
@@ -59,6 +60,7 @@ namespace UpstoxClient.Model
             DisclosedQuantity = disclosedQuantity;
             TriggerPrice = triggerPrice;
             IsAmo = isAmo;
+            MarketProtectionOption = marketProtection;
             OnCreated();
         }
 
@@ -479,6 +481,20 @@ namespace UpstoxClient.Model
         public bool? IsAmo { get; set; }
 
         /// <summary>
+        /// Used to track the state of MarketProtection
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<float?> MarketProtectionOption { get; private set; }
+
+        /// <summary>
+        /// Optional market price protection value
+        /// </summary>
+        /// <value>Market price protection (optional)</value>
+        [JsonPropertyName("market_protection")]
+        public float? MarketProtection { get { return this.MarketProtectionOption.Value; } set { this.MarketProtectionOption = new(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -504,6 +520,7 @@ namespace UpstoxClient.Model
             sb.Append("  DisclosedQuantity: ").Append(DisclosedQuantity).Append("\n");
             sb.Append("  TriggerPrice: ").Append(TriggerPrice).Append("\n");
             sb.Append("  IsAmo: ").Append(IsAmo).Append("\n");
+            sb.Append("  MarketProtection: ").Append(MarketProtection).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -544,6 +561,7 @@ namespace UpstoxClient.Model
             Option<int?> disclosedQuantity = default;
             Option<float?> triggerPrice = default;
             Option<bool?> isAmo = default;
+            Option<float?> marketProtection = default;
 
             while (utf8JsonReader.Read())
             {
@@ -604,6 +622,9 @@ namespace UpstoxClient.Model
                         case "is_amo":
                             isAmo = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "market_protection":
+                            marketProtection = new Option<float?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (float?)null : (float)utf8JsonReader.GetDouble());
+                            break;
                         default:
                             break;
                     }
@@ -640,7 +661,7 @@ namespace UpstoxClient.Model
             if (!isAmo.IsSet)
                 throw new ArgumentException("Property is required for class PlaceOrderV3Request.", nameof(isAmo));
 
-            return new PlaceOrderV3Request(quantity.Value!, product.Value!, validity.Value!, price.Value!, tag, slice, instrumentToken.Value!, orderType.Value!, transactionType.Value!, disclosedQuantity.Value!, triggerPrice.Value!, isAmo.Value!);
+            return new PlaceOrderV3Request(quantity.Value!, product.Value!, validity.Value!, price.Value!, tag, slice, instrumentToken.Value!, orderType.Value!, transactionType.Value!, disclosedQuantity.Value!, triggerPrice.Value!, isAmo.Value!, marketProtection);
         }
 
         /// <summary>
@@ -732,6 +753,12 @@ namespace UpstoxClient.Model
                 writer.WriteBoolean("is_amo", placeOrderV3Request.IsAmo.Value);
             else
                 writer.WriteNull("is_amo");
+
+            if (placeOrderV3Request.MarketProtectionOption.IsSet)
+                if (placeOrderV3Request.MarketProtectionOption.Value != null)
+                    writer.WriteNumber("market_protection", placeOrderV3Request.MarketProtectionOption.Value!.Value);
+                else
+                    writer.WriteNull("market_protection");
         }
     }
 }
