@@ -36,23 +36,29 @@ namespace UpstoxClient.Model
         /// <param name="mode">mode</param>
         /// <param name="status">status</param>
         /// <param name="reason">reason</param>
+        /// <param name="currency">currency</param>
+        /// <param name="eta">eta</param>
         /// <param name="lastUpdatedAt">lastUpdatedAt</param>
         /// <param name="bankName">bankName</param>
         /// <param name="transactionId">transactionId</param>
         /// <param name="totalCharges">totalCharges</param>
         /// <param name="chargesCategory">chargesCategory</param>
+        /// <param name="createdAt">createdAt</param>
         [JsonConstructor]
-        public PaymentHistoryData(Option<double?> amount = default, Option<string?> mode = default, Option<string?> status = default, Option<string?> reason = default, Option<string?> lastUpdatedAt = default, Option<string?> bankName = default, Option<string?> transactionId = default, Option<double?> totalCharges = default, Option<string?> chargesCategory = default)
+        public PaymentHistoryData(Option<double?> amount = default, Option<string?> mode = default, Option<string?> status = default, Option<string?> reason = default, Option<string?> currency = default, Option<string?> eta = default, Option<string?> lastUpdatedAt = default, Option<string?> bankName = default, Option<string?> transactionId = default, Option<double?> totalCharges = default, Option<string?> chargesCategory = default, Option<string?> createdAt = default)
         {
             AmountOption = amount;
             ModeOption = mode;
             StatusOption = status;
             ReasonOption = reason;
+            CurrencyOption = currency;
+            EtaOption = eta;
             LastUpdatedAtOption = lastUpdatedAt;
             BankNameOption = bankName;
             TransactionIdOption = transactionId;
             TotalChargesOption = totalCharges;
             ChargesCategoryOption = chargesCategory;
+            CreatedAtOption = createdAt;
             OnCreated();
         }
 
@@ -109,6 +115,32 @@ namespace UpstoxClient.Model
         /// </summary>
         [JsonPropertyName("reason")]
         public string? Reason { get { return this.ReasonOption.Value; } set { this.ReasonOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Currency
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CurrencyOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Currency
+        /// </summary>
+        [JsonPropertyName("currency")]
+        public string? Currency { get { return this.CurrencyOption.Value; } set { this.CurrencyOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Eta
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> EtaOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Eta
+        /// </summary>
+        [JsonPropertyName("eta")]
+        public string? Eta { get { return this.EtaOption.Value; } set { this.EtaOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of LastUpdatedAt
@@ -176,6 +208,19 @@ namespace UpstoxClient.Model
         public string? ChargesCategory { get { return this.ChargesCategoryOption.Value; } set { this.ChargesCategoryOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of CreatedAt
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CreatedAtOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets CreatedAt
+        /// </summary>
+        [JsonPropertyName("created_at")]
+        public string? CreatedAt { get { return this.CreatedAtOption.Value; } set { this.CreatedAtOption = new(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -193,11 +238,14 @@ namespace UpstoxClient.Model
             sb.Append("  Mode: ").Append(Mode).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  Reason: ").Append(Reason).Append("\n");
+            sb.Append("  Currency: ").Append(Currency).Append("\n");
+            sb.Append("  Eta: ").Append(Eta).Append("\n");
             sb.Append("  LastUpdatedAt: ").Append(LastUpdatedAt).Append("\n");
             sb.Append("  BankName: ").Append(BankName).Append("\n");
             sb.Append("  TransactionId: ").Append(TransactionId).Append("\n");
             sb.Append("  TotalCharges: ").Append(TotalCharges).Append("\n");
             sb.Append("  ChargesCategory: ").Append(ChargesCategory).Append("\n");
+            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -230,11 +278,14 @@ namespace UpstoxClient.Model
             Option<string?> mode = default;
             Option<string?> status = default;
             Option<string?> reason = default;
+            Option<string?> currency = default;
+            Option<string?> eta = default;
             Option<string?> lastUpdatedAt = default;
             Option<string?> bankName = default;
             Option<string?> transactionId = default;
             Option<double?> totalCharges = default;
             Option<string?> chargesCategory = default;
+            Option<string?> createdAt = default;
 
             while (utf8JsonReader.Read())
             {
@@ -263,6 +314,12 @@ namespace UpstoxClient.Model
                         case "reason":
                             reason = new Option<string?>(utf8JsonReader.GetString());
                             break;
+                        case "currency":
+                            currency = new Option<string?>(utf8JsonReader.GetString());
+                            break;
+                        case "eta":
+                            eta = new Option<string?>(utf8JsonReader.GetString());
+                            break;
                         case "last_updated_at":
                             lastUpdatedAt = new Option<string?>(utf8JsonReader.GetString());
                             break;
@@ -278,13 +335,16 @@ namespace UpstoxClient.Model
                         case "charges_category":
                             chargesCategory = new Option<string?>(utf8JsonReader.GetString());
                             break;
+                        case "created_at":
+                            createdAt = new Option<string?>(utf8JsonReader.GetString());
+                            break;
                         default:
                             break;
                     }
                 }
             }
 
-            return new PaymentHistoryData(amount, mode, status, reason, lastUpdatedAt, bankName, transactionId, totalCharges, chargesCategory);
+            return new PaymentHistoryData(amount, mode, status, reason, currency, eta, lastUpdatedAt, bankName, transactionId, totalCharges, chargesCategory, createdAt);
         }
 
         /// <summary>
@@ -335,6 +395,18 @@ namespace UpstoxClient.Model
                 else
                     writer.WriteNull("reason");
 
+            if (paymentHistoryData.CurrencyOption.IsSet)
+                if (paymentHistoryData.CurrencyOption.Value != null)
+                    writer.WriteString("currency", paymentHistoryData.Currency);
+                else
+                    writer.WriteNull("currency");
+
+            if (paymentHistoryData.EtaOption.IsSet)
+                if (paymentHistoryData.EtaOption.Value != null)
+                    writer.WriteString("eta", paymentHistoryData.Eta);
+                else
+                    writer.WriteNull("eta");
+
             if (paymentHistoryData.LastUpdatedAtOption.IsSet)
                 if (paymentHistoryData.LastUpdatedAtOption.Value != null)
                     writer.WriteString("last_updated_at", paymentHistoryData.LastUpdatedAt);
@@ -364,6 +436,12 @@ namespace UpstoxClient.Model
                     writer.WriteString("charges_category", paymentHistoryData.ChargesCategory);
                 else
                     writer.WriteNull("charges_category");
+
+            if (paymentHistoryData.CreatedAtOption.IsSet)
+                if (paymentHistoryData.CreatedAtOption.Value != null)
+                    writer.WriteString("created_at", paymentHistoryData.CreatedAt);
+                else
+                    writer.WriteNull("created_at");
         }
     }
 }
