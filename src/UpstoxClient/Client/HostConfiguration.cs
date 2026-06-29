@@ -225,6 +225,11 @@ namespace UpstoxClient.Client
             _jsonOptions.Converters.Add(new PaginationJsonConverter());
             _jsonOptions.Converters.Add(new PaymentHistoryDataJsonConverter());
             _jsonOptions.Converters.Add(new PaymentHistoryResponseJsonConverter());
+            _jsonOptions.Converters.Add(new PayoutDetailsJsonConverter());
+            _jsonOptions.Converters.Add(new PayoutDetailsResponseJsonConverter());
+            _jsonOptions.Converters.Add(new PayoutModesResponseJsonConverter());
+            _jsonOptions.Converters.Add(new InitiatePayoutRequestJsonConverter());
+            _jsonOptions.Converters.Add(new ModifyPayoutRequestJsonConverter());
             _jsonOptions.Converters.Add(new PledgeAvailableToTradeJsonConverter());
             _jsonOptions.Converters.Add(new PledgeMarginUsedJsonConverter());
             _jsonOptions.Converters.Add(new PledgeUnavailableToTradeJsonConverter());

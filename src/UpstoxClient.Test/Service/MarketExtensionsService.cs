@@ -63,8 +63,8 @@ namespace UpstoxClient.Test.Service
             var api = (MarketApi)services.GetRequiredService<IMarketApi>();
             var response = await api.GetOiDataAsync(
                 instrumentKey: "NSE_INDEX|Nifty 50",
-                expiry: "2026-06-02",
-                date: "2026-05-23"
+                expiry: "2026-06-30",
+                date: "2026-06-29"
             );
             AssertAnalyticsData("GetOiData", response.Ok());
         }
@@ -94,8 +94,8 @@ namespace UpstoxClient.Test.Service
             var api = (MarketApi)services.GetRequiredService<IMarketApi>();
             var response = await api.GetChangeOiDataAsync(
                 instrumentKey: "NSE_INDEX|Nifty 50",
-                expiry: "2026-06-02",
-                date: "2026-05-23",
+                expiry: "2026-06-30",
+                date: "2026-06-29",
                 interval: 1
             );
             AssertAnalyticsData("GetChangeOiData", response.Ok());
@@ -126,8 +126,8 @@ namespace UpstoxClient.Test.Service
             var api = (MarketApi)services.GetRequiredService<IMarketApi>();
             var response = await api.GetPcrDataAsync(
                 instrumentKey: "NSE_INDEX|Nifty 50",
-                expiry: "2026-06-02",
-                date: "2026-05-23",
+                expiry: "2026-06-30",
+                date: "2026-06-29",
                 bucketInterval: 1
             );
             AssertAnalyticsData("GetPcrData", response.Ok());
@@ -158,8 +158,8 @@ namespace UpstoxClient.Test.Service
             var api = (MarketApi)services.GetRequiredService<IMarketApi>();
             var response = await api.GetMaxPainDataAsync(
                 instrumentKey: "NSE_INDEX|Nifty 50",
-                expiry: "2026-06-02",
-                date: "2026-05-23",
+                expiry: "2026-06-30",
+                date: "2026-06-29",
                 bucketInterval: 1
             );
             AssertAnalyticsData("GetMaxPainData", response.Ok());

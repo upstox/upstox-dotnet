@@ -293,6 +293,89 @@ namespace UpstoxClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPcrDataApiResponse"/>?&gt;</returns>
         Task<IGetPcrDataApiResponse?> GetPcrDataOrDefaultAsync(string? instrumentKey = default, string? expiry = default, string? date = default, int? bucketInterval = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Smartlist Futures
+        /// </summary>
+        /// <remarks>
+        /// Fetches the smartlist of futures for the given asset type and category.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, PREMIUM, DISCOUNT (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistFuturesApiResponse"/>&gt;</returns>
+        Task<IGetSmartlistFuturesApiResponse> GetSmartlistFuturesAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Smartlist Futures
+        /// </summary>
+        /// <remarks>
+        /// Fetches the smartlist of futures for the given asset type and category.
+        /// </remarks>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, PREMIUM, DISCOUNT (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistFuturesApiResponse"/>?&gt;</returns>
+        Task<IGetSmartlistFuturesApiResponse?> GetSmartlistFuturesOrDefaultAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Smartlist MTF
+        /// </summary>
+        /// <remarks>
+        /// Fetches the smartlist of MTF (Margin Trade Funding) stocks. Prices are enriched with live LTP data.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistMtfApiResponse"/>&gt;</returns>
+        Task<IGetSmartlistMtfApiResponse> GetSmartlistMtfAsync(Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Smartlist MTF
+        /// </summary>
+        /// <remarks>
+        /// Fetches the smartlist of MTF (Margin Trade Funding) stocks. Prices are enriched with live LTP data.
+        /// </remarks>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistMtfApiResponse"/>?&gt;</returns>
+        Task<IGetSmartlistMtfApiResponse?> GetSmartlistMtfOrDefaultAsync(Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Smartlist Options
+        /// </summary>
+        /// <remarks>
+        /// Fetches the smartlist of options for the given asset type and category.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, IV_GAINERS, IV_LOSERS, UNDER_5000, UNDER_10000 (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistOptionsApiResponse"/>&gt;</returns>
+        Task<IGetSmartlistOptionsApiResponse> GetSmartlistOptionsAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Smartlist Options
+        /// </summary>
+        /// <remarks>
+        /// Fetches the smartlist of options for the given asset type and category.
+        /// </remarks>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, IV_GAINERS, IV_LOSERS, UNDER_5000, UNDER_10000 (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistOptionsApiResponse"/>?&gt;</returns>
+        Task<IGetSmartlistOptionsApiResponse?> GetSmartlistOptionsOrDefaultAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -812,6 +895,178 @@ namespace UpstoxClient.Api
     }
 
     /// <summary>
+    /// The <see cref="IGetSmartlistFuturesApiResponse"/>
+    /// </summary>
+    /// <summary>
+    /// The <see cref="IGetSmartlistFuturesApiResponse"/>
+    /// </summary>
+    public interface IGetSmartlistFuturesApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.AnalyticsResponse?>, IUnauthorized<UpstoxClient.Model.ApiGatewayErrorResponse?>
+    {
+        /// <summary>
+        /// Returns true if the response is 405 MethodNotAllowed
+        /// </summary>
+        /// <returns></returns>
+        bool IsMethodNotAllowed { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+
+        /// <summary>
+        /// Returns true if the response is 423 Locked
+        /// </summary>
+        /// <returns></returns>
+        bool IsLocked { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IGetSmartlistMtfApiResponse"/>
+    /// </summary>
+    /// <summary>
+    /// The <see cref="IGetSmartlistMtfApiResponse"/>
+    /// </summary>
+    public interface IGetSmartlistMtfApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.AnalyticsResponse?>, IUnauthorized<UpstoxClient.Model.ApiGatewayErrorResponse?>
+    {
+        /// <summary>
+        /// Returns true if the response is 405 MethodNotAllowed
+        /// </summary>
+        /// <returns></returns>
+        bool IsMethodNotAllowed { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+
+        /// <summary>
+        /// Returns true if the response is 423 Locked
+        /// </summary>
+        /// <returns></returns>
+        bool IsLocked { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IGetSmartlistOptionsApiResponse"/>
+    /// </summary>
+    /// <summary>
+    /// The <see cref="IGetSmartlistOptionsApiResponse"/>
+    /// </summary>
+    public interface IGetSmartlistOptionsApiResponse : UpstoxClient.Client.IApiResponse, IMethodNotAllowed<UpstoxClient.Model.ApiGatewayErrorResponse?>, IBadRequest<UpstoxClient.Model.ApiGatewayErrorResponse?>, IInternalServerError<UpstoxClient.Model.ApiGatewayErrorResponse?>, ILocked<UpstoxClient.Model.ApiGatewayErrorResponse?>, IUnprocessableContent<UpstoxClient.Model.ApiGatewayErrorResponse?>, ITooManyRequests<UpstoxClient.Model.ApiGatewayErrorResponse?>, IOk<UpstoxClient.Model.AnalyticsResponse?>, IUnauthorized<UpstoxClient.Model.ApiGatewayErrorResponse?>
+    {
+        /// <summary>
+        /// Returns true if the response is 405 MethodNotAllowed
+        /// </summary>
+        /// <returns></returns>
+        bool IsMethodNotAllowed { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+
+        /// <summary>
+        /// Returns true if the response is 423 Locked
+        /// </summary>
+        /// <returns></returns>
+        bool IsLocked { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+
+    /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
     public class MarketApiEvents
@@ -894,6 +1149,66 @@ namespace UpstoxClient.Api
         internal void ExecuteOnErrorGetMarketStatus(Exception exception)
         {
             OnErrorGetMarketStatus?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnGetSmartlistFutures;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetSmartlistFutures;
+
+        internal void ExecuteOnGetSmartlistFutures(MarketApi.GetSmartlistFuturesApiResponse apiResponse)
+        {
+            OnGetSmartlistFutures?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetSmartlistFutures(Exception exception)
+        {
+            OnErrorGetSmartlistFutures?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnGetSmartlistMtf;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetSmartlistMtf;
+
+        internal void ExecuteOnGetSmartlistMtf(MarketApi.GetSmartlistMtfApiResponse apiResponse)
+        {
+            OnGetSmartlistMtf?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetSmartlistMtf(Exception exception)
+        {
+            OnErrorGetSmartlistMtf?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnGetSmartlistOptions;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetSmartlistOptions;
+
+        internal void ExecuteOnGetSmartlistOptions(MarketApi.GetSmartlistOptionsApiResponse apiResponse)
+        {
+            OnGetSmartlistOptions?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetSmartlistOptions(Exception exception)
+        {
+            OnErrorGetSmartlistOptions?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
@@ -4462,6 +4777,1608 @@ namespace UpstoxClient.Api
             public bool IsUnauthorized => 401 == (int)StatusCode;
             public UpstoxClient.Model.ApiGatewayErrorResponse? Unauthorized() => IsUnauthorized ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions) : null;
             public bool TryUnauthorized([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result) { result = null; try { result = Unauthorized(); } catch (Exception e) { OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401); } return result != null; }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetSmartlistFutures(ref Option<string?> assetType, ref Option<string?> category, ref Option<int?> pageNumber, ref Option<int?> pageSize);
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        private void AfterGetSmartlistFuturesDefaultImplementation(IGetSmartlistFuturesApiResponse apiResponseLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetSmartlistFutures(ref suppressDefaultLog, apiResponseLocalVar, assetType, category, pageNumber, pageSize);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        partial void AfterGetSmartlistFutures(ref bool suppressDefaultLog, IGetSmartlistFuturesApiResponse apiResponseLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        private void OnErrorGetSmartlistFuturesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetSmartlistFutures(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, assetType, category, pageNumber, pageSize);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        partial void OnErrorGetSmartlistFutures(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize);
+
+        /// <summary>
+        /// Get Smartlist Futures Fetches the smartlist of futures for the given asset type and category.
+        /// </summary>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, PREMIUM, DISCOUNT (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistFuturesApiResponse"/>&gt;</returns>
+        public async Task<IGetSmartlistFuturesApiResponse?> GetSmartlistFuturesOrDefaultAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetSmartlistFuturesAsync(assetType, category, pageNumber, pageSize, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get Smartlist Futures Fetches the smartlist of futures for the given asset type and category.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, PREMIUM, DISCOUNT (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistFuturesApiResponse"/>&gt;</returns>
+        public async Task<IGetSmartlistFuturesApiResponse> GetSmartlistFuturesAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                FormatGetSmartlistFutures(ref assetType, ref category, ref pageNumber, ref pageSize);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/v2/market/smartlist/futures"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/market/smartlist/futures");
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (assetType.IsSet)
+                        parseQueryStringLocalVar["asset_type"] = ClientUtils.ParameterToString(assetType.Value);
+
+                    if (category.IsSet)
+                        parseQueryStringLocalVar["category"] = ClientUtils.ParameterToString(category.Value);
+
+                    if (pageNumber.IsSet)
+                        parseQueryStringLocalVar["page_number"] = ClientUtils.ParameterToString(pageNumber.Value);
+
+                    if (pageSize.IsSet)
+                        parseQueryStringLocalVar["page_size"] = ClientUtils.ParameterToString(pageSize.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "*/*",
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetSmartlistFuturesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetSmartlistFuturesApiResponse>();
+                        GetSmartlistFuturesApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/smartlist/futures", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetSmartlistFuturesDefaultImplementation(apiResponseLocalVar, assetType, category, pageNumber, pageSize);
+
+                        Events.ExecuteOnGetSmartlistFutures(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetSmartlistFuturesDefaultImplementation(e, "/v2/market/smartlist/futures", uriBuilderLocalVar.Path, assetType, category, pageNumber, pageSize);
+                Events.ExecuteOnErrorGetSmartlistFutures(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetSmartlistFuturesApiResponse"/>
+        /// </summary>
+        public partial class GetSmartlistFuturesApiResponse : UpstoxClient.Client.ApiResponse, IGetSmartlistFuturesApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetSmartlistFuturesApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetSmartlistFuturesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSmartlistFuturesApiResponse(ILogger<GetSmartlistFuturesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetSmartlistFuturesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSmartlistFuturesApiResponse(ILogger<GetSmartlistFuturesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsMethodNotAllowed
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = MethodNotAllowed();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLocked => 423 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsLocked
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Locked();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.AnalyticsResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.AnalyticsResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.AnalyticsResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetSmartlistMtf(ref Option<int?> pageNumber, ref Option<int?> pageSize);
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        private void AfterGetSmartlistMtfDefaultImplementation(IGetSmartlistMtfApiResponse apiResponseLocalVar, Option<int?> pageNumber, Option<int?> pageSize)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetSmartlistMtf(ref suppressDefaultLog, apiResponseLocalVar, pageNumber, pageSize);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        partial void AfterGetSmartlistMtf(ref bool suppressDefaultLog, IGetSmartlistMtfApiResponse apiResponseLocalVar, Option<int?> pageNumber, Option<int?> pageSize);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        private void OnErrorGetSmartlistMtfDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<int?> pageNumber, Option<int?> pageSize)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetSmartlistMtf(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, pageNumber, pageSize);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        partial void OnErrorGetSmartlistMtf(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<int?> pageNumber, Option<int?> pageSize);
+
+        /// <summary>
+        /// Get Smartlist MTF Fetches the smartlist of MTF (Margin Trade Funding) stocks. Prices are enriched with live LTP data.
+        /// </summary>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistMtfApiResponse"/>&gt;</returns>
+        public async Task<IGetSmartlistMtfApiResponse?> GetSmartlistMtfOrDefaultAsync(Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetSmartlistMtfAsync(pageNumber, pageSize, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get Smartlist MTF Fetches the smartlist of MTF (Margin Trade Funding) stocks. Prices are enriched with live LTP data.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistMtfApiResponse"/>&gt;</returns>
+        public async Task<IGetSmartlistMtfApiResponse> GetSmartlistMtfAsync(Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                FormatGetSmartlistMtf(ref pageNumber, ref pageSize);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/v2/market/smartlist/mtf"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/market/smartlist/mtf");
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (pageNumber.IsSet)
+                        parseQueryStringLocalVar["page_number"] = ClientUtils.ParameterToString(pageNumber.Value);
+
+                    if (pageSize.IsSet)
+                        parseQueryStringLocalVar["page_size"] = ClientUtils.ParameterToString(pageSize.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "*/*",
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetSmartlistMtfApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetSmartlistMtfApiResponse>();
+                        GetSmartlistMtfApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/smartlist/mtf", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetSmartlistMtfDefaultImplementation(apiResponseLocalVar, pageNumber, pageSize);
+
+                        Events.ExecuteOnGetSmartlistMtf(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetSmartlistMtfDefaultImplementation(e, "/v2/market/smartlist/mtf", uriBuilderLocalVar.Path, pageNumber, pageSize);
+                Events.ExecuteOnErrorGetSmartlistMtf(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetSmartlistMtfApiResponse"/>
+        /// </summary>
+        public partial class GetSmartlistMtfApiResponse : UpstoxClient.Client.ApiResponse, IGetSmartlistMtfApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetSmartlistMtfApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetSmartlistMtfApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSmartlistMtfApiResponse(ILogger<GetSmartlistMtfApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetSmartlistMtfApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSmartlistMtfApiResponse(ILogger<GetSmartlistMtfApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsMethodNotAllowed
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = MethodNotAllowed();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLocked => 423 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsLocked
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Locked();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.AnalyticsResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.AnalyticsResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.AnalyticsResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetSmartlistOptions(ref Option<string?> assetType, ref Option<string?> category, ref Option<int?> pageNumber, ref Option<int?> pageSize);
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        private void AfterGetSmartlistOptionsDefaultImplementation(IGetSmartlistOptionsApiResponse apiResponseLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetSmartlistOptions(ref suppressDefaultLog, apiResponseLocalVar, assetType, category, pageNumber, pageSize);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        partial void AfterGetSmartlistOptions(ref bool suppressDefaultLog, IGetSmartlistOptionsApiResponse apiResponseLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        private void OnErrorGetSmartlistOptionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetSmartlistOptions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, assetType, category, pageNumber, pageSize);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="assetType"></param>
+        /// <param name="category"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        partial void OnErrorGetSmartlistOptions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> assetType, Option<string?> category, Option<int?> pageNumber, Option<int?> pageSize);
+
+        /// <summary>
+        /// Get Smartlist Options Fetches the smartlist of options for the given asset type and category.
+        /// </summary>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, IV_GAINERS, IV_LOSERS, UNDER_5000, UNDER_10000 (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistOptionsApiResponse"/>&gt;</returns>
+        public async Task<IGetSmartlistOptionsApiResponse?> GetSmartlistOptionsOrDefaultAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetSmartlistOptionsAsync(assetType, category, pageNumber, pageSize, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get Smartlist Options Fetches the smartlist of options for the given asset type and category.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="assetType">Asset type. Allowed values: INDEX, STOCK, COMMODITY (optional)</param>
+        /// <param name="category">Category. Allowed values: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS, PRICE_GAINERS, PRICE_LOSERS, IV_GAINERS, IV_LOSERS, UNDER_5000, UNDER_10000 (COMMODITY supports only: TOP_TRADED, MOST_ACTIVE, OI_GAINERS, OI_LOSERS) (optional)</param>
+        /// <param name="pageNumber">Page number (optional, 1-indexed) (optional)</param>
+        /// <param name="pageSize">Page size (optional, max 50) (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetSmartlistOptionsApiResponse"/>&gt;</returns>
+        public async Task<IGetSmartlistOptionsApiResponse> GetSmartlistOptionsAsync(Option<string?> assetType = default, Option<string?> category = default, Option<int?> pageNumber = default, Option<int?> pageSize = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                FormatGetSmartlistOptions(ref assetType, ref category, ref pageNumber, ref pageSize);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/v2/market/smartlist/options"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/market/smartlist/options");
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (assetType.IsSet)
+                        parseQueryStringLocalVar["asset_type"] = ClientUtils.ParameterToString(assetType.Value);
+
+                    if (category.IsSet)
+                        parseQueryStringLocalVar["category"] = ClientUtils.ParameterToString(category.Value);
+
+                    if (pageNumber.IsSet)
+                        parseQueryStringLocalVar["page_number"] = ClientUtils.ParameterToString(pageNumber.Value);
+
+                    if (pageSize.IsSet)
+                        parseQueryStringLocalVar["page_size"] = ClientUtils.ParameterToString(pageSize.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "*/*",
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetSmartlistOptionsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetSmartlistOptionsApiResponse>();
+                        GetSmartlistOptionsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/v2/market/smartlist/options", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetSmartlistOptionsDefaultImplementation(apiResponseLocalVar, assetType, category, pageNumber, pageSize);
+
+                        Events.ExecuteOnGetSmartlistOptions(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetSmartlistOptionsDefaultImplementation(e, "/v2/market/smartlist/options", uriBuilderLocalVar.Path, assetType, category, pageNumber, pageSize);
+                Events.ExecuteOnErrorGetSmartlistOptions(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetSmartlistOptionsApiResponse"/>
+        /// </summary>
+        public partial class GetSmartlistOptionsApiResponse : UpstoxClient.Client.ApiResponse, IGetSmartlistOptionsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetSmartlistOptionsApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetSmartlistOptionsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSmartlistOptionsApiResponse(ILogger<GetSmartlistOptionsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetSmartlistOptionsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSmartlistOptionsApiResponse(ILogger<GetSmartlistOptionsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public bool IsMethodNotAllowed => 405 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 405 MethodNotAllowed
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? MethodNotAllowed()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsMethodNotAllowed
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 405 MethodNotAllowed and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryMethodNotAllowed([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = MethodNotAllowed();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)405);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLocked => 423 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 423 Locked
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Locked()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsLocked
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 423 Locked and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryLocked([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Locked();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)423);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? TooManyRequests()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.AnalyticsResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.AnalyticsResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out UpstoxClient.Model.AnalyticsResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public UpstoxClient.Model.ApiGatewayErrorResponse? Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<UpstoxClient.Model.ApiGatewayErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized([NotNullWhen(true)]out UpstoxClient.Model.ApiGatewayErrorResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
 
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
