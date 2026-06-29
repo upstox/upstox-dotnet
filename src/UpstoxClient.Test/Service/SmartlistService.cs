@@ -16,7 +16,8 @@ namespace UpstoxClient.Test.Service
             Console.WriteLine("=== Testing Market API (GetSmartlistFutures) ===");
             var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetSmartlistFuturesAsync(
-                assetType: new Option<string?>("EQUITY"),
+                assetType: new Option<string?>("STOCK"),
+                category: new Option<string?>("TOP_TRADED"),
                 pageNumber: new Option<int?>(1),
                 pageSize: new Option<int?>(10));
             var result = response.Ok();
@@ -107,7 +108,8 @@ namespace UpstoxClient.Test.Service
         {
             var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetSmartlistFuturesAsync(
-                assetType: new Option<string?>("EQUITY"),
+                assetType: new Option<string?>("STOCK"),
+                category: new Option<string?>("TOP_TRADED"),
                 pageNumber: new Option<int?>(1),
                 pageSize: new Option<int?>(10));
             var result = response.Ok();
@@ -150,7 +152,8 @@ namespace UpstoxClient.Test.Service
         {
             var marketApi = services.GetRequiredService<IMarketApi>();
             var response = await marketApi.GetSmartlistOptionsAsync(
-                assetType: new Option<string?>("EQUITY"),
+                assetType: new Option<string?>("STOCK"),
+                category: new Option<string?>("TOP_TRADED"),
                 pageNumber: new Option<int?>(1),
                 pageSize: new Option<int?>(10));
             var result = response.Ok();
