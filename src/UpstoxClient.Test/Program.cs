@@ -77,6 +77,12 @@ namespace UpstoxClient.Test
                 await HistoryV3Service.PrintGetIntraDayCandleDataTest(services);
                 await IPOService.PrintGetIpoListingTest(services);
                 await IPOService.PrintGetIpoDetailsTest(services);
+                await IPOService.PrintGetIpoOrdersTest(services);
+                await IPOService.PrintGetIpoOrderByIdTest(services);
+                // ApplyForIpo and CancelIpoOrder are state-changing on a real account; they
+                // self-skip unless IPOService.EnableStateChangingIpoTests is set to true.
+                await IPOService.PrintApplyForIpoTest(services);
+                await IPOService.PrintCancelIpoOrderTest(services);
                 await InstrumentsService.PrintSearchInstrumentTest(services);
                 await LoginService.PrintTokenTest(services);
                 await LoginService.PrintInitTokenRequestForIndieUserTest(services);
@@ -220,6 +226,12 @@ namespace UpstoxClient.Test
                 await HistoryV3Service.SanityGetIntraDayCandleDataTest(services);
                 await IPOService.SanityGetIpoListingTest(services);
                 await IPOService.SanityGetIpoDetailsTest(services);
+                await IPOService.SanityGetIpoOrdersTest(services);
+                await IPOService.SanityGetIpoOrderByIdTest(services);
+                // ApplyForIpo and CancelIpoOrder are state-changing on a real account; they
+                // self-skip unless IPOService.EnableStateChangingIpoTests is set to true.
+                await IPOService.SanityApplyForIpoTest(services);
+                await IPOService.SanityCancelIpoOrderTest(services);
                 await InstrumentsService.SanitySearchInstrumentTest(services);
                 await LoginService.SanityTokenTest(services);
                 await LoginService.SanityInitTokenRequestForIndieUserTest(services);
