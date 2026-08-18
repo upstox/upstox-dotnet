@@ -244,16 +244,98 @@ namespace UpstoxClient.Test.Service
         /// ApplyForIpo and CancelIpoOrder mutate state on the authenticated live account:
         /// they place, and withdraw, a real IPO application backed by a real UPI mandate.
         /// The existing test harness has no guarding pattern for write paths, so these two
-        /// endpoints are wired up but disabled by default. Flip this flag to true (and set
-        /// ApplyUpiId / ApplyIpoId below to values valid for the account under test) to
-        /// exercise them for real.
+        /// endpoints are wired up but disabled by default. To exercise them for real, run with:
+        ///
+        ///   UPSTOX_ENABLE_IPO_WRITE_TESTS=true
+        ///   UPSTOX_TEST_UPI=&lt;a UPI handle belonging to the account under test&gt;
+        ///   UPSTOX_TEST_IPO_ORDER_ID=&lt;order id&gt;   (optional; pins GetIpoOrderById/CancelIpoOrder)
+        ///
+        /// These are environment-driven rather than hardcoded so that a live UPI handle never
+        /// lands in version control and so a plain test run can never place an application.
         /// </summary>
-        private static readonly bool EnableStateChangingIpoTests = false;
+        private static readonly bool EnableStateChangingIpoTests =
+            Environment.GetEnvironmentVariable("UPSTOX_ENABLE_IPO_WRITE_TESTS") == "true";
 
         /// <summary>
-        /// UPI handle used by the ApplyForIpo tests. Must belong to the authenticated user.
+        /// UPI handle used by the ApplyForIpo tests. Must belong to the authenticated user —
+        /// the exchange rejects the application outright when it does not, so this is supplied
+        /// per-run through UPSTOX_TEST_UPI rather than hardcoded to a placeholder.
         /// </summary>
-        private const string ApplyUpiId = "someone@upi";
+        private static readonly string ApplyUpiId =
+            Environment.GetEnvironmentVariable("UPSTOX_TEST_UPI") ?? "someone@upi";
+
+        /// <summary>
+        /// An IPO that is eligible for a fresh application right now, along with the bid
+        /// parameters the details API reports for it.
+        /// </summary>
+        private sealed record IpoApplyCandidate(string Slug, string Symbol, int Quantity, decimal Price);
+
+        /// <summary>
+        /// Resolves the IPOs that can actually be applied for at this moment.
+        ///
+        /// Picking <c>listing.Data[0]</c> is not good enough: the listing includes IPOs whose
+        /// bidding window has not opened yet (status is "open" while they are still only in the
+        /// pre-apply phase), and applying to those is rejected with a 400. This filters to
+        /// issues whose bidding window contains today, then re-reads each one through the
+        /// details API so the slug id, lot size and cut-off price all come from the same
+        /// authoritative response, and so that the IND investor category is confirmed present.
+        /// </summary>
+        private static async Task<List<IpoApplyCandidate>> ResolveApplyCandidatesAsync(IIPOApi ipoApi)
+        {
+            var candidates = new List<IpoApplyCandidate>();
+
+            var listingResponse = await ipoApi.GetIpoListingAsync();
+            var listing = listingResponse.Ok();
+
+            if (listing?.Data == null)
+                return candidates;
+
+            var today = DateTime.Today;
+
+            foreach (var item in listing.Data)
+            {
+                if (!string.Equals(item.Status, "open", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                // The bidding window must already have started and not yet have closed.
+                if (!DateTime.TryParse(item.BiddingStartDate, out var start) ||
+                    !DateTime.TryParse(item.BiddingEndDate, out var end))
+                    continue;
+
+                if (today < start.Date || today > end.Date)
+                    continue;
+
+                // Re-read through the details API: this is where the slug id used by the
+                // apply call, the lot size and the cut-off price come from.
+                var detailsResponse = await ipoApi.GetIpoDetailsAsync(id: item.Id);
+                var details = detailsResponse.Ok();
+                var data = details?.Data;
+
+                if (data == null)
+                    continue;
+
+                var slug = data.Id;
+                if (string.IsNullOrWhiteSpace(slug))
+                    continue;
+
+                // Retail (IND) has to be one of the categories the issue accepts.
+                var acceptsRetail = data.Investors == null ||
+                                    data.Investors.Count == 0 ||
+                                    data.Investors.Any(i => i?.Category == IpoInvestorType.CategoryEnum.IND);
+                if (!acceptsRetail)
+                    continue;
+
+                var quantity = data.MinimumQuantity ?? data.LotSize ?? 0;
+                var price = (decimal)(data.CutOffPrice ?? data.MaximumPrice ?? 0d);
+
+                if (quantity <= 0 || price <= 0m)
+                    continue;
+
+                candidates.Add(new IpoApplyCandidate(slug!, data.Symbol ?? item.Symbol ?? "(unknown)", quantity, price));
+            }
+
+            return candidates;
+        }
 
         /// <summary>
         /// Prints every field of an <see cref="IpoOrderData"/>, including nested bids
@@ -360,9 +442,17 @@ namespace UpstoxClient.Test.Service
 
         /// <summary>
         /// Resolves an IPO order id from the order book, or null when the account has none.
+        ///
+        /// Set UPSTOX_TEST_IPO_ORDER_ID to pin the tests to one specific order instead of
+        /// whichever happens to sit at the top of the order book — necessary for the cancel
+        /// test, where acting on the wrong order is not recoverable.
         /// </summary>
         private static async Task<string?> ResolveIpoOrderIdAsync(IIPOApi ipoApi)
         {
+            var pinnedOrderId = Environment.GetEnvironmentVariable("UPSTOX_TEST_IPO_ORDER_ID");
+            if (!string.IsNullOrWhiteSpace(pinnedOrderId))
+                return pinnedOrderId;
+
             var ordersResponse = await ipoApi.GetIpoOrdersAsync();
             var orders = ordersResponse.Ok();
 
@@ -397,38 +487,44 @@ namespace UpstoxClient.Test.Service
 
             var ipoApi = services.GetRequiredService<IIPOApi>();
 
-            // Resolve an open IPO plus its cut-off price and lot size from the listing/details APIs.
-            var listingResponse = await ipoApi.GetIpoListingAsync();
-            var listing = listingResponse.Ok();
+            var candidates = await ResolveApplyCandidatesAsync(ipoApi);
 
-            if (listing?.Data == null || listing.Data.Count == 0)
+            if (candidates.Count == 0)
             {
-                Console.WriteLine("No IPO listings found, skipping ApplyForIpo test");
+                Console.WriteLine("No IPO is currently inside its bidding window, skipping ApplyForIpo test");
                 Console.WriteLine("==================");
                 return;
             }
 
-            var ipoId = listing.Data[0].Id;
-            var detailsResponse = await ipoApi.GetIpoDetailsAsync(id: ipoId);
-            var details = detailsResponse.Ok();
+            Console.WriteLine($"Found {candidates.Count} applicable IPO(s): " +
+                              string.Join(", ", candidates.Select(c => $"{c.Symbol} ({c.Slug})")));
 
-            var quantity = details?.Data?.MinimumQuantity ?? details?.Data?.LotSize ?? 1;
-            var price = (decimal)(details?.Data?.CutOffPrice ?? details?.Data?.MaximumPrice ?? 0d);
-
-            var request = new IpoApplyRequest(
-                bids: new List<IpoBidRequest> { new IpoBidRequest(quantity: quantity, price: price) },
-                id: ipoId,
-                upi: ApplyUpiId,
-                category: IpoApplyRequest.CategoryEnum.IND
-            );
-
-            Console.WriteLine($"Applying for IPO id: {ipoId} quantity: {quantity} price: {price} upi: {ApplyUpiId}");
-
-            var response = await ipoApi.ApplyForIpoAsync(request);
-            var result = response.Ok();
-
-            if (result != null)
+            // An individual issue can still be refused for account-specific reasons (an
+            // application already exists, the category is exhausted, funds are insufficient),
+            // so walk the candidates until one is accepted instead of failing on the first.
+            foreach (var candidate in candidates)
             {
+                var request = new IpoApplyRequest(
+                    bids: new List<IpoBidRequest> { new IpoBidRequest(quantity: candidate.Quantity, price: candidate.Price) },
+                    id: candidate.Slug,
+                    upi: ApplyUpiId,
+                    category: IpoApplyRequest.CategoryEnum.IND
+                );
+
+                Console.WriteLine();
+                Console.WriteLine($"Applying for IPO slug: {candidate.Slug} symbol: {candidate.Symbol} " +
+                                  $"quantity: {candidate.Quantity} price: {candidate.Price} upi: {ApplyUpiId}");
+
+                var response = await ipoApi.ApplyForIpoAsync(request);
+                var result = response.Ok();
+
+                if (result == null)
+                {
+                    Console.WriteLine($"  REJECTED (HTTP {(int)response.StatusCode} {response.StatusCode})");
+                    Console.WriteLine($"  Response: {response.RawContent}");
+                    continue;
+                }
+
                 Console.WriteLine($"Status: {result.Status?.ToString() ?? "null"}");
                 Console.WriteLine("Data:");
                 if (result.Data != null)
@@ -452,11 +548,16 @@ namespace UpstoxClient.Test.Service
                     foreach (var kvp in result.AdditionalProperties)
                         Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
                 }
+
+                Console.WriteLine();
+                Console.WriteLine($">>> IPO APPLICATION PLACED: OrderId = {result.Data?.OrderId}");
+                Console.WriteLine($">>> Raw response: {response.RawContent}");
+                Console.WriteLine("==================");
+                return;
             }
-            else
-            {
-                Console.WriteLine("ApplyForIpo response is null");
-            }
+
+            Console.WriteLine();
+            Console.WriteLine("ApplyForIpo: every applicable IPO rejected the application (see reasons above)");
             Console.WriteLine("==================");
         }
 
@@ -471,32 +572,19 @@ namespace UpstoxClient.Test.Service
 
             var ipoApi = services.GetRequiredService<IIPOApi>();
 
-            var listingResponse = await ipoApi.GetIpoListingAsync();
-            var listing = listingResponse.Ok();
+            var candidates = await ResolveApplyCandidatesAsync(ipoApi);
 
-            if (listing == null)
+            if (candidates.Count == 0)
             {
-                if (listingResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    throw new Exception("Invalid access token");
-                throw new Exception("GetIpoListing response is null while resolving an IPO to apply for");
-            }
-
-            if (listing.Data == null || listing.Data.Count == 0)
-            {
-                Console.WriteLine("ApplyForIpo sanity test skipped: no IPOs are currently listed");
+                Console.WriteLine("ApplyForIpo sanity test skipped: no IPO is currently inside its bidding window");
                 return;
             }
 
-            var ipoId = listing.Data[0].Id;
-            var detailsResponse = await ipoApi.GetIpoDetailsAsync(id: ipoId);
-            var details = detailsResponse.Ok();
-
-            var quantity = details?.Data?.MinimumQuantity ?? details?.Data?.LotSize ?? 1;
-            var price = (decimal)(details?.Data?.CutOffPrice ?? details?.Data?.MaximumPrice ?? 0d);
+            var candidate = candidates[0];
 
             var request = new IpoApplyRequest(
-                bids: new List<IpoBidRequest> { new IpoBidRequest(quantity: quantity, price: price) },
-                id: ipoId,
+                bids: new List<IpoBidRequest> { new IpoBidRequest(quantity: candidate.Quantity, price: candidate.Price) },
+                id: candidate.Slug,
                 upi: ApplyUpiId,
                 category: IpoApplyRequest.CategoryEnum.IND
             );
@@ -508,7 +596,7 @@ namespace UpstoxClient.Test.Service
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                     throw new Exception("Invalid access token");
-                throw new Exception("ApplyForIpo response is null");
+                throw new Exception($"ApplyForIpo failed with HTTP {(int)response.StatusCode}: {response.RawContent}");
             }
 
             if (result.Data == null)
@@ -736,10 +824,13 @@ namespace UpstoxClient.Test.Service
                     foreach (var kvp in result.AdditionalProperties)
                         Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
                 }
+
+                Console.WriteLine($">>> Raw response: {response.RawContent}");
             }
             else
             {
-                Console.WriteLine("CancelIpoOrder response is null");
+                Console.WriteLine($"CancelIpoOrder REJECTED (HTTP {(int)response.StatusCode} {response.StatusCode})");
+                Console.WriteLine($"  Response: {response.RawContent}");
             }
             Console.WriteLine("==================");
         }
