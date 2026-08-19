@@ -45,8 +45,9 @@ namespace UpstoxClient.Model
         /// <param name="biddingStartDate">biddingStartDate</param>
         /// <param name="biddingEndDate">biddingEndDate</param>
         /// <param name="totalSubscription">totalSubscription</param>
+        /// <param name="investors">Investor categories the issue accepts. Empty when the listing data carries none — the IPO details API is the authoritative source</param>
         [JsonConstructor]
-        public IpoListingData(Option<string?> id = default, Option<string?> symbol = default, Option<string?> name = default, Option<string?> status = default, Option<string?> isin = default, Option<string?> issueType = default, Option<double?> issueSize = default, Option<string?> industry = default, Option<double?> minimumPrice = default, Option<double?> maximumPrice = default, Option<string?> biddingStartDate = default, Option<string?> biddingEndDate = default, Option<string?> totalSubscription = default)
+        public IpoListingData(Option<string?> id = default, Option<string?> symbol = default, Option<string?> name = default, Option<string?> status = default, Option<string?> isin = default, Option<string?> issueType = default, Option<double?> issueSize = default, Option<string?> industry = default, Option<double?> minimumPrice = default, Option<double?> maximumPrice = default, Option<string?> biddingStartDate = default, Option<string?> biddingEndDate = default, Option<string?> totalSubscription = default, Option<List<IpoInvestorType>?> investors = default)
         {
             IdOption = id;
             SymbolOption = symbol;
@@ -61,6 +62,7 @@ namespace UpstoxClient.Model
             BiddingStartDateOption = biddingStartDate;
             BiddingEndDateOption = biddingEndDate;
             TotalSubscriptionOption = totalSubscription;
+            InvestorsOption = investors;
             OnCreated();
         }
 
@@ -236,6 +238,20 @@ namespace UpstoxClient.Model
         public string? TotalSubscription { get { return this.TotalSubscriptionOption.Value; } set { this.TotalSubscriptionOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Investors
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<IpoInvestorType>?> InvestorsOption { get; private set; }
+
+        /// <summary>
+        /// Investor categories the issue accepts. Empty when the listing data carries none — the IPO details API is the authoritative source
+        /// </summary>
+        /// <value>Investor categories the issue accepts. Empty when the listing data carries none — the IPO details API is the authoritative source</value>
+        [JsonPropertyName("investors")]
+        public List<IpoInvestorType>? Investors { get { return this.InvestorsOption.Value; } set { this.InvestorsOption = new(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -262,6 +278,7 @@ namespace UpstoxClient.Model
             sb.Append("  BiddingStartDate: ").Append(BiddingStartDate).Append("\n");
             sb.Append("  BiddingEndDate: ").Append(BiddingEndDate).Append("\n");
             sb.Append("  TotalSubscription: ").Append(TotalSubscription).Append("\n");
+            sb.Append("  Investors: ").Append(Investors).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -303,6 +320,7 @@ namespace UpstoxClient.Model
             Option<string?> biddingStartDate = default;
             Option<string?> biddingEndDate = default;
             Option<string?> totalSubscription = default;
+            Option<List<IpoInvestorType>?> investors = default;
 
             while (utf8JsonReader.Read())
             {
@@ -358,13 +376,19 @@ namespace UpstoxClient.Model
                         case "total_subscription":
                             totalSubscription = new Option<string?>(utf8JsonReader.GetString());
                             break;
+                        case "investors":
+                            investors = new Option<List<IpoInvestorType>?>(JsonSerializer.Deserialize<List<IpoInvestorType>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
                         default:
                             break;
                     }
                 }
             }
 
-            return new IpoListingData(id, symbol, name, status, isin, issueType, issueSize, industry, minimumPrice, maximumPrice, biddingStartDate, biddingEndDate, totalSubscription);
+            if (investors.IsSet && investors.Value == null)
+                throw new ArgumentNullException(nameof(investors), "Property is not nullable for class IpoListingData.");
+
+            return new IpoListingData(id, symbol, name, status, isin, issueType, issueSize, industry, minimumPrice, maximumPrice, biddingStartDate, biddingEndDate, totalSubscription, investors);
         }
 
         /// <summary>
@@ -391,6 +415,9 @@ namespace UpstoxClient.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, IpoListingData ipoListingData, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (ipoListingData.InvestorsOption.IsSet && ipoListingData.Investors == null)
+                throw new ArgumentNullException(nameof(ipoListingData.Investors), "Property is required for class IpoListingData.");
+
             if (ipoListingData.IdOption.IsSet)
                 if (ipoListingData.IdOption.Value != null)
                     writer.WriteString("id", ipoListingData.Id);
@@ -468,6 +495,12 @@ namespace UpstoxClient.Model
                     writer.WriteString("total_subscription", ipoListingData.TotalSubscription);
                 else
                     writer.WriteNull("total_subscription");
+
+            if (ipoListingData.InvestorsOption.IsSet)
+            {
+                writer.WritePropertyName("investors");
+                JsonSerializer.Serialize(writer, ipoListingData.Investors, jsonSerializerOptions);
+            }
         }
     }
 }

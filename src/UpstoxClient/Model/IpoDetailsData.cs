@@ -58,8 +58,9 @@ namespace UpstoxClient.Model
         /// <param name="timeline">timeline</param>
         /// <param name="registrarInfo">registrarInfo</param>
         /// <param name="totalSubscription">totalSubscription</param>
+        /// <param name="investors">Investor categories the issue accepts</param>
         [JsonConstructor]
-        public IpoDetailsData(Option<string?> id = default, Option<string?> symbol = default, Option<string?> name = default, Option<string?> status = default, Option<string?> isin = default, Option<string?> issueType = default, Option<double?> issueSize = default, Option<string?> industry = default, Option<double?> minimumPrice = default, Option<double?> maximumPrice = default, Option<string?> biddingStartDate = default, Option<string?> biddingEndDate = default, Option<string?> dailyStartTime = default, Option<string?> dailyEndTime = default, Option<double?> faceValue = default, Option<double?> tickSize = default, Option<int?> lotSize = default, Option<int?> minimumQuantity = default, Option<double?> cutOffPrice = default, Option<double?> listingPrice = default, Option<string?> listingExchange = default, Option<string?> rhpUrl = default, Option<string?> drhpUrl = default, Option<IpoTimeline?> timeline = default, Option<IpoRegistrarInfo?> registrarInfo = default, Option<string?> totalSubscription = default)
+        public IpoDetailsData(Option<string?> id = default, Option<string?> symbol = default, Option<string?> name = default, Option<string?> status = default, Option<string?> isin = default, Option<string?> issueType = default, Option<double?> issueSize = default, Option<string?> industry = default, Option<double?> minimumPrice = default, Option<double?> maximumPrice = default, Option<string?> biddingStartDate = default, Option<string?> biddingEndDate = default, Option<string?> dailyStartTime = default, Option<string?> dailyEndTime = default, Option<double?> faceValue = default, Option<double?> tickSize = default, Option<int?> lotSize = default, Option<int?> minimumQuantity = default, Option<double?> cutOffPrice = default, Option<double?> listingPrice = default, Option<string?> listingExchange = default, Option<string?> rhpUrl = default, Option<string?> drhpUrl = default, Option<IpoTimeline?> timeline = default, Option<IpoRegistrarInfo?> registrarInfo = default, Option<string?> totalSubscription = default, Option<List<IpoInvestorType>?> investors = default)
         {
             IdOption = id;
             SymbolOption = symbol;
@@ -87,6 +88,7 @@ namespace UpstoxClient.Model
             TimelineOption = timeline;
             RegistrarInfoOption = registrarInfo;
             TotalSubscriptionOption = totalSubscription;
+            InvestorsOption = investors;
             OnCreated();
         }
 
@@ -431,6 +433,20 @@ namespace UpstoxClient.Model
         public string? TotalSubscription { get { return this.TotalSubscriptionOption.Value; } set { this.TotalSubscriptionOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Investors
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<IpoInvestorType>?> InvestorsOption { get; private set; }
+
+        /// <summary>
+        /// Investor categories the issue accepts
+        /// </summary>
+        /// <value>Investor categories the issue accepts</value>
+        [JsonPropertyName("investors")]
+        public List<IpoInvestorType>? Investors { get { return this.InvestorsOption.Value; } set { this.InvestorsOption = new(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -470,6 +486,7 @@ namespace UpstoxClient.Model
             sb.Append("  Timeline: ").Append(Timeline).Append("\n");
             sb.Append("  RegistrarInfo: ").Append(RegistrarInfo).Append("\n");
             sb.Append("  TotalSubscription: ").Append(TotalSubscription).Append("\n");
+            sb.Append("  Investors: ").Append(Investors).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -524,6 +541,7 @@ namespace UpstoxClient.Model
             Option<IpoTimeline?> timeline = default;
             Option<IpoRegistrarInfo?> registrarInfo = default;
             Option<string?> totalSubscription = default;
+            Option<List<IpoInvestorType>?> investors = default;
 
             while (utf8JsonReader.Read())
             {
@@ -618,6 +636,9 @@ namespace UpstoxClient.Model
                         case "total_subscription":
                             totalSubscription = new Option<string?>(utf8JsonReader.GetString());
                             break;
+                        case "investors":
+                            investors = new Option<List<IpoInvestorType>?>(JsonSerializer.Deserialize<List<IpoInvestorType>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
                         default:
                             break;
                     }
@@ -630,7 +651,10 @@ namespace UpstoxClient.Model
             if (registrarInfo.IsSet && registrarInfo.Value == null)
                 throw new ArgumentNullException(nameof(registrarInfo), "Property is not nullable for class IpoDetailsData.");
 
-            return new IpoDetailsData(id, symbol, name, status, isin, issueType, issueSize, industry, minimumPrice, maximumPrice, biddingStartDate, biddingEndDate, dailyStartTime, dailyEndTime, faceValue, tickSize, lotSize, minimumQuantity, cutOffPrice, listingPrice, listingExchange, rhpUrl, drhpUrl, timeline, registrarInfo, totalSubscription);
+            if (investors.IsSet && investors.Value == null)
+                throw new ArgumentNullException(nameof(investors), "Property is not nullable for class IpoDetailsData.");
+
+            return new IpoDetailsData(id, symbol, name, status, isin, issueType, issueSize, industry, minimumPrice, maximumPrice, biddingStartDate, biddingEndDate, dailyStartTime, dailyEndTime, faceValue, tickSize, lotSize, minimumQuantity, cutOffPrice, listingPrice, listingExchange, rhpUrl, drhpUrl, timeline, registrarInfo, totalSubscription, investors);
         }
 
         /// <summary>
@@ -662,6 +686,9 @@ namespace UpstoxClient.Model
 
             if (ipoDetailsData.RegistrarInfoOption.IsSet && ipoDetailsData.RegistrarInfo == null)
                 throw new ArgumentNullException(nameof(ipoDetailsData.RegistrarInfo), "Property is required for class IpoDetailsData.");
+
+            if (ipoDetailsData.InvestorsOption.IsSet && ipoDetailsData.Investors == null)
+                throw new ArgumentNullException(nameof(ipoDetailsData.Investors), "Property is required for class IpoDetailsData.");
 
             if (ipoDetailsData.IdOption.IsSet)
                 if (ipoDetailsData.IdOption.Value != null)
@@ -816,6 +843,12 @@ namespace UpstoxClient.Model
                     writer.WriteString("total_subscription", ipoDetailsData.TotalSubscription);
                 else
                     writer.WriteNull("total_subscription");
+
+            if (ipoDetailsData.InvestorsOption.IsSet)
+            {
+                writer.WritePropertyName("investors");
+                JsonSerializer.Serialize(writer, ipoDetailsData.Investors, jsonSerializerOptions);
+            }
         }
     }
 }

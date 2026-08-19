@@ -34,6 +34,7 @@ Samples are grouped by API area. Each `.md` file contains one or more C# snippet
 | [**option-chain/**](option-chain/) | Option contracts, put-call option chain. |
 | [**expired-instruments/**](expired-instruments/) | Expiries, expired future/option contracts, expired historical candle data. |
 | [**market-information/**](market-information/) | Exchange status, market timings, market holidays. |
+| [**ipo/**](ipo/) | IPO listing (by status/issue type), IPO details by id, and IPO orders — apply, list, fetch by order id and cancel. |
 | [**gtt-orders/**](gtt-orders/) | Place, modify, cancel, and get details for GTT (Good Till Triggered) orders. |
 | [**margins/**](margins/) | Margin details. |
 | [**charges/**](charges/) | Brokerage details. |
