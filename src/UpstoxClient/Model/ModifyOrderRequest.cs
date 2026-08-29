@@ -39,8 +39,9 @@ namespace UpstoxClient.Model
         /// <param name="orderType">Type of order. It can be one of the following MARKET refers to market order LIMILT refers to Limit Order SL refers to Stop Loss Limit SL-M refers to Stop Loss Market</param>
         /// <param name="disclosedQuantity">The quantity that should be disclosed in the market depth</param>
         /// <param name="triggerPrice">If the order is a stop loss order then the trigger price to be set is mentioned here</param>
+        /// <param name="marketProtection">Optional market price protection value</param>
         [JsonConstructor]
-        public ModifyOrderRequest(Option<int?> quantity = default, ValidityEnum? validity = default, float? price = default, string? orderId = default, OrderTypeEnum? orderType = default, Option<int?> disclosedQuantity = default, float? triggerPrice = default)
+        public ModifyOrderRequest(Option<int?> quantity = default, ValidityEnum? validity = default, float? price = default, string? orderId = default, OrderTypeEnum? orderType = default, Option<int?> disclosedQuantity = default, float? triggerPrice = default, Option<float?> marketProtection = default)
         {
             QuantityOption = quantity;
             Validity = validity;
@@ -49,6 +50,7 @@ namespace UpstoxClient.Model
             OrderType = orderType;
             DisclosedQuantityOption = disclosedQuantity;
             TriggerPrice = triggerPrice;
+            MarketProtectionOption = marketProtection;
             OnCreated();
         }
 
@@ -293,6 +295,20 @@ namespace UpstoxClient.Model
         public float? TriggerPrice { get; set; }
 
         /// <summary>
+        /// Used to track the state of MarketProtection
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<float?> MarketProtectionOption { get; private set; }
+
+        /// <summary>
+        /// Optional market price protection value
+        /// </summary>
+        /// <value>Market price protection (optional)</value>
+        [JsonPropertyName("market_protection")]
+        public float? MarketProtection { get { return this.MarketProtectionOption.Value; } set { this.MarketProtectionOption = new(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -313,6 +329,7 @@ namespace UpstoxClient.Model
             sb.Append("  OrderType: ").Append(OrderType).Append("\n");
             sb.Append("  DisclosedQuantity: ").Append(DisclosedQuantity).Append("\n");
             sb.Append("  TriggerPrice: ").Append(TriggerPrice).Append("\n");
+            sb.Append("  MarketProtection: ").Append(MarketProtection).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -348,6 +365,7 @@ namespace UpstoxClient.Model
             Option<ModifyOrderRequest.OrderTypeEnum?> orderType = default;
             Option<int?> disclosedQuantity = default;
             Option<float?> triggerPrice = default;
+            Option<float?> marketProtection = default;
 
             while (utf8JsonReader.Read())
             {
@@ -389,6 +407,9 @@ namespace UpstoxClient.Model
                         case "trigger_price":
                             triggerPrice = new Option<float?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (float?)null : (float)utf8JsonReader.GetDouble());
                             break;
+                        case "market_protection":
+                            marketProtection = new Option<float?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (float?)null : (float)utf8JsonReader.GetDouble());
+                            break;
                         default:
                             break;
                     }
@@ -410,7 +431,7 @@ namespace UpstoxClient.Model
             if (!triggerPrice.IsSet)
                 throw new ArgumentException("Property is required for class ModifyOrderRequest.", nameof(triggerPrice));
 
-            return new ModifyOrderRequest(quantity, validity.Value!, price.Value!, orderId.Value!, orderType.Value!, disclosedQuantity, triggerPrice.Value!);
+            return new ModifyOrderRequest(quantity, validity.Value!, price.Value!, orderId.Value!, orderType.Value!, disclosedQuantity, triggerPrice.Value!, marketProtection);
         }
 
         /// <summary>
@@ -475,6 +496,12 @@ namespace UpstoxClient.Model
                 writer.WriteNumber("trigger_price", modifyOrderRequest.TriggerPrice.Value);
             else
                 writer.WriteNull("trigger_price");
+
+            if (modifyOrderRequest.MarketProtectionOption.IsSet)
+                if (modifyOrderRequest.MarketProtectionOption.Value != null)
+                    writer.WriteNumber("market_protection", modifyOrderRequest.MarketProtectionOption.Value!.Value);
+                else
+                    writer.WriteNull("market_protection");
         }
     }
 }
