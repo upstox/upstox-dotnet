@@ -69,6 +69,7 @@ namespace UpstoxClient.Client
             _jsonOptions.Converters.Add(new GetExpiredFuturesContractResponseJsonConverter());
             _jsonOptions.Converters.Add(new GetExpiriesResponseJsonConverter());
             _jsonOptions.Converters.Add(new GetFullMarketQuoteResponseJsonConverter());
+            _jsonOptions.Converters.Add(new GetFullMarketQuoteResponseV3JsonConverter());
             _jsonOptions.Converters.Add(new GetGttOrderResponseJsonConverter());
             _jsonOptions.Converters.Add(new GetHistoricalCandleResponseJsonConverter());
             _jsonOptions.Converters.Add(new GetHoldingsResponseJsonConverter());
@@ -119,6 +120,7 @@ namespace UpstoxClient.Client
             _jsonOptions.Converters.Add(new MarketQuoteSymbolJsonConverter());
             _jsonOptions.Converters.Add(new MarketQuoteSymbolLtpJsonConverter());
             _jsonOptions.Converters.Add(new MarketQuoteSymbolLtpV3JsonConverter());
+            _jsonOptions.Converters.Add(new MarketQuoteSymbolV3JsonConverter());
             _jsonOptions.Converters.Add(new MarketStatusDataJsonConverter());
             _jsonOptions.Converters.Add(new ModifyOrderDataJsonConverter());
             _jsonOptions.Converters.Add(new ModifyOrderRequestJsonConverter());
