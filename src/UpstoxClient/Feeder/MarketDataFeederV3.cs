@@ -477,7 +477,8 @@ namespace UpstoxClient.Feeder
                 Ltp = protoLtpc.Ltp,
                 Ltt = protoLtpc.Ltt,
                 Ltq = protoLtpc.Ltq,
-                Cp = protoLtpc.Cp
+                Cp = protoLtpc.Cp,
+                Iep = protoLtpc.Iep
             };
         }
 
@@ -511,7 +512,13 @@ namespace UpstoxClient.Feeder
                 Oi = protoMarketFF.Oi,
                 Iv = protoMarketFF.Iv,
                 Tbq = protoMarketFF.Tbq,
-                Tsq = protoMarketFF.Tsq
+                Tsq = protoMarketFF.Tsq,
+                Iep = protoMarketFF.Iep,
+                Rp = protoMarketFF.Rp,
+                Ieq = protoMarketFF.Ieq,
+                IiqTotal = protoMarketFF.IiqTotal,
+                IiqM = protoMarketFF.IiqM,
+                CasEligible = protoMarketFF.CasEligible
             };
         }
 
@@ -606,7 +613,9 @@ namespace UpstoxClient.Feeder
         {
             var modelMarketInfo = new MarketUpdateV3.MarketInfo
             {
-                SegmentStatus = new Dictionary<string, MarketUpdateV3.MarketStatus>()
+                SegmentStatus = new Dictionary<string, MarketUpdateV3.MarketStatus>(),
+                CasMarketStatus = new Dictionary<string, MarketUpdateV3.StatusInfo>(),
+                PreOpenSessionStatus = new Dictionary<string, MarketUpdateV3.StatusInfo>()
             };
 
             if (protoMarketInfo.SegmentStatus != null)
@@ -617,7 +626,32 @@ namespace UpstoxClient.Feeder
                 }
             }
 
+            if (protoMarketInfo.CasMarketStatus != null)
+            {
+                foreach (var status in protoMarketInfo.CasMarketStatus)
+                {
+                    modelMarketInfo.CasMarketStatus[status.Key] = ConvertProtoStatusInfoToModel(status.Value);
+                }
+            }
+
+            if (protoMarketInfo.PreOpenSessionStatus != null)
+            {
+                foreach (var status in protoMarketInfo.PreOpenSessionStatus)
+                {
+                    modelMarketInfo.PreOpenSessionStatus[status.Key] = ConvertProtoStatusInfoToModel(status.Value);
+                }
+            }
+
             return modelMarketInfo;
+        }
+
+        private MarketUpdateV3.StatusInfo ConvertProtoStatusInfoToModel(UpstoxClient.Proto.StatusInfo protoStatusInfo)
+        {
+            return new MarketUpdateV3.StatusInfo
+            {
+                Status = protoStatusInfo.Status,
+                UpdatedTime = protoStatusInfo.UpdatedTime
+            };
         }
 
         private MarketUpdateV3.MarketStatus ConvertProtoMarketStatusToModel(UpstoxClient.Proto.MarketStatus protoStatus)
