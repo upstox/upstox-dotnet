@@ -100,6 +100,7 @@ namespace UpstoxClient.Test
                 await SmartlistService.PrintGetSmartlistMtfTest(services);
                 await SmartlistService.PrintGetSmartlistOptionsTest(services);
                 await MarketQuoteService.PrintGetFullMarketQuoteTest(services);
+                await MarketQuoteV3Service.PrintGetFullMarketQuoteV3Test(services);
                 await MarketQuoteV3Service.PrintGetLtpTest(services);
                 await MarketQuoteV3Service.PrintGetMarketQuoteOHLCV3Test(services);
                 await MarketQuoteV3Service.PrintGetMarketQuoteOptionGreekTest(services);
@@ -249,6 +250,7 @@ namespace UpstoxClient.Test
                 await SmartlistService.SanityGetSmartlistMtfTest(services);
                 await SmartlistService.SanityGetSmartlistOptionsTest(services);
                 await MarketQuoteService.SanityGetFullMarketQuoteTest(services);
+                await MarketQuoteV3Service.SanityGetFullMarketQuoteV3Test(services);
                 await MarketQuoteV3Service.SanityGetLtpTest(services);
                 await MarketQuoteV3Service.SanityGetMarketQuoteOHLCV3Test(services);
                 await MarketQuoteV3Service.SanityGetMarketQuoteOptionGreekTest(services);
