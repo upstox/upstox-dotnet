@@ -99,9 +99,12 @@ namespace UpstoxClient.Feeder.Model
             [JsonPropertyName("cp")]
             public double? Cp { get; set; }
 
+            [JsonPropertyName("iep")]
+            public double? Iep { get; set; }
+
             public override string ToString()
             {
-                return $"LTPC {{ Ltp: {Ltp}, Ltt: {Ltt}, Ltq: {Ltq}, Cp: {Cp} }}";
+                return $"LTPC {{ Ltp: {Ltp}, Ltt: {Ltt}, Ltq: {Ltq}, Cp: {Cp}, Iep: {Iep} }}";
             }
         }
 
@@ -237,6 +240,24 @@ namespace UpstoxClient.Feeder.Model
             [JsonPropertyName("tsq")]
             public double? Tsq { get; set; }
 
+            [JsonPropertyName("iep")]
+            public double? Iep { get; set; }
+
+            [JsonPropertyName("rp")]
+            public double? Rp { get; set; }
+
+            [JsonPropertyName("ieq")]
+            public long? Ieq { get; set; }
+
+            [JsonPropertyName("iiqTotal")]
+            public long? IiqTotal { get; set; }
+
+            [JsonPropertyName("iiqM")]
+            public long? IiqM { get; set; }
+
+            [JsonPropertyName("casEligible")]
+            public bool? CasEligible { get; set; }
+
             public override string ToString()
             {
                 var sb = new StringBuilder();
@@ -245,7 +266,8 @@ namespace UpstoxClient.Feeder.Model
                 sb.Append($"MarketLevel: {MarketLevel?.ToString() ?? "null"}, ");
                 sb.Append($"OptionGreeks: {OptionGreeks?.ToString() ?? "null"}, ");
                 sb.Append($"MarketOHLC: {MarketOHLC?.ToString() ?? "null"}, ");
-                sb.Append($"Atp: {Atp}, Vtt: {Vtt}, Oi: {Oi}, Iv: {Iv}, Tbq: {Tbq}, Tsq: {Tsq} ");
+                sb.Append($"Atp: {Atp}, Vtt: {Vtt}, Oi: {Oi}, Iv: {Iv}, Tbq: {Tbq}, Tsq: {Tsq}, ");
+                sb.Append($"Iep: {Iep}, Rp: {Rp}, Ieq: {Ieq}, IiqTotal: {IiqTotal}, IiqM: {IiqM}, CasEligible: {CasEligible} ");
                 sb.Append("}");
                 return sb.ToString();
             }
@@ -339,20 +361,55 @@ namespace UpstoxClient.Feeder.Model
             }
         }
 
+        public class StatusInfo
+        {
+            [JsonPropertyName("status")]
+            public string? Status { get; set; }
+
+            [JsonPropertyName("updatedTime")]
+            public long? UpdatedTime { get; set; }
+
+            public override string ToString()
+            {
+                return $"StatusInfo {{ Status: {Status}, UpdatedTime: {UpdatedTime} }}";
+            }
+        }
+
         public class MarketInfo
         {
             [JsonPropertyName("segmentStatus")]
             public Dictionary<string, MarketStatus>? SegmentStatus { get; set; }
 
+            [JsonPropertyName("casMarketStatus")]
+            public Dictionary<string, StatusInfo>? CasMarketStatus { get; set; }
+
+            [JsonPropertyName("preOpenSessionStatus")]
+            public Dictionary<string, StatusInfo>? PreOpenSessionStatus { get; set; }
+
             public override string ToString()
             {
-                if (SegmentStatus == null || SegmentStatus.Count == 0)
+                var segmentString = "null";
+                if (SegmentStatus != null && SegmentStatus.Count > 0)
                 {
-                    return "MarketInfo { SegmentStatus: null }";
+                    var segmentJoined = string.Join(", ", SegmentStatus.Select(s => $"\"{s.Key}\": {s.Value}"));
+                    segmentString = "{ " + segmentJoined + " }";
                 }
 
-                var statusString = string.Join(", ", SegmentStatus.Select(s => $"\"{s.Key}\": {s.Value}"));
-                return $"MarketInfo {{ SegmentStatus: {{ {statusString} }} }}";
+                var casString = "null";
+                if (CasMarketStatus != null && CasMarketStatus.Count > 0)
+                {
+                    var casJoined = string.Join(", ", CasMarketStatus.Select(s => $"\"{s.Key}\": {s.Value?.ToString() ?? "null"}"));
+                    casString = "{ " + casJoined + " }";
+                }
+
+                var preOpenString = "null";
+                if (PreOpenSessionStatus != null && PreOpenSessionStatus.Count > 0)
+                {
+                    var preOpenJoined = string.Join(", ", PreOpenSessionStatus.Select(s => $"\"{s.Key}\": {s.Value?.ToString() ?? "null"}"));
+                    preOpenString = "{ " + preOpenJoined + " }";
+                }
+
+                return $"MarketInfo {{ SegmentStatus: {segmentString}, CasMarketStatus: {casString}, PreOpenSessionStatus: {preOpenString} }}";
             }
         }
     }
