@@ -6,7 +6,6 @@ namespace UpstoxClient.Test.Service
 {
     /// <summary>
     /// Tests for the US Stocks APIs (orders, charges, portfolio, funds, market holidays/timings).
-    /// These endpoints are currently live only on UAT (https://uat-api.upstox.com), not on prod.
     /// </summary>
     public class USStocksService
     {

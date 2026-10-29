@@ -147,7 +147,7 @@ namespace UpstoxClient.Test
                 await UserApiExtensionsService.PrintUpdateUserIpTest(services);
                 await UserService.PrintProfileTest(services);
                 await UserService.PrintGetUserFundMarginTest(services);
-                // US Stocks endpoints are UAT-only for now; Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
+                // Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
                 await USStocksService.PrintGetUsOrderBookTest(services);
                 await USStocksService.PrintGetUsOrderDetailsTest(services);
                 await USStocksService.PrintEstimateUsOrderTest(services);
@@ -208,7 +208,7 @@ namespace UpstoxClient.Test
             await Run("GetSmartlistMtf",      () => SmartlistService.SanityGetSmartlistMtfTest(services));
             await Run("GetSmartlistOptions",  () => SmartlistService.SanityGetSmartlistOptionsTest(services));
 
-            Console.WriteLine("=== US Stocks Sanity Tests (UAT only) ===");
+            Console.WriteLine("=== US Stocks Sanity Tests ===");
             await Run("GetUsOrderBook",       () => USStocksService.SanityGetUsOrderBookTest(services));
             await Run("GetUsOrderDetails",    () => USStocksService.SanityGetUsOrderDetailsTest(services));
             await Run("EstimateUsOrder",      () => USStocksService.SanityEstimateUsOrderTest(services));
@@ -319,7 +319,7 @@ namespace UpstoxClient.Test
                 await UserApiExtensionsService.SanityUpdateUserIpTest(services);
                 await UserService.SanityProfileTest(services);
                 await UserService.SanityGetUserFundMarginTest(services);
-                // US Stocks endpoints are UAT-only for now; Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
+                // Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
                 await USStocksService.SanityGetUsOrderBookTest(services);
                 await USStocksService.SanityGetUsOrderDetailsTest(services);
                 await USStocksService.SanityEstimateUsOrderTest(services);

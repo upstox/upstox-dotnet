@@ -2,10 +2,6 @@
 
 Links to all US Stocks examples in the `code/` folder.
 
-> **Note:** The US Stocks APIs are currently available only on UAT (`https://uat-api.upstox.com`).
-> To try them there, point the SDK at UAT:
-> `options.AddApiHttpClients(client => client.BaseAddress = new Uri("https://uat-api.upstox.com"));`
-
 ## 1. Orders
 
 - 1.1 [Place US order by quantity](code/place-order.md#place-us-order-by-quantity)
