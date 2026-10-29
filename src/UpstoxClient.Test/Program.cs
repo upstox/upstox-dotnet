@@ -147,6 +147,20 @@ namespace UpstoxClient.Test
                 await UserApiExtensionsService.PrintUpdateUserIpTest(services);
                 await UserService.PrintProfileTest(services);
                 await UserService.PrintGetUserFundMarginTest(services);
+                // US Stocks endpoints are UAT-only for now; Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
+                await USStocksService.PrintGetUsOrderBookTest(services);
+                await USStocksService.PrintGetUsOrderDetailsTest(services);
+                await USStocksService.PrintEstimateUsOrderTest(services);
+                await USStocksService.PrintPlaceUsOrderTest(services);
+                await USStocksService.PrintModifyUsOrderTest(services);
+                await USStocksService.PrintCancelUsOrderTest(services);
+                await USStocksService.PrintCalculateUsMarginTest(services);
+                await USStocksService.PrintGetUsHoldingsTest(services);
+                await USStocksService.PrintGetUsFundsTest(services);
+                await USStocksService.PrintGetUsExchangeTimingsTest(services);
+                await USStocksService.PrintGetUsHolidayTest(services);
+                await USStocksService.PrintGetUsHolidaysTest(services);
+                await USStocksService.PrintGetUsMarketStatusTest(services);
                 await WebsocketService.PrintAuthorizeMarketDataFeedTest(services);
                 await WebsocketService.PrintGetPortfolioStreamFeedAuthorizeTest(services);
         }
@@ -193,6 +207,18 @@ namespace UpstoxClient.Test
             await Run("GetSmartlistFutures",  () => SmartlistService.SanityGetSmartlistFuturesTest(services));
             await Run("GetSmartlistMtf",      () => SmartlistService.SanityGetSmartlistMtfTest(services));
             await Run("GetSmartlistOptions",  () => SmartlistService.SanityGetSmartlistOptionsTest(services));
+
+            Console.WriteLine("=== US Stocks Sanity Tests (UAT only) ===");
+            await Run("GetUsOrderBook",       () => USStocksService.SanityGetUsOrderBookTest(services));
+            await Run("GetUsOrderDetails",    () => USStocksService.SanityGetUsOrderDetailsTest(services));
+            await Run("EstimateUsOrder",      () => USStocksService.SanityEstimateUsOrderTest(services));
+            await Run("CalculateUsMargin",    () => USStocksService.SanityCalculateUsMarginTest(services));
+            await Run("GetUsHoldings",        () => USStocksService.SanityGetUsHoldingsTest(services));
+            await Run("GetUsFunds",           () => USStocksService.SanityGetUsFundsTest(services));
+            await Run("GetUsExchangeTimings", () => USStocksService.SanityGetUsExchangeTimingsTest(services));
+            await Run("GetUsHoliday",         () => USStocksService.SanityGetUsHolidayTest(services));
+            await Run("GetUsHolidays",        () => USStocksService.SanityGetUsHolidaysTest(services));
+            await Run("GetUsMarketStatus",    () => USStocksService.SanityGetUsMarketStatusTest(services));
 
             Console.WriteLine();
             Console.WriteLine("=== Results ===");
@@ -293,6 +319,20 @@ namespace UpstoxClient.Test
                 await UserApiExtensionsService.SanityUpdateUserIpTest(services);
                 await UserService.SanityProfileTest(services);
                 await UserService.SanityGetUserFundMarginTest(services);
+                // US Stocks endpoints are UAT-only for now; Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
+                await USStocksService.SanityGetUsOrderBookTest(services);
+                await USStocksService.SanityGetUsOrderDetailsTest(services);
+                await USStocksService.SanityEstimateUsOrderTest(services);
+                await USStocksService.SanityPlaceUsOrderTest(services);
+                await USStocksService.SanityModifyUsOrderTest(services);
+                await USStocksService.SanityCancelUsOrderTest(services);
+                await USStocksService.SanityCalculateUsMarginTest(services);
+                await USStocksService.SanityGetUsHoldingsTest(services);
+                await USStocksService.SanityGetUsFundsTest(services);
+                await USStocksService.SanityGetUsExchangeTimingsTest(services);
+                await USStocksService.SanityGetUsHolidayTest(services);
+                await USStocksService.SanityGetUsHolidaysTest(services);
+                await USStocksService.SanityGetUsMarketStatusTest(services);
                 await WebsocketService.SanityAuthorizeMarketDataFeedTest(services);
                 await WebsocketService.SanityGetPortfolioStreamFeedAuthorizeTest(services);
 
