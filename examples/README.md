@@ -35,6 +35,7 @@ Samples are grouped by API area. Each `.md` file contains one or more C# snippet
 | [**expired-instruments/**](expired-instruments/) | Expiries, expired future/option contracts, expired historical candle data. |
 | [**market-information/**](market-information/) | Exchange status, market timings, market holidays. |
 | [**ipo/**](ipo/) | IPO listing (by status/issue type), IPO details by id, and IPO orders — apply, list, fetch by order id and cancel. |
+| [**us-stocks/**](us-stocks/) | US stocks (UAT only): place, modify, cancel orders, order book/details, order estimate, margin, holdings, funds, US market holidays, timings and status. |
 | [**gtt-orders/**](gtt-orders/) | Place, modify, cancel, and get details for GTT (Good Till Triggered) orders. |
 | [**margins/**](margins/) | Margin details. |
 | [**charges/**](charges/) | Brokerage details. |
