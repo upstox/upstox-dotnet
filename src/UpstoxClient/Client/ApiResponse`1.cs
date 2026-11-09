@@ -383,4 +383,24 @@ namespace UpstoxClient.Client
         /// <returns></returns>
         bool TryNotFound([NotNullWhen(true)]out TType? result);
     }
+
+    /// <summary>
+    /// An interface for responses of type 
+    /// </summary>
+    /// <typeparam name="TType"></typeparam>
+    public interface IGone<TType> : IApiResponse
+    {
+        /// <summary>
+        /// Deserializes the response if the response is Gone
+        /// </summary>
+        /// <returns></returns>
+        TType Gone();
+
+        /// <summary>
+        /// Returns true if the response is Gone and the deserialized response is not null
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        bool TryGone([NotNullWhen(true)]out TType? result);
+    }
 }

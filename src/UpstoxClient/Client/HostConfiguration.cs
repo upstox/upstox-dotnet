@@ -257,6 +257,29 @@ namespace UpstoxClient.Client
             _jsonOptions.Converters.Add(new UserFundMarginV3DataJsonConverter());
             _jsonOptions.Converters.Add(new UserIpResponseDataJsonConverter());
             _jsonOptions.Converters.Add(new UserIpResponseJsonConverter());
+            // US Stocks
+            _jsonOptions.Converters.Add(new GetUsExchangeTimingResponseJsonConverter());
+            _jsonOptions.Converters.Add(new GetUsHolidayResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsExchangeTimingDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsFundsDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsFundsResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsHoldingDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsHoldingsResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsHolidayDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsMarginDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsMarginRequestJsonConverter());
+            _jsonOptions.Converters.Add(new UsMarginResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsModifyOrderRequestJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderBookDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderBookResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderDetailsResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderEstimateDataJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderEstimateRequestJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderEstimateResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderMarginJsonConverter());
+            _jsonOptions.Converters.Add(new UsOrderResponseJsonConverter());
+            _jsonOptions.Converters.Add(new UsPlaceOrderRequestJsonConverter());
             JsonSerializerOptionsProvider jsonSerializerOptionsProvider = new(_jsonOptions);
             _services.AddSingleton(jsonSerializerOptionsProvider);
             _services.AddSingleton<IApiFactory, ApiFactory>();
@@ -280,6 +303,11 @@ namespace UpstoxClient.Client
             _services.AddSingleton<PostTradeApiEvents>();
             _services.AddSingleton<TradeProfitAndLossApiEvents>();
             _services.AddSingleton<UserApiEvents>();
+            _services.AddSingleton<USMarketHolidaysAndTimingsApiEvents>();
+            _services.AddSingleton<USStocksChargesApiEvents>();
+            _services.AddSingleton<USStocksFundsApiEvents>();
+            _services.AddSingleton<USStocksOrderApiEvents>();
+            _services.AddSingleton<USStocksPortfolioApiEvents>();
             _services.AddSingleton<WebsocketApiEvents>();
         }
 
@@ -327,6 +355,11 @@ namespace UpstoxClient.Client
             builders.Add(_services.AddHttpClient<IPostTradeApi, PostTradeApi>(client));
             builders.Add(_services.AddHttpClient<ITradeProfitAndLossApi, TradeProfitAndLossApi>(client));
             builders.Add(_services.AddHttpClient<IUserApi, UserApi>(client));
+            builders.Add(_services.AddHttpClient<IUSMarketHolidaysAndTimingsApi, USMarketHolidaysAndTimingsApi>(client));
+            builders.Add(_services.AddHttpClient<IUSStocksChargesApi, USStocksChargesApi>(client));
+            builders.Add(_services.AddHttpClient<IUSStocksFundsApi, USStocksFundsApi>(client));
+            builders.Add(_services.AddHttpClient<IUSStocksOrderApi, USStocksOrderApi>(client));
+            builders.Add(_services.AddHttpClient<IUSStocksPortfolioApi, USStocksPortfolioApi>(client));
             builders.Add(_services.AddHttpClient<IWebsocketApi, WebsocketApi>(client));
             
             if (builder != null)
