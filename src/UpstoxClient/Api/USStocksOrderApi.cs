@@ -87,22 +87,24 @@ namespace UpstoxClient.Api
         /// Get US stocks order book
         /// </summary>
         /// <remarks>
-        /// Returns the user&#39;s US stocks orders for the day, in every state.
+        /// Returns the user&#39;s US stocks orders for the day, in every state; optionally only those with a tag.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">Return only orders placed with this tag; exact, case-sensitive match (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetUsOrderBookApiResponse"/>&gt;</returns>
-        Task<IGetUsOrderBookApiResponse> GetUsOrderBookAsync(System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetUsOrderBookApiResponse> GetUsOrderBookAsync(Option<string?> tag = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get US stocks order book
         /// </summary>
         /// <remarks>
-        /// Returns the user&#39;s US stocks orders for the day, in every state.
+        /// Returns the user&#39;s US stocks orders for the day, in every state; optionally only those with a tag.
         /// </remarks>
+        /// <param name="tag">Return only orders placed with this tag; exact, case-sensitive match (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetUsOrderBookApiResponse"/>?&gt;</returns>
-        Task<IGetUsOrderBookApiResponse?> GetUsOrderBookOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetUsOrderBookApiResponse?> GetUsOrderBookOrDefaultAsync(Option<string?> tag = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get US stocks order details
@@ -1828,14 +1830,17 @@ namespace UpstoxClient.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatGetUsOrderBook(ref Option<string?> tag);
+
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        private void AfterGetUsOrderBookDefaultImplementation(IGetUsOrderBookApiResponse apiResponseLocalVar)
+        /// <param name="tag"></param>
+        private void AfterGetUsOrderBookDefaultImplementation(IGetUsOrderBookApiResponse apiResponseLocalVar, Option<string?> tag)
         {
             bool suppressDefaultLog = false;
-            AfterGetUsOrderBook(ref suppressDefaultLog, apiResponseLocalVar);
+            AfterGetUsOrderBook(ref suppressDefaultLog, apiResponseLocalVar, tag);
             if (!suppressDefaultLog)
                 Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1845,7 +1850,8 @@ namespace UpstoxClient.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        partial void AfterGetUsOrderBook(ref bool suppressDefaultLog, IGetUsOrderBookApiResponse apiResponseLocalVar);
+        /// <param name="tag"></param>
+        partial void AfterGetUsOrderBook(ref bool suppressDefaultLog, IGetUsOrderBookApiResponse apiResponseLocalVar, Option<string?> tag);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1853,10 +1859,11 @@ namespace UpstoxClient.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        private void OnErrorGetUsOrderBookDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar)
+        /// <param name="tag"></param>
+        private void OnErrorGetUsOrderBookDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetUsOrderBook(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar);
+            OnErrorGetUsOrderBook(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, tag);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1868,18 +1875,20 @@ namespace UpstoxClient.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        partial void OnErrorGetUsOrderBook(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar);
+        /// <param name="tag"></param>
+        partial void OnErrorGetUsOrderBook(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string?> tag);
 
         /// <summary>
-        /// Get US stocks order book Returns the user&#39;s US stocks orders for the day, in every state.
+        /// Get US stocks order book Returns the user&#39;s US stocks orders for the day, in every state; optionally only those with a tag.
         /// </summary>
+        /// <param name="tag">Return only orders placed with this tag; exact, case-sensitive match (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetUsOrderBookApiResponse"/>&gt;</returns>
-        public async Task<IGetUsOrderBookApiResponse?> GetUsOrderBookOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetUsOrderBookApiResponse?> GetUsOrderBookOrDefaultAsync(Option<string?> tag = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetUsOrderBookAsync(cancellationToken).ConfigureAwait(false);
+                return await GetUsOrderBookAsync(tag, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1888,17 +1897,20 @@ namespace UpstoxClient.Api
         }
 
         /// <summary>
-        /// Get US stocks order book Returns the user&#39;s US stocks orders for the day, in every state.
+        /// Get US stocks order book Returns the user&#39;s US stocks orders for the day, in every state; optionally only those with a tag.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tag">Return only orders placed with this tag; exact, case-sensitive match (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetUsOrderBookApiResponse"/>&gt;</returns>
-        public async Task<IGetUsOrderBookApiResponse> GetUsOrderBookAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetUsOrderBookApiResponse> GetUsOrderBookAsync(Option<string?> tag = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
+                FormatGetUsOrderBook(ref tag);
+
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
                     uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
@@ -1907,6 +1919,13 @@ namespace UpstoxClient.Api
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
                         ? "/v2/us/order/retrieve-all"
                         : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/v2/us/order/retrieve-all");
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (tag.IsSet)
+                        parseQueryStringLocalVar["tag"] = ClientUtils.ParameterToString(tag.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -1944,7 +1963,7 @@ namespace UpstoxClient.Api
                             }
                         }
 
-                        AfterGetUsOrderBookDefaultImplementation(apiResponseLocalVar);
+                        AfterGetUsOrderBookDefaultImplementation(apiResponseLocalVar, tag);
 
                         Events.ExecuteOnGetUsOrderBook(apiResponseLocalVar);
 
@@ -1958,7 +1977,7 @@ namespace UpstoxClient.Api
             }
             catch(Exception e)
             {
-                OnErrorGetUsOrderBookDefaultImplementation(e, "/v2/us/order/retrieve-all", uriBuilderLocalVar.Path);
+                OnErrorGetUsOrderBookDefaultImplementation(e, "/v2/us/order/retrieve-all", uriBuilderLocalVar.Path, tag);
                 Events.ExecuteOnErrorGetUsOrderBook(e);
                 throw;
             }
