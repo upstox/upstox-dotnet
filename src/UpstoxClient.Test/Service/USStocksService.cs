@@ -99,6 +99,16 @@ namespace UpstoxClient.Test.Service
             return book?.Data?.FirstOrDefault()?.OrderId;
         }
 
+        private static async Task<string?> ResolveCancellableOrderIdAsync(IUSStocksOrderApi api)
+        {
+            var fromEnv = Environment.GetEnvironmentVariable("UPSTOX_TEST_US_ORDER_ID");
+            if (!string.IsNullOrWhiteSpace(fromEnv)) return fromEnv;
+            // Only cancel an order this test placed, never the user's own orders
+            var book = (await api.GetUsOrderBookAsync(tag: "sdk-test")).Ok();
+            return book?.Data?.FirstOrDefault(o => o.Tag == "sdk-test"
+                && (o.Status == UsOrderBookData.StatusEnum.Open || o.Status == UsOrderBookData.StatusEnum.Queued))?.OrderId;
+        }
+
         // ------------------------------------------------------------------
         // USStocksOrderApi
         // ------------------------------------------------------------------
@@ -331,7 +341,7 @@ namespace UpstoxClient.Test.Service
             }
 
             var api = services.GetRequiredService<IUSStocksOrderApi>();
-            var orderId = await ResolveOrderIdAsync(api);
+            var orderId = await ResolveCancellableOrderIdAsync(api);
             if (orderId == null)
             {
                 Console.WriteLine("No US order found, skipping CancelUsOrder test");
@@ -365,7 +375,7 @@ namespace UpstoxClient.Test.Service
             }
 
             var api = services.GetRequiredService<IUSStocksOrderApi>();
-            var orderId = await ResolveOrderIdAsync(api);
+            var orderId = await ResolveCancellableOrderIdAsync(api);
             if (orderId == null)
             {
                 Console.WriteLine("CancelUsOrder sanity test skipped: no US order found");
