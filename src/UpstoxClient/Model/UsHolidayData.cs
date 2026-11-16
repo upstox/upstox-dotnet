@@ -33,13 +33,11 @@ namespace UpstoxClient.Model
         /// Initializes a new instance of the <see cref="UsHolidayData" /> class.
         /// </summary>
         /// <param name="date">date</param>
-        /// <param name="description">description</param>
         /// <param name="holidayType">holidayType</param>
         [JsonConstructor]
-        internal UsHolidayData(Option<string?> date = default, Option<string?> description = default, Option<HolidayTypeEnum?> holidayType = default)
+        internal UsHolidayData(Option<string?> date = default, Option<HolidayTypeEnum?> holidayType = default)
         {
             DateOption = date;
-            DescriptionOption = description;
             HolidayTypeOption = holidayType;
             OnCreated();
         }
@@ -172,20 +170,6 @@ namespace UpstoxClient.Model
         public string? Date { get { return this.DateOption.Value; } }
 
         /// <summary>
-        /// Used to track the state of Description
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> DescriptionOption { get; }
-
-        /// <summary>
-        /// Gets or Sets Description
-        /// </summary>
-        /* <example>US Market Closed</example> */
-        [JsonPropertyName("description")]
-        public string? Description { get { return this.DescriptionOption.Value; } }
-
-        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -200,7 +184,6 @@ namespace UpstoxClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class UsHolidayData {\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  HolidayType: ").Append(HolidayType).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
@@ -231,7 +214,6 @@ namespace UpstoxClient.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> date = default;
-            Option<string?> description = default;
             Option<UsHolidayData.HolidayTypeEnum?> holidayType = default;
 
             while (utf8JsonReader.Read())
@@ -252,9 +234,6 @@ namespace UpstoxClient.Model
                         case "date":
                             date = new Option<string?>(utf8JsonReader.GetString());
                             break;
-                        case "description":
-                            description = new Option<string?>(utf8JsonReader.GetString());
-                            break;
                         case "holiday_type":
                             string? holidayTypeRawValue = utf8JsonReader.GetString();
                             holidayType = new Option<UsHolidayData.HolidayTypeEnum?>(holidayTypeRawValue == null ? null : UsHolidayData.HolidayTypeEnumFromStringOrDefault(holidayTypeRawValue));
@@ -265,7 +244,7 @@ namespace UpstoxClient.Model
                 }
             }
 
-            return new UsHolidayData(date, description, holidayType);
+            return new UsHolidayData(date, holidayType);
         }
 
         /// <summary>
@@ -297,12 +276,6 @@ namespace UpstoxClient.Model
                     writer.WriteString("date", usHolidayData.Date);
                 else
                     writer.WriteNull("date");
-
-            if (usHolidayData.DescriptionOption.IsSet)
-                if (usHolidayData.DescriptionOption.Value != null)
-                    writer.WriteString("description", usHolidayData.Description);
-                else
-                    writer.WriteNull("description");
 
             var holidayTypeRawValue = UsHolidayData.HolidayTypeEnumToJsonValue(usHolidayData.HolidayTypeOption.Value!.Value);
             if (holidayTypeRawValue != null)

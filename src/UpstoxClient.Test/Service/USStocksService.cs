@@ -33,7 +33,6 @@ namespace UpstoxClient.Test.Service
             Console.WriteLine($"{indent}OrderType: {d.OrderType}");
             Console.WriteLine($"{indent}Name: {d.Name}");
             Console.WriteLine($"{indent}Exchange: {d.Exchange}");
-            Console.WriteLine($"{indent}Product: {d.Product}");
             Console.WriteLine($"{indent}Validity: {d.Validity}");
             Console.WriteLine($"{indent}Price: {d.Price}");
             Console.WriteLine($"{indent}Quantity: {d.Quantity}");
@@ -61,7 +60,6 @@ namespace UpstoxClient.Test.Service
             foreach (var h in data)
             {
                 Console.WriteLine($"    Date: {h.Date}");
-                Console.WriteLine($"    Description: {h.Description}");
                 Console.WriteLine($"    HolidayType: {h.HolidayType}");
                 PrintAdditional(h.AdditionalProperties, "    ");
                 Console.WriteLine("    ---");
@@ -158,6 +156,17 @@ namespace UpstoxClient.Test.Service
                     throw new Exception("GetUsOrderBook: Data[0].InstrumentKey is not populated");
                 if (first.Status == null)
                     throw new Exception("GetUsOrderBook: Data[0].Status is not populated");
+
+                // Tag filter is exact-match, so every order returned for a known tag must carry it.
+                var tag = result.Data.FirstOrDefault(o => !string.IsNullOrEmpty(o.Tag))?.Tag;
+                if (tag != null)
+                {
+                    var taggedResponse = await api.GetUsOrderBookAsync(tag);
+                    var tagged = taggedResponse.Ok();
+                    ThrowIfNull(tagged, taggedResponse, "GetUsOrderBook(tag)");
+                    if (tagged!.Data == null || tagged.Data.Count == 0 || tagged.Data.Any(o => o.Tag != tag))
+                        throw new Exception($"GetUsOrderBook: tag filter '{tag}' returned non-matching orders");
+                }
             }
         }
 
@@ -695,8 +704,8 @@ namespace UpstoxClient.Test.Service
             var first = result.Data[0];
             if (string.IsNullOrWhiteSpace(first.Date))
                 throw new Exception("GetUsHolidays: Data[0].Date is not populated");
-            if (string.IsNullOrWhiteSpace(first.Description))
-                throw new Exception("GetUsHolidays: Data[0].Description is not populated");
+            if (first.HolidayType == null)
+                throw new Exception("GetUsHolidays: Data[0].HolidayType is not populated");
         }
 
         public static async Task PrintGetUsMarketStatusTest(IServiceProvider services)

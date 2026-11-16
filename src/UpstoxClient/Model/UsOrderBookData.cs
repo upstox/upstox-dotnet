@@ -34,7 +34,6 @@ namespace UpstoxClient.Model
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="exchange">exchange</param>
-        /// <param name="product">product</param>
         /// <param name="validity">validity</param>
         /// <param name="price">Limit price in USD</param>
         /// <param name="quantity">Ordered shares</param>
@@ -57,11 +56,10 @@ namespace UpstoxClient.Model
         /// <param name="exchangeTimestamp">When the order was last updated, IST, yyyy-MM-dd HH:mm:ss</param>
         /// <param name="isAmo">isAmo</param>
         [JsonConstructor]
-        internal UsOrderBookData(Option<string?> name = default, Option<string?> exchange = default, Option<string?> product = default, Option<string?> validity = default, Option<decimal?> price = default, Option<decimal?> quantity = default, Option<decimal?> amount = default, Option<StatusEnum?> status = default, Option<bool?> fractionable = default, Option<string?> variety = default, Option<string?> tag = default, Option<string?> orderId = default, Option<string?> instrumentKey = default, Option<string?> tradingSymbol = default, Option<OrderTypeEnum?> orderType = default, Option<string?> transactionType = default, Option<decimal?> averagePrice = default, Option<decimal?> filledQuantity = default, Option<decimal?> pendingQuantity = default, Option<string?> statusMessage = default, Option<string?> statusMessageRaw = default, Option<string?> orderTimestamp = default, Option<string?> exchangeTimestamp = default, Option<bool?> isAmo = default)
+        internal UsOrderBookData(Option<string?> name = default, Option<string?> exchange = default, Option<string?> validity = default, Option<decimal?> price = default, Option<decimal?> quantity = default, Option<decimal?> amount = default, Option<StatusEnum?> status = default, Option<bool?> fractionable = default, Option<string?> variety = default, Option<string?> tag = default, Option<string?> orderId = default, Option<string?> instrumentKey = default, Option<string?> tradingSymbol = default, Option<OrderTypeEnum?> orderType = default, Option<string?> transactionType = default, Option<decimal?> averagePrice = default, Option<decimal?> filledQuantity = default, Option<decimal?> pendingQuantity = default, Option<string?> statusMessage = default, Option<string?> statusMessageRaw = default, Option<string?> orderTimestamp = default, Option<string?> exchangeTimestamp = default, Option<bool?> isAmo = default)
         {
             NameOption = name;
             ExchangeOption = exchange;
-            ProductOption = product;
             ValidityOption = validity;
             PriceOption = price;
             QuantityOption = quantity;
@@ -397,20 +395,6 @@ namespace UpstoxClient.Model
         public string? Exchange { get { return this.ExchangeOption.Value; } }
 
         /// <summary>
-        /// Used to track the state of Product
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> ProductOption { get; }
-
-        /// <summary>
-        /// Gets or Sets Product
-        /// </summary>
-        /* <example>D</example> */
-        [JsonPropertyName("product")]
-        public string? Product { get { return this.ProductOption.Value; } }
-
-        /// <summary>
         /// Used to track the state of Validity
         /// </summary>
         [JsonIgnore]
@@ -701,7 +685,6 @@ namespace UpstoxClient.Model
             sb.Append("class UsOrderBookData {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Exchange: ").Append(Exchange).Append("\n");
-            sb.Append("  Product: ").Append(Product).Append("\n");
             sb.Append("  Validity: ").Append(Validity).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
             sb.Append("  Quantity: ").Append(Quantity).Append("\n");
@@ -753,7 +736,6 @@ namespace UpstoxClient.Model
 
             Option<string?> name = default;
             Option<string?> exchange = default;
-            Option<string?> product = default;
             Option<string?> validity = default;
             Option<decimal?> price = default;
             Option<decimal?> quantity = default;
@@ -796,9 +778,6 @@ namespace UpstoxClient.Model
                             break;
                         case "exchange":
                             exchange = new Option<string?>(utf8JsonReader.GetString());
-                            break;
-                        case "product":
-                            product = new Option<string?>(utf8JsonReader.GetString());
                             break;
                         case "validity":
                             validity = new Option<string?>(utf8JsonReader.GetString());
@@ -871,7 +850,7 @@ namespace UpstoxClient.Model
                 }
             }
 
-            return new UsOrderBookData(name, exchange, product, validity, price, quantity, amount, status, fractionable, variety, tag, orderId, instrumentKey, tradingSymbol, orderType, transactionType, averagePrice, filledQuantity, pendingQuantity, statusMessage, statusMessageRaw, orderTimestamp, exchangeTimestamp, isAmo);
+            return new UsOrderBookData(name, exchange, validity, price, quantity, amount, status, fractionable, variety, tag, orderId, instrumentKey, tradingSymbol, orderType, transactionType, averagePrice, filledQuantity, pendingQuantity, statusMessage, statusMessageRaw, orderTimestamp, exchangeTimestamp, isAmo);
         }
 
         /// <summary>
@@ -909,12 +888,6 @@ namespace UpstoxClient.Model
                     writer.WriteString("exchange", usOrderBookData.Exchange);
                 else
                     writer.WriteNull("exchange");
-
-            if (usOrderBookData.ProductOption.IsSet)
-                if (usOrderBookData.ProductOption.Value != null)
-                    writer.WriteString("product", usOrderBookData.Product);
-                else
-                    writer.WriteNull("product");
 
             if (usOrderBookData.ValidityOption.IsSet)
                 if (usOrderBookData.ValidityOption.Value != null)
