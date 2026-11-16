@@ -9,7 +9,7 @@ namespace UpstoxClient.Test.Service
     /// </summary>
     public class USStocksService
     {
-        private const string InstrumentKey = "US_EQ|AAPL";
+        private const string InstrumentKey = "US_EQ|COUR";
 
         /// <summary>Place/cancel hit a real account, so they run only with UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.</summary>
         private static readonly bool EnableStateChangingUsOrderTests =
@@ -85,7 +85,7 @@ namespace UpstoxClient.Test.Service
 
         private static UsOrderEstimateRequest BuildEstimateRequest() => new UsOrderEstimateRequest(
             quantity: 1m,
-            price: 180m,
+            price: 4m,
             instrumentKey: InstrumentKey,
             transactionType: UsOrderEstimateRequest.TransactionTypeEnum.BUY,
             orderType: UsOrderEstimateRequest.OrderTypeEnum.LIMIT);
