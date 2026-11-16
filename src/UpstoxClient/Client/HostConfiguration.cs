@@ -269,7 +269,6 @@ namespace UpstoxClient.Client
             _jsonOptions.Converters.Add(new UsMarginDataJsonConverter());
             _jsonOptions.Converters.Add(new UsMarginRequestJsonConverter());
             _jsonOptions.Converters.Add(new UsMarginResponseJsonConverter());
-            _jsonOptions.Converters.Add(new UsModifyOrderRequestJsonConverter());
             _jsonOptions.Converters.Add(new UsOrderBookDataJsonConverter());
             _jsonOptions.Converters.Add(new UsOrderBookResponseJsonConverter());
             _jsonOptions.Converters.Add(new UsOrderDataJsonConverter());
