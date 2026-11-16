@@ -11,7 +11,7 @@ namespace UpstoxClient.Test.Service
     {
         private const string InstrumentKey = "US_EQ|AAPL";
 
-        /// <summary>Place/modify/cancel hit a real account, so they run only with UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.</summary>
+        /// <summary>Place/cancel hit a real account, so they run only with UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.</summary>
         private static readonly bool EnableStateChangingUsOrderTests =
             Environment.GetEnvironmentVariable("UPSTOX_ENABLE_US_ORDER_WRITE_TESTS") == "true";
 
@@ -310,75 +310,6 @@ namespace UpstoxClient.Test.Service
             if (string.IsNullOrWhiteSpace(result!.Data?.OrderId))
                 throw new Exception("PlaceUsOrder: Data.OrderId is not populated");
         }
-
-        public static async Task PrintModifyUsOrderTest(IServiceProvider services)
-        {
-            Console.WriteLine("=== Testing USStocksOrder API (ModifyUsOrder) ===");
-            if (!EnableStateChangingUsOrderTests)
-            {
-                Console.WriteLine("SKIPPED: set UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true to modify a real US order.");
-                Console.WriteLine("==================");
-                return;
-            }
-
-            var api = services.GetRequiredService<IUSStocksOrderApi>();
-            var orderId = await ResolveOrderIdAsync(api);
-            if (orderId == null)
-            {
-                Console.WriteLine("No US order found, skipping ModifyUsOrder test");
-                Console.WriteLine("==================");
-                return;
-            }
-
-            var response = await api.ModifyUsOrderAsync(BuildModifyRequest(orderId));
-            var result = response.Ok();
-
-            if (result != null)
-            {
-                Console.WriteLine($"Status: {result.Status?.ToString() ?? "null"}");
-                Console.WriteLine($"Data.OrderId: {result.Data?.OrderId}");
-                if (result.Data != null) PrintAdditional(result.Data.AdditionalProperties, "  ");
-                PrintAdditional(result.AdditionalProperties, "");
-            }
-            else
-            {
-                Console.WriteLine($"ModifyUsOrder response is null (HTTP {(int)response.StatusCode}): {response.RawContent}");
-            }
-            Console.WriteLine("==================");
-        }
-
-        public static async Task SanityModifyUsOrderTest(IServiceProvider services)
-        {
-            if (!EnableStateChangingUsOrderTests)
-            {
-                Console.WriteLine("ModifyUsOrder sanity test skipped: set UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true to run it");
-                return;
-            }
-
-            var api = services.GetRequiredService<IUSStocksOrderApi>();
-            var orderId = await ResolveOrderIdAsync(api);
-            if (orderId == null)
-            {
-                Console.WriteLine("ModifyUsOrder sanity test skipped: no US order found");
-                return;
-            }
-
-            var response = await api.ModifyUsOrderAsync(BuildModifyRequest(orderId));
-            var result = response.Ok();
-            ThrowIfNull(result, response, "ModifyUsOrder");
-
-            if (string.IsNullOrWhiteSpace(result!.Data?.OrderId))
-                throw new Exception("ModifyUsOrder: Data.OrderId is not populated");
-        }
-
-        private static UsModifyOrderRequest BuildModifyRequest(string orderId) => new UsModifyOrderRequest(
-            quantity: 1m,
-            price: 1.05m,
-            validity: UsModifyOrderRequest.ValidityEnum.DAY,
-            orderId: orderId,
-            instrumentKey: InstrumentKey,
-            transactionType: UsModifyOrderRequest.TransactionTypeEnum.BUY,
-            orderType: UsModifyOrderRequest.OrderTypeEnum.LIMIT);
 
         public static async Task PrintCancelUsOrderTest(IServiceProvider services)
         {

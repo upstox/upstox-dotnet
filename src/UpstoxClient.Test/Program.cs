@@ -147,12 +147,11 @@ namespace UpstoxClient.Test
                 await UserApiExtensionsService.PrintUpdateUserIpTest(services);
                 await UserService.PrintProfileTest(services);
                 await UserService.PrintGetUserFundMarginTest(services);
-                // Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
+                // Place/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
                 await USStocksService.PrintGetUsOrderBookTest(services);
                 await USStocksService.PrintGetUsOrderDetailsTest(services);
                 await USStocksService.PrintEstimateUsOrderTest(services);
                 await USStocksService.PrintPlaceUsOrderTest(services);
-                await USStocksService.PrintModifyUsOrderTest(services);
                 await USStocksService.PrintCancelUsOrderTest(services);
                 await USStocksService.PrintCalculateUsMarginTest(services);
                 await USStocksService.PrintGetUsHoldingsTest(services);
@@ -319,12 +318,11 @@ namespace UpstoxClient.Test
                 await UserApiExtensionsService.SanityUpdateUserIpTest(services);
                 await UserService.SanityProfileTest(services);
                 await UserService.SanityGetUserFundMarginTest(services);
-                // Place/Modify/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
+                // Place/CancelUsOrder self-skip unless UPSTOX_ENABLE_US_ORDER_WRITE_TESTS=true.
                 await USStocksService.SanityGetUsOrderBookTest(services);
                 await USStocksService.SanityGetUsOrderDetailsTest(services);
                 await USStocksService.SanityEstimateUsOrderTest(services);
                 await USStocksService.SanityPlaceUsOrderTest(services);
-                await USStocksService.SanityModifyUsOrderTest(services);
                 await USStocksService.SanityCancelUsOrderTest(services);
                 await USStocksService.SanityCalculateUsMarginTest(services);
                 await USStocksService.SanityGetUsHoldingsTest(services);
