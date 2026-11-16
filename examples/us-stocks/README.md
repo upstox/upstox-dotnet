@@ -8,8 +8,9 @@ Links to all US Stocks examples in the `code/` folder.
 - 1.2 [Place US order by amount](code/place-order.md#place-us-order-by-amount)
 - 1.3 [Cancel US order](code/cancel-order.md#cancel-us-order)
 - 1.4 [Get US order book](code/get-order-book.md#get-us-order-book)
-- 1.5 [Get US order details](code/get-order-details.md#get-us-order-details)
-- 1.6 [Get US order estimate](code/order-estimate.md#get-us-order-estimate)
+- 1.5 [Get US order book filtered by tag](code/get-order-book.md#get-us-order-book-filtered-by-tag)
+- 1.6 [Get US order details](code/get-order-details.md#get-us-order-details)
+- 1.7 [Get US order estimate](code/order-estimate.md#get-us-order-estimate)
 
 ## 2. Charges
 

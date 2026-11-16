@@ -24,7 +24,7 @@ try
     var response = await apiInstance.GetUsHolidaysAsync();
     foreach (var holiday in response.Ok()?.Data ?? new List<UsHolidayData>())
     {
-        Console.WriteLine($"{holiday.Date} {holiday.Description} ({holiday.HolidayType})");
+        Console.WriteLine($"{holiday.Date} ({holiday.HolidayType})");
     }
 }
 catch (Exception e)
@@ -60,7 +60,7 @@ try
     var response = await apiInstance.GetUsHolidayAsync("2026-11-26");
     foreach (var holiday in response.Ok()?.Data ?? new List<UsHolidayData>())
     {
-        Console.WriteLine($"{holiday.Date} {holiday.Description} ({holiday.HolidayType})");
+        Console.WriteLine($"{holiday.Date} ({holiday.HolidayType})");
     }
 }
 catch (Exception e)
