@@ -35,12 +35,14 @@ namespace UpstoxClient.Model
         /// <param name="exchange">exchange</param>
         /// <param name="status">status</param>
         /// <param name="lastUpdated">lastUpdated</param>
+        /// <param name="casEligibleStatus">CAS (Closing Auction Session) status of the segment. Present only for segments where CAS exists (e.g. NSE_EQ); absent otherwise.</param>
         [JsonConstructor]
-        public MarketStatusData(Option<string?> exchange = default, Option<string?> status = default, Option<long?> lastUpdated = default)
+        public MarketStatusData(Option<string?> exchange = default, Option<string?> status = default, Option<long?> lastUpdated = default, Option<CasEligibleStatusData?> casEligibleStatus = default)
         {
             ExchangeOption = exchange;
             StatusOption = status;
             LastUpdatedOption = lastUpdated;
+            CasEligibleStatusOption = casEligibleStatus;
             OnCreated();
         }
 
@@ -57,7 +59,7 @@ namespace UpstoxClient.Model
         /// Gets or Sets Exchange
         /// </summary>
         [JsonPropertyName("exchange")]
-        public string? Exchange { get { return this.ExchangeOption; } set { this.ExchangeOption = new(value); } }
+        public string? Exchange { get { return this.ExchangeOption.Value; } set { this.ExchangeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Status
@@ -70,7 +72,7 @@ namespace UpstoxClient.Model
         /// Gets or Sets Status
         /// </summary>
         [JsonPropertyName("status")]
-        public string? Status { get { return this.StatusOption; } set { this.StatusOption = new(value); } }
+        public string? Status { get { return this.StatusOption.Value; } set { this.StatusOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of LastUpdated
@@ -83,7 +85,21 @@ namespace UpstoxClient.Model
         /// Gets or Sets LastUpdated
         /// </summary>
         [JsonPropertyName("last_updated")]
-        public long? LastUpdated { get { return this.LastUpdatedOption; } set { this.LastUpdatedOption = new(value); } }
+        public long? LastUpdated { get { return this.LastUpdatedOption.Value; } set { this.LastUpdatedOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of CasEligibleStatus
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<CasEligibleStatusData?> CasEligibleStatusOption { get; private set; }
+
+        /// <summary>
+        /// CAS (Closing Auction Session) status of the segment. Present only for segments where CAS exists (e.g. NSE_EQ); absent otherwise.
+        /// </summary>
+        /// <value>CAS (Closing Auction Session) status of the segment. Present only for segments where CAS exists (e.g. NSE_EQ); absent otherwise.</value>
+        [JsonPropertyName("cas_eligible_status")]
+        public CasEligibleStatusData? CasEligibleStatus { get { return this.CasEligibleStatusOption.Value; } set { this.CasEligibleStatusOption = new(value); } }
 
         /// <summary>
         /// Gets or Sets additional properties
@@ -102,6 +118,7 @@ namespace UpstoxClient.Model
             sb.Append("  Exchange: ").Append(Exchange).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  LastUpdated: ").Append(LastUpdated).Append("\n");
+            sb.Append("  CasEligibleStatus: ").Append(CasEligibleStatus).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -133,6 +150,7 @@ namespace UpstoxClient.Model
             Option<string?> exchange = default;
             Option<string?> status = default;
             Option<long?> lastUpdated = default;
+            Option<CasEligibleStatusData?> casEligibleStatus = default;
 
             while (utf8JsonReader.Read())
             {
@@ -158,13 +176,19 @@ namespace UpstoxClient.Model
                         case "last_updated":
                             lastUpdated = new Option<long?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (long?)null : utf8JsonReader.GetInt64());
                             break;
+                        case "cas_eligible_status":
+                            casEligibleStatus = new Option<CasEligibleStatusData?>(JsonSerializer.Deserialize<CasEligibleStatusData>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
                         default:
                             break;
                     }
                 }
             }
 
-            return new MarketStatusData(exchange, status, lastUpdated);
+            if (casEligibleStatus.IsSet && casEligibleStatus.Value == null)
+                throw new ArgumentNullException(nameof(casEligibleStatus), "Property is not nullable for class MarketStatusData.");
+
+            return new MarketStatusData(exchange, status, lastUpdated, casEligibleStatus);
         }
 
         /// <summary>
@@ -191,6 +215,9 @@ namespace UpstoxClient.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, MarketStatusData marketStatusData, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (marketStatusData.CasEligibleStatusOption.IsSet && marketStatusData.CasEligibleStatus == null)
+                throw new ArgumentNullException(nameof(marketStatusData.CasEligibleStatus), "Property is required for class MarketStatusData.");
+
             if (marketStatusData.ExchangeOption.IsSet)
                 if (marketStatusData.ExchangeOption.Value != null)
                     writer.WriteString("exchange", marketStatusData.Exchange);
@@ -208,6 +235,12 @@ namespace UpstoxClient.Model
                     writer.WriteNumber("last_updated", marketStatusData.LastUpdatedOption.Value!.Value);
                 else
                     writer.WriteNull("last_updated");
+
+            if (marketStatusData.CasEligibleStatusOption.IsSet)
+            {
+                writer.WritePropertyName("cas_eligible_status");
+                JsonSerializer.Serialize(writer, marketStatusData.CasEligibleStatus, jsonSerializerOptions);
+            }
         }
     }
 }

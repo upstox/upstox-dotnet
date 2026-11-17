@@ -121,6 +121,7 @@ namespace UpstoxClient.Client
             _jsonOptions.Converters.Add(new MarketQuoteSymbolLtpJsonConverter());
             _jsonOptions.Converters.Add(new MarketQuoteSymbolLtpV3JsonConverter());
             _jsonOptions.Converters.Add(new MarketQuoteSymbolV3JsonConverter());
+            _jsonOptions.Converters.Add(new CasEligibleStatusDataJsonConverter());
             _jsonOptions.Converters.Add(new MarketStatusDataJsonConverter());
             _jsonOptions.Converters.Add(new ModifyOrderDataJsonConverter());
             _jsonOptions.Converters.Add(new ModifyOrderRequestJsonConverter());
